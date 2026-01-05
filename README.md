@@ -1,5 +1,8 @@
 # ARDU-8051  
 **An Arduino-Compatible Open-Source 8051 Learning Platform**
+![Uploading Ardu-51_Front_Angle_1.png…]()
+
+
 
 ARDU-8051 is a low-cost, open-source, Arduino-compatible development board based on the ATmel 8051 microcontroller, featuring an integrated USBasp programmer. The platform is designed primarily for embedded systems education, enabling students and educators to explore classical 8051 architecture using a modern, accessible hardware ecosystem.
 
