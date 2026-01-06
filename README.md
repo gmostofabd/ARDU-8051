@@ -45,5 +45,125 @@ The platform focuses on **conceptual clarity and hands-on learning**, rather tha
 
 ---
 
-## Repository Structure
+## 🧩 System Architecture
+
+![Block Diagram](images/block_diagram.png)
+
+
+### Major Functional Blocks
+- ATmel 8051 Microcontroller  
+- USBasp In-System Programmer  
+- Clock and Reset Circuitry  
+- Power Regulation  
+- Arduino-Compatible I/O Headers  
+
+The **on-board USBasp** enables direct firmware upload via USB, simplifying lab setup and reducing cost.
+
+---
+
+## 🔧 Hardware Design
+
+
+
+### 📐 Schematic Design
+![Schematic Preview](images/schematic_preview.png)
+
+- Designed using **Proteus Design Suite**
+- Follows standard 8051 reference architectures
+- Includes reliable reset and clock circuitry
+- ISP signals routed for stable programming
+
+📁 Full schematic files are available in the repository.
+
+---
+
+### 🖥️ PCB Design
+![PCB Top View](images/pcb_top.png)
+![PCB Bottom View](images/pcb_bottom.png)
+
+- Compact PCB layout
+- Arduino-compatible shield form factor
+- Optimized for low-cost fabrication
+- Clear signal routing and power integrity
+
+---
+
+### 🧱 3D Board Views
+![3D Angle View](images/ardu_8051_3d_angle.png)
+![3D Top View](images/ardu_8051_3d_top.png)
+
+3D renders are provided to support:
+- Hardware understanding
+- Remote learning
+- Pre-assembly visualization
+
+---
+
+## 💻 Programming Workflow
+
+1. Write firmware in **8051 Assembly or C**
+2. Compile using standard 8051 toolchains
+3. Upload firmware via **on-board USBasp**
+4. Run and test directly on hardware
+
+This workflow preserves **low-level embedded concepts** while minimizing setup complexity.
+
+---
+
+## 📂 Repository Structure
+
+
+
+## 📚 Academic Reference
+
+This project is described in a **ResearchGate Method publication**.
+
+> If you use ARDU-8051 in teaching, research, or derivative work, citation is appreciated.
+
+(You may add your DOI here.)
+
+---
+
+
+## ⚠️ Limitations
+
+ARDU-8051 is an **educational platform** and is not intended for:
+- High-performance computing
+- Industrial or safety-critical applications  
+
+Design priorities are **simplicity, affordability, and teaching effectiveness**.
+
+---
+
+## 🚀 Future Work
+
+Planned enhancements include:
+- Example firmware (Assembly & C)
+- Lab exercises and tutorials
+- Minor hardware revisions based on feedback
+- Community-contributed extensions
+
+---
+
+## 📜 License
+
+This project is released under an **open-source hardware-compatible license**.  
+See the `LICENSE` file for details.
+
+---
+
+## 🤝 Contribution & Collaboration
+
+Contributions, feedback, and academic collaboration are welcome.
+
+If you are an **educator**, **student**, or **researcher** using ARDU-8051, feel free to:
+- Open issues
+- Suggest improvements
+- Share classroom experiences
+
+---
+
+### Maintainer
+**Md. Golam Mostofa**  
+GitHub: https://github.com/gmostofabd
 
