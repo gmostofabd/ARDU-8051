@@ -1,14 +1,11 @@
 ## ARDU-8051  
-
 <p align="justify">
   <h1>An Arduino-Compatible Open-Source ATmel 8051 Hardware Shield</h1>
 </p>
 
-
-<div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 50%; margin: auto;">
-<img src="https://github.com/gmostofabd/ARDU-8051/blob/abfb65496c42ffb5566fd5242e189f0a0ee783f1/3d/Ardu-51_Front_Angle_1.png" alt="ARDU-8051 Learning Platform" width="90%" style="border-radius: 8px;">
+<div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 80%; margin: auto;">
+<img src="https://github.com/gmostofabd/ARDU-8051/blob/abfb65496c42ffb5566fd5242e189f0a0ee783f1/3d/Ardu-51_Front_Angle_1.png" alt="ARDU-8051 Learning Platform" width="50%" style="border-radius: 8px;">
 </div>
-
 
 ARDU-8051 is a low-cost, open-source, Arduino-compatible development board based on the ATmel 8051 microcontroller, featuring an integrated USBasp programmer. The platform is designed primarily for embedded systems education, enabling students and educators to explore classical 8051 architecture using a modern, accessible hardware ecosystem.
 
@@ -70,7 +67,7 @@ The **on-board USBasp** enables direct firmware upload via USB, simplifying lab 
 
 
 ### 📐 Schematic Design
-![Schematic Preview](images/schematic_preview.png)
+![Schematic Preview](images/Ardu-51_Features.png)
 
 - Designed using **Proteus Design Suite**
 - Follows standard 8051 reference architectures
