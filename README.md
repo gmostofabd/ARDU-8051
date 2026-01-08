@@ -1,7 +1,11 @@
-# ARDU-8051  
-**An Arduino-Compatible Open-Source 8051 Learning Platform**
+## ARDU-8051  
 
-<div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 90%; margin: auto;">
+<p align="justify">
+  <h1>An Arduino-Compatible Open-Source ATmel 8051 Hardware Shield</h1>
+</p>
+
+
+<div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 50%; margin: auto;">
 <img src="https://github.com/gmostofabd/ARDU-8051/blob/abfb65496c42ffb5566fd5242e189f0a0ee783f1/3d/Ardu-51_Front_Angle_1.png" alt="ARDU-8051 Learning Platform" width="90%" style="border-radius: 8px;">
 </div>
 
