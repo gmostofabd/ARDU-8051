@@ -22,7 +22,7 @@ This repository hosts all hardware designs, schematics, documentation, and lab m
 
 The 8051 microcontroller remains a foundational component of embedded systems curricula worldwide due to its architectural simplicity and pedagogical value. However, traditional laboratory hardware is often outdated, expensive, or difficult to program.
 
-ARDU-8051 addresses these challenges by:
+- ARDU-8051 addresses these challenges by:
 - Reducing hardware and setup complexity  
 - Integrating programming capability directly on the board  
 - Adopting an Arduino-compatible form factor  
@@ -32,15 +32,15 @@ ARDU-8051 addresses these challenges by:
 
 ## 🎯 Design Goals
 
-Preserve traditional 8051 pedagogy used in universities
+- Preserve traditional 8051 pedagogy used in universities
 
-Provide simulation-to-hardware continuity
+- Provide simulation-to-hardware continuity
 
-Eliminate dependency on proprietary programmers
+- Eliminate dependency on proprietary programmers
 
-Enable low-cost, reproducible laboratory setups
+- Enable low-cost, reproducible laboratory setups
 
-Support both assembly-level learning and real hardware experimentation
+- Support both assembly-level learning and real hardware experimentation
 
 ---
 ## 🧩 Platform Highlights
@@ -80,36 +80,36 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 
 🔌 USBasp Programmer (On-board)
 
-Implemented using ATmega8A (DIP package)
-
-Fully compatible with AVRDUDE
-
-Supports on-board programming and external ISP
-
-USB Type-B / Type-C selectable footprint
+  - Implemented using ATmega8A (DIP package)
+  
+  - Fully compatible with AVRDUDE
+  
+  - Supports on-board programming and external ISP
+  
+  - USB Type-B / Type-C selectable footprint
 ---
 
 
 ## 🧪 Simulation-First Workflow
 
-Design and test circuits in Proteus ISIS
+- Design and test circuits in Proteus ISIS
 
-Write 8051 assembly code using MIDE-51
+- Write 8051 assembly code using MIDE-51
 
-Generate HEX file
+- Generate HEX file
 
-Verify behavior in simulation
+- Verify behavior in simulation
 
-Program real hardware using AVRDUDE + USBasp
+- Program real hardware using AVRDUDE + USBasp
 
 
 
 ## 🛠️ Software Toolchain
-Purpose	Tool
-Circuit Simulation	Proteus ISIS
-Assembly Programming	MIDE-51 Assembler
-Hardware Programming	AVRDUDE
-Programmer	USBasp
+- Purpose	Tool
+- Circuit Simulation	Proteus ISIS
+- Assembly Programming	MIDE-51 Assembler
+- Hardware Programming	AVRDUDE
+- Programmer	USBasp
 
 
 
@@ -117,27 +117,29 @@ Programmer	USBasp
 ### 🚀 Quick Start (Blink LED)
   Requirements
   
-  ARDU-8051 EDU-PRO board
+  -- ARDU-8051 EDU-PRO board
   
-  USB cable (Type-B or Type-C)
+  -- USB cable (Type-B or Type-C)
   
-  Proteus, MIDE-51, AVRDUDE installed
+  -- Proteus, MIDE-51, AVRDUDE installed
   
   Steps
   
-  Open provided Proteus schematic
+  -- Open provided Proteus schematic
   
-  Assemble Blink LED code using MIDE-51
+  -- Assemble Blink LED code using MIDE-51
   
-  Load HEX file into Proteus and verify blinking
+  -- Load HEX file into Proteus and verify blinking
   
-  Connect board via USB
+  -- Connect board via USB
   
-  Program using AVRDUDE:
+  -- Program using AVRDUDE:
   
-  avrdude -c usbasp -p at89s52 -U flash:w:blink.hex
+  -- avrdude -c usbasp -p at89s52 -U flash:w:blink.hex
   
-  Observe LED blinking on P1.0
+  -- Observe LED blinking on P1.0
+
+  
 
 ## 📁 Repository Structure
     ARDU-8051/
@@ -157,57 +159,32 @@ Programmer	USBasp
     │ └── proteus-projects/
     ├── LICENSE
     └── README.md
+
+    
 ## 📘 Documentation
 
-User Manual – Board operation and workflow
+- User Manual – Board operation and workflow
 
-Student Lab Manual – Step-by-step experiments
+- Student Lab Manual – Step-by-step experiments
 
-Instructor Manual – Solutions, waveforms, rubrics
+- Instructor Manual – Solutions, waveforms, rubrics
 
-IEEE Platform Description – Academic publication-ready text
+- IEEE Platform Description – Academic publication-ready text
 
-All documents are located in the /docs directory.
+- All documents are located in the /docs directory.
 
 ## 🧠 Educational Use
 
 This platform is suitable for:
 
-Undergraduate microcontroller laboratories
+- Undergraduate microcontroller laboratories
 
-Introductory embedded systems courses
+- Introductory embedded systems courses
 
-Assembly language instruction
+- Assembly language instruction
 
-ADC and peripheral interfacing experiments
+- ADC and peripheral interfacing experiments
 
-## 🌍 Open-Source License
-
-This project is released as open-source hardware and documentation.
-
-Recommended License:
-
-Hardware: CERN-OHL-S
-
-Documentation: CC BY-SA 4.0
-
-Firmware: MIT License
-
-See the LICENSE file for details.
-
-## 🤝 Contribution Guidelines
-
-Contributions are welcome:
-
-Hardware improvements
-
-Documentation corrections
-
-Additional lab experiments
-
-Simulation enhancements
-
-Please submit issues and pull requests using standard GitHub workflows.
 
 📖 Citation
 
@@ -229,159 +206,18 @@ docs/images/
 ## 🖼️ Image Purpose & Caption Mapping (IMPORTANT)
 ## 1️⃣ ardu-8051-board.png
 
-Used in: README header (hero image)
-
-Description:
-
-Full ARDU-8051 EDU-PRO board
-
-Top view
-
-Clearly visible ICs, USB connector, headers
-
-Recommended specs:
-
-Resolution: 1600×900 or higher
-
-Background: white or light gray
-
-Style: real photo or clean render
-
 ## 2️⃣ block-diagram.png
-
-Used in: Hardware Architecture section
-
-Caption in README:
-
-Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
-
-Should include blocks for:
-
-AT89S52 (8051 Core)
-
-USBasp (ATmega8A)
-
-ADC0804
-
-74HC245 Buffer
-
-USB Interface
-
-Arduino Headers
-
-Style:
-
-Vector diagram (Inkscape / draw.io / PowerPoint)
-
-Sans-serif font
-
-IEEE-style arrows
 
 ## 3️⃣ usbasp-schematic.png
 
-Used in: USBasp Programmer (On-board) section
-
-Should show:
-
-ATmega8A (DIP)
-
-USB D+ / D−
-
-Crystal
-
-ISP headers
-
-USB Type-B / Type-C option
-
-Power filtering
-
-Source:
-
-Exported from Proteus
-
-Or redrawn cleanly for publication
-
 ## 4️⃣ proteus-simulation.png
-
-Used in: Simulation-First Workflow section
-
-Should show:
-
-Proteus ISIS schematic
-
-AT89S52 loaded with HEX file
-
-LED blinking or ADC experiment
-
-Logic probe / oscilloscope (optional)
-
-Purpose:
-Demonstrates simulation → hardware parity
-
-## ✅ Naming Rules (DO NOT CHANGE)
-
-Lowercase only
-
-Hyphen-separated
-
-.png format
-
-No spaces
-
-No version numbers in filenames
-
-This ensures:
-
-GitHub compatibility
-
-Markdown reliability
-
-Long-term citation safety
-
-## 📌 Optional (Future Expansion – NOT required now)
-
-If later needed, you may add:
-
-docs/images/
-├── pcb-top.png
-├── pcb-bottom.png
-├── pinout-diagram.png
-├── adc0804-timing.png
-├── lab-setup-photo.png
-
-##v 🎯 Academic Tip (Important)
-
-Use the same filenames in:
-
-GitHub README
-
-IEEE paper figures
-
-ResearchGate uploads
-
-Lab manuals
-
-This consistency signals professional engineering discipline.
-
-
-
-
-
 
 
 ## 🔧 Hardware Design
 
-
-
 ### 📐 Schematic Design
 ![Schematic Preview](images/Ardu-51_Features.png)
 
-- Designed using **Proteus Design Suite**
-- Follows standard 8051 reference architectures
-- Includes reliable reset and clock circuitry
-- ISP signals routed for stable programming
-
-📁 Full schematic files are available in the repository.
 
 ---
 
@@ -389,37 +225,14 @@ This consistency signals professional engineering discipline.
 ![PCB Top View](images/pcb_top.png)
 ![PCB Bottom View](images/pcb_bottom.png)
 
-- Compact PCB layout
-- Arduino-compatible shield form factor
-- Optimized for low-cost fabrication
-- Clear signal routing and power integrity
-
 ---
 
 ### 🧱 3D Board Views
 ![3D Angle View](images/ardu_8051_3d_angle.png)
 ![3D Top View](images/ardu_8051_3d_top.png)
 
-3D renders are provided to support:
-- Hardware understanding
-- Remote learning
-- Pre-assembly visualization
 
 ---
-
-## 💻 Programming Workflow
-
-1. Write firmware in **8051 Assembly or C**
-2. Compile using standard 8051 toolchains
-3. Upload firmware via **on-board USBasp**
-4. Run and test directly on hardware
-
-This workflow preserves **low-level embedded concepts** while minimizing setup complexity.
-
----
-
-## 📂 Repository Structure
-
 
 
 ## 📚 Academic Reference
@@ -431,7 +244,6 @@ This project is described in a **ResearchGate Method publication**.
 (You may add your DOI here.)
 
 ---
-
 
 ## ⚠️ Limitations
 
@@ -457,17 +269,6 @@ Planned enhancements include:
 
 This project is released under an **open-source hardware-compatible license**.  
 See the `LICENSE` file for details.
-
----
-
-## 🤝 Contribution & Collaboration
-
-Contributions, feedback, and academic collaboration are welcome.
-
-If you are an **educator**, **student**, or **researcher** using ARDU-8051, feel free to:
-- Open issues
-- Suggest improvements
-- Share classroom experiences
 
 ---
 
