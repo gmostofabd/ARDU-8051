@@ -1,14 +1,22 @@
-# ARDU-8051  
-**An Arduino-Compatible Open-Source 8051 Learning Platform**
+## ARDU-8051  
+<p align="justify">
+  <h1>An Arduino-Compatible Open-Source ATmel 8051 Hardware Shield</h1>
+</p>
 
-<div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 90%; margin: auto;">
-<img src="https://github.com/gmostofabd/ARDU-8051/blob/abfb65496c42ffb5566fd5242e189f0a0ee783f1/3d/Ardu-51_Front_Angle_1.png" alt="ARDU-8051 Learning Platform" width="90%" style="border-radius: 8px;">
+<div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 80%; margin: auto;">
+<img src="https://github.com/gmostofabd/ARDU-8051/blob/abfb65496c42ffb5566fd5242e189f0a0ee783f1/3d/Ardu-51_Front_Angle_1.png" alt="ARDU-8051 Learning Platform" width="50%" style="border-radius: 8px;">
 </div>
 
 
-ARDU-8051 is a low-cost, open-source, Arduino-compatible development board based on the ATmel 8051 microcontroller, featuring an integrated USBasp programmer. The platform is designed primarily for embedded systems education, enabling students and educators to explore classical 8051 architecture using a modern, accessible hardware ecosystem.
-
 ---
+
+## 📌 Overview
+<p align="justify">
+ARDU-8051 is a low-cost, open-source, Arduino-compatible development board based on the ATmel 8051 microcontroller, featuring an integrated USBasp programmer. The platform is designed primarily for embedded systems education, enabling students and educators to explore classical 8051 architecture using a modern, simulation-first workflow, accessible hardware ecosystem.
+  
+This repository hosts all hardware designs, schematics, documentation, and lab materials required for academic and self-learning use.
+</p>
+
 
 ## Motivation
 
@@ -22,28 +30,192 @@ ARDU-8051 addresses these challenges by:
 
 ---
 
-## Key Features
+## 🎯 Design Goals
 
-- ATmel 8051-family microcontroller  
-- Integrated USBasp ISP programmer  
-- Arduino-compatible headers and form factor  
-- Single-board solution (no external programmer required)  
-- Designed for low-cost fabrication  
-- Fully open-source design files  
+- Preserve traditional 8051 pedagogy used in universities
 
----
+- Provide simulation-to-hardware continuity
 
-## Educational Scope
+- Eliminate dependency on proprietary programmers
 
-ARDU-8051 is intended for:
-- Undergraduate embedded systems laboratories  
-- Introductory microcontroller courses  
-- Self-learning and experimentation  
-- Training workshops and demonstrations  
+- Enable low-cost, reproducible laboratory setups
+
+- Support both assembly-level learning and real hardware experimentation
 
 The platform focuses on **conceptual clarity and hands-on learning**, rather than high-performance or industrial applications.
 
 ---
+## 🧩 Platform Highlights
 
-## Repository Structure
+    -- AT89S52 (8051 core) with 11.0592 MHz crystal
+    
+    -- On-board USBasp programmer (ATmega8A, DIP)
+    
+    -- Dual USB option: Type-B or Type-C
+    
+    -- ADC0804 parallel analog-to-digital converter
+    
+    -- Buffered Port-0 bus using 74HC245
+    
+    -- Arduino UNO–compatible headers
+    
+    -- External 6-pin ISP header
+    
+    -- Designed for Proteus simulation + real hardware parity
+---
+
+
+## 🖼️ Hardware Architecture
+
+Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
+
+  - 🔌 USBasp Programmer (On-board)
+
+  - Implemented using ATmega8A (DIP package)
+  
+  - Fully compatible with AVRDUDE
+  
+  - Supports on-board programming and external ISP
+  
+  - USB Type-B / Type-C selectable footprint
+
+---
+
+
+## 🧪 Simulation-First Workflow
+
+- Design and test circuits in Proteus ISIS
+
+- Write 8051 assembly code using MIDE-51
+
+- Generate HEX file
+
+- Verify behavior in simulation
+
+- Program real hardware using AVRDUDE + USBasp
+
+---
+
+## 🛠️ Software Toolchain
+- Purpose	Tool
+- Circuit Simulation	Proteus ISIS
+- Assembly Programming	MIDE-51 Assembler
+- Hardware Programming	AVRDUDE
+- Programmer	USBasp
+
+
+---
+
+### 🚀 Quick Start (Blink LED)
+  ### Requirements
+  
+  -- ARDU-8051 EDU-PRO board
+  
+  -- USB cable (Type-B or Type-C)
+  
+  -- Proteus, MIDE-51, AVRDUDE installed
+  
+  ### Steps
+  
+  -- Open provided Proteus schematic
+  
+  -- Assemble Blink LED code using MIDE-51
+  
+  -- Load HEX file into Proteus and verify blinking
+  
+  -- Connect board via USB
+  
+  -- Program using AVRDUDE:
+  
+  -- avrdude -c usbasp -p at89s52 -U flash:w:blink.hex
+  
+  -- Observe LED blinking on P1.0
+
+  ---  
+
+## 🧠 Educational Use
+
+This platform is suitable for:
+
+- Undergraduate microcontroller laboratories
+
+- Introductory embedded systems courses
+
+- Assembly language instruction
+
+- ADC and peripheral interfacing experiments
+
+---
+
+## 🌍 Open-Source License
+
+Hardware: CERN-OHL-S
+
+Documentation: CC BY-SA 4.0
+
+Firmware: MIT License
+See the LICENSE file for details.
+
+---
+
+## 🤝 Contribution Guidelines
+
+Contributions are welcome: hardware improvements, documentation corrections, additional lab experiments, simulation enhancements. Submit issues and pull requests via GitHub workflows.
+
+## Citation:
+G. Mostofa, "ARDU-8051 EDU-PRO: An Open-Source Educational Platform for 8051 Microcontroller Learning," 2026.
+
+---
+
+## 🔧 Hardware Design
+
+### 📐 Schematic Design
+![Schematic Preview](images/Ardu-51_Features.png)
+
+
+---
+
+### 🖥️ PCB Design
+![PCB Top View](images/pcb_top.png)
+![PCB Bottom View](images/pcb_bottom.png)
+
+---
+
+### 🧱 3D Board Views
+![3D Angle View](images/ardu_8051_3d_angle.png)
+![3D Top View](images/ardu_8051_3d_top.png)
+
+
+---
+
+## ⚠️ Limitations
+
+ARDU-8051 is an **educational platform** and is not intended for:
+- High-performance computing
+- Industrial or safety-critical applications  
+
+Design priorities are **simplicity, affordability, and teaching effectiveness**.
+
+---
+
+## 🚀 Future Work
+
+Planned enhancements include:
+- Example firmware (Assembly & C)
+- Lab exercises and tutorials
+- Minor hardware revisions based on feedback
+- Community-contributed extensions
+
+---
+
+## 📜 License
+
+This project is released under an **open-source hardware-compatible license**.  
+See the `LICENSE` file for details.
+
+---
+
+### Maintainer
+**Md. Golam Mostofa**  
+GitHub: https://github.com/gmostofabd
 
