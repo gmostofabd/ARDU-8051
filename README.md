@@ -22,7 +22,7 @@ This repository hosts all hardware designs, schematics, documentation, and lab m
 
 The 8051 microcontroller remains a foundational component of embedded systems curricula worldwide due to its architectural simplicity and pedagogical value. However, traditional laboratory hardware is often outdated, expensive, or difficult to program.
 
-- ARDU-8051 addresses these challenges by:
+ARDU-8051 addresses these challenges by:
 - Reducing hardware and setup complexity  
 - Integrating programming capability directly on the board  
 - Adopting an Arduino-compatible form factor  
@@ -41,6 +41,8 @@ The 8051 microcontroller remains a foundational component of embedded systems cu
 - Enable low-cost, reproducible laboratory setups
 
 - Support both assembly-level learning and real hardware experimentation
+
+The platform focuses on **conceptual clarity and hands-on learning**, rather than high-performance or industrial applications.
 
 ---
 ## 🧩 Platform Highlights
@@ -62,23 +64,12 @@ The 8051 microcontroller remains a foundational component of embedded systems cu
     -- Designed for Proteus simulation + real hardware parity
 ---
 
-## Educational Scope
-
-ARDU-8051 is intended for:
-- Undergraduate embedded systems laboratories  
-- Introductory microcontroller courses  
-- Self-learning and experimentation  
-- Training workshops and demonstrations  
-
-The platform focuses on **conceptual clarity and hands-on learning**, rather than high-performance or industrial applications.
-
----
 
 ## 🖼️ Hardware Architecture
 
 Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 
-🔌 USBasp Programmer (On-board)
+  - 🔌 USBasp Programmer (On-board)
 
   - Implemented using ATmega8A (DIP package)
   
@@ -87,6 +78,7 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
   - Supports on-board programming and external ISP
   
   - USB Type-B / Type-C selectable footprint
+
 ---
 
 
@@ -102,7 +94,7 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 
 - Program real hardware using AVRDUDE + USBasp
 
-
+---
 
 ## 🛠️ Software Toolchain
 - Purpose	Tool
@@ -112,10 +104,10 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 - Programmer	USBasp
 
 
-
+---
 
 ### 🚀 Quick Start (Blink LED)
-  Requirements
+  ### Requirements
   
   -- ARDU-8051 EDU-PRO board
   
@@ -123,7 +115,7 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
   
   -- Proteus, MIDE-51, AVRDUDE installed
   
-  Steps
+  ### Steps
   
   -- Open provided Proteus schematic
   
@@ -139,39 +131,7 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
   
   -- Observe LED blinking on P1.0
 
-  
-
-## 📁 Repository Structure
-    ARDU-8051/
-    ├── hardware/
-    │ ├── schematics/
-    │ ├── pcb/
-    │ └── bom/
-    ├── docs/
-    │ ├── user-manual/
-    │ ├── student-lab-manual/
-    │ ├── instructor-manual/
-    │ └── images/
-    ├── firmware/
-    │ ├── assembly-examples/
-    │ └── hex-files/
-    ├── simulation/
-    │ └── proteus-projects/
-    ├── LICENSE
-    └── README.md
-
-    
-## 📘 Documentation
-
-- User Manual – Board operation and workflow
-
-- Student Lab Manual – Step-by-step experiments
-
-- Instructor Manual – Solutions, waveforms, rubrics
-
-- IEEE Platform Description – Academic publication-ready text
-
-- All documents are located in the /docs directory.
+  ---  
 
 ## 🧠 Educational Use
 
@@ -185,33 +145,27 @@ This platform is suitable for:
 
 - ADC and peripheral interfacing experiments
 
+---
 
-📖 Citation
+## 🌍 Open-Source License
 
-If you use this platform in academic work, please cite:
+Hardware: CERN-OHL-S
 
+Documentation: CC BY-SA 4.0
+
+Firmware: MIT License
+See the LICENSE file for details.
+
+---
+
+## 🤝 Contribution Guidelines
+
+Contributions are welcome: hardware improvements, documentation corrections, additional lab experiments, simulation enhancements. Submit issues and pull requests via GitHub workflows.
+
+## Citation:
 G. Mostofa, "ARDU-8051 EDU-PRO: An Open-Source Educational Platform for 8051 Microcontroller Learning," 2026.
-## ⭐ Acknowledgment
 
-This project was developed to support accessible, concept-driven microcontroller education, particularly in academic environments where 8051 remains a core teaching platform.
-
-
-## 📁 docs/images/ — Required Image Filename List
-docs/images/
-├── ardu-8051-board.png
-├── block-diagram.png
-├── usbasp-schematic.png
-├── proteus-simulation.png
-
-## 🖼️ Image Purpose & Caption Mapping (IMPORTANT)
-## 1️⃣ ardu-8051-board.png
-
-## 2️⃣ block-diagram.png
-
-## 3️⃣ usbasp-schematic.png
-
-## 4️⃣ proteus-simulation.png
-
+---
 
 ## 🔧 Hardware Design
 
@@ -231,17 +185,6 @@ docs/images/
 ![3D Angle View](images/ardu_8051_3d_angle.png)
 ![3D Top View](images/ardu_8051_3d_top.png)
 
-
----
-
-
-## 📚 Academic Reference
-
-This project is described in a **ResearchGate Method publication**.
-
-> If you use ARDU-8051 in teaching, research, or derivative work, citation is appreciated.
-
-(You may add your DOI here.)
 
 ---
 
