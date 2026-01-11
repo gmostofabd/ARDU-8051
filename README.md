@@ -170,20 +170,20 @@ G. Mostofa, "ARDU-8051 EDU-PRO: An Open-Source Educational Platform for 8051 Mic
 ## 🔧 Hardware Design
 
 ### 📐 Schematic Design
-![Schematic Preview](images/e509d51c-3134-499c-841a-e424be538a3f.png)
+![Schematic Preview](docs/images/ARDU-8051-Circuit.png)
 
 
 ---
 
 ### 🖥️ PCB Design
-![PCB Top View](images/pcb_top.png)
-![PCB Bottom View](images/pcb_bottom.png)
+![PCB Top View](docs/images/ARDU-8051-PCB-Top.png)
+![PCB Bottom View](docs/images/ARDU-8051-PCB-Bottom.png)
 
 ---
 
 ### 🧱 3D Board Views
-![3D Angle View](images/ardu_8051_3d_angle.png)
-![3D Top View](images/ardu_8051_3d_top.png)
+![3D Angle View](docs/images/ARDU-8051-3D-2.png)
+![3D Top View](docs/images/ARDU-8051-3D-1.png)
 
 
 ---
