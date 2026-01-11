@@ -182,8 +182,8 @@ G. Mostofa, "ARDU-8051 EDU-PRO: An Open-Source Educational Platform for 8051 Mic
 ---
 
 ### 🧱 3D Board Views
-![3D Angle View](images/ardu_8051_3d_angle.png)
-![3D Top View](images/ardu_8051_3d_top.png)
+![3D Angle View](docs/images/ARDU-8051-3D-2.png)
+![3D Top View](docs/images/ARDU-8051-3D-1.png)
 
 
 ---
