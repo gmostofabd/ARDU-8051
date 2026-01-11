@@ -176,8 +176,8 @@ G. Mostofa, "ARDU-8051 EDU-PRO: An Open-Source Educational Platform for 8051 Mic
 ---
 
 ### 🖥️ PCB Design
-![PCB Top View](images/pcb_top.png)
-![PCB Bottom View](images/pcb_bottom.png)
+![PCB Top View](docs/images/ARDU-8051-PCB-Top.png)
+![PCB Bottom View](docs/images/ARDU-8051-PCB-Bottom.png)
 
 ---
 
