@@ -176,21 +176,24 @@ Contributions are welcome: hardware improvements, documentation corrections, add
 ![PCB Top View](docs/images/ARDU-8051-PCB-Top.png)
 ![PCB Bottom View](docs/images/ARDU-8051-PCB-Bottom.png)
 
+
+---
+
+## Hardware Views
+
 ---
 
 ### 🧱 3D Board Views
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/ARDU-8051-3D-2.png" width="30%">
+  <img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/ARDU-8051-3D-1.png" width="30%">
+  <img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/assets/images/schematic.png" width="30%">
+</p>
 
-<figure align="center">
-  <img src="docs/images/ARDU-8051-3D-2.png" width="600">
-  <figcaption><b>Figure 1.</b> ARDU-8051 Hardware Shield 3D View</figcaption>
-</figure>
-
-<figure align="center">
-  <img src="docs/images/ARDU-8051-3D-1.png" width="600">
-  <figcaption><b>Figure 1.</b> ARDU-8051 Hardware Shield</figcaption>
-</figure>
+<p align="center"><b>Figure 2.</b> Top View, Bottom View and Schematic</p>
 
 ---
+
 
 ## ⚠️ Limitations
 
