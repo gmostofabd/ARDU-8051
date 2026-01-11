@@ -162,9 +162,6 @@ See the LICENSE file for details.
 
 Contributions are welcome: hardware improvements, documentation corrections, additional lab experiments, simulation enhancements. Submit issues and pull requests via GitHub workflows.
 
-## Citation:
-G. Mostofa, "ARDU-8051 EDU-PRO: An Open-Source Educational Platform for 8051 Microcontroller Learning," 2026.
-
 ---
 
 ## 🔧 Hardware Design
@@ -182,9 +179,16 @@ G. Mostofa, "ARDU-8051 EDU-PRO: An Open-Source Educational Platform for 8051 Mic
 ---
 
 ### 🧱 3D Board Views
-![3D Angle View](docs/images/ARDU-8051-3D-2.png)
-![3D Top View](docs/images/ARDU-8051-3D-1.png)
 
+<figure align="center">
+  <img src="docs/images/ARDU-8051-3D-2.png" width="600">
+  <figcaption><b>Figure 1.</b> ARDU-8051 Hardware Shield 3D View</figcaption>
+</figure>
+
+<figure align="center">
+  <img src="docs/images/ARDU-8051-3D-1.png" width="600">
+  <figcaption><b>Figure 1.</b> ARDU-8051 Hardware Shield</figcaption>
+</figure>
 
 ---
 
