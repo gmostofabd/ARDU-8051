@@ -170,7 +170,7 @@ G. Mostofa, "ARDU-8051 EDU-PRO: An Open-Source Educational Platform for 8051 Mic
 ## 🔧 Hardware Design
 
 ### 📐 Schematic Design
-![Schematic Preview](docs/images/ARDU-8051 Schematic.png)
+![Schematic Preview](docs/images/ARDU-8051-Circuit.png)
 
 
 ---
