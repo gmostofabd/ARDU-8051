@@ -162,9 +162,6 @@ See the LICENSE file for details.
 
 Contributions are welcome: hardware improvements, documentation corrections, additional lab experiments, simulation enhancements. Submit issues and pull requests via GitHub workflows.
 
-## Citation:
-G. Mostofa, "ARDU-8051 EDU-PRO: An Open-Source Educational Platform for 8051 Microcontroller Learning," 2026.
-
 ---
 
 ## 🔧 Hardware Design
@@ -179,14 +176,24 @@ G. Mostofa, "ARDU-8051 EDU-PRO: An Open-Source Educational Platform for 8051 Mic
 ![PCB Top View](docs/images/ARDU-8051-PCB-Top.png)
 ![PCB Bottom View](docs/images/ARDU-8051-PCB-Bottom.png)
 
+
+---
+
+## Hardware Views
+
 ---
 
 ### 🧱 3D Board Views
-![3D Angle View](docs/images/ARDU-8051-3D-2.png)
-![3D Top View](docs/images/ARDU-8051-3D-1.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/ARDU-8051-3D-2.png" width="30%">
+  <img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/ARDU-8051-3D-1.png" width="30%">
+  <img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/assets/images/schematic.png" width="30%">
+</p>
 
+<p align="center"><b>Figure 2.</b> Top View, Bottom View and Schematic</p>
 
 ---
+
 
 ## ⚠️ Limitations
 
