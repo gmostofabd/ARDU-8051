@@ -42,26 +42,20 @@ ARDU-8051 addresses these challenges by:
 
 - Support both assembly-level learning and real hardware experimentation
 
-The platform focuses on **conceptual clarity and hands-on learning**, rather than high-performance or industrial applications.
+> The platform focuses on **conceptual clarity and hands-on learning**, rather than high-performance or industrial applications.
 
 ---
 ## 🧩 Platform Highlights
 
-    -- AT89S52 (8051 core) with 11.0592 MHz crystal
-    
-    -- On-board USBasp programmer (ATmega8A, DIP)
-    
-    -- Dual USB option: Type-B or Type-C
-    
-    -- ADC0804 parallel analog-to-digital converter
-    
-    -- Buffered Port-0 bus using 74HC245
-    
-    -- Arduino UNO–compatible headers
-    
-    -- External 6-pin ISP header
-    
-    -- Designed for Proteus simulation + real hardware parity
+- **AT89S52 (8051 core)** with 11.0592 MHz crystal  
+- **On-board USBasp programmer** (ATmega8A, DIP)  
+- **Dual USB footprint**: Type-B or Type-C  
+- **ADC0804** parallel analog-to-digital converter  
+- **Buffered Port-0 bus** using 74HC245  
+- **Arduino UNO–compatible headers**  
+- **External 6-pin ISP header**  
+- Designed for **Proteus simulation + real hardware parity**
+
 ---
 
 
@@ -69,67 +63,52 @@ The platform focuses on **conceptual clarity and hands-on learning**, rather tha
 
 Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 
-  - 🔌 USBasp Programmer (On-board)
+### 🔌 USBasp Programmer (On-board)
 
-  - Implemented using ATmega8A (DIP package)
-  
-  - Fully compatible with AVRDUDE
-  
-  - Supports on-board programming and external ISP
-  
-  - USB Type-B / Type-C selectable footprint
+- Implemented using **ATmega8A (DIP package)**  
+- Fully compatible with **AVRDUDE**  
+- Supports **on-board programming** and **external ISP**  
+- USB **Type-B / Type-C selectable footprint**
+
 
 ---
 
-
 ## 🧪 Simulation-First Workflow
 
-- Design and test circuits in Proteus ISIS
-
-- Write 8051 assembly code using MIDE-51
-
-- Generate HEX file
-
-- Verify behavior in simulation
-
-- Program real hardware using AVRDUDE + USBasp
+1. Design and test circuits in **Proteus ISIS**  
+2. Write 8051 assembly code using **MIDE-51**  
+3. Generate the **HEX file**  
+4. Verify behavior in simulation  
+5. Program real hardware using **AVRDUDE + USBasp**
 
 ---
 
 ## 🛠️ Software Toolchain
-- Purpose	Tool
-- Circuit Simulation	Proteus ISIS
-- Assembly Programming	MIDE-51 Assembler
-- Hardware Programming	AVRDUDE
-- Programmer	USBasp
 
+| Purpose | Tool |
+|------|------|
+| Circuit Simulation | Proteus ISIS |
+| Assembly Programming | MIDE-51 Assembler |
+| Hardware Programming | AVRDUDE |
+| Programmer | USBasp |
 
 ---
 
-### 🚀 Quick Start (Blink LED)
-  ### Requirements
-  
-  -- ARDU-8051 EDU-PRO board
-  
-  -- USB cable (Type-B or Type-C)
-  
-  -- Proteus, MIDE-51, AVRDUDE installed
-  
-  ### Steps
-  
-  -- Open provided Proteus schematic
-  
-  -- Assemble Blink LED code using MIDE-51
-  
-  -- Load HEX file into Proteus and verify blinking
-  
-  -- Connect board via USB
-  
-  -- Program using AVRDUDE:
-  
-  -- avrdude -c usbasp -p at89s52 -U flash:w:blink.hex
-  
-  -- Observe LED blinking on P1.0
+## 🚀 Quick Start: Blink LED
+
+### Requirements
+
+- ARDU-8051 EDU-PRO board  
+- USB cable (Type-B or Type-C)  
+- Proteus, MIDE-51, and AVRDUDE installed  
+
+### Steps
+
+1. Open the provided **Proteus schematic**  
+2. Assemble the **Blink LED** program using MIDE-51  
+3. Load the HEX file into Proteus and verify blinking  
+4. Connect the board via USB  
+5. Program using AVRDUDE:
 
   ---  
 
@@ -176,7 +155,6 @@ Contributions are welcome: hardware improvements, documentation corrections, add
 ![PCB Top View](docs/images/ARDU-8051-PCB-Top.png)
 ![PCB Bottom View](docs/images/ARDU-8051-PCB-Bottom.png)
 
-
 ---
 
 ## Hardware Views
@@ -193,7 +171,6 @@ Contributions are welcome: hardware improvements, documentation corrections, add
 <p align="center"><b>Figure 2.</b> Top View, Bottom View and Schematic</p>
 
 ---
-
 
 ## ⚠️ Limitations
 
@@ -226,3 +203,4 @@ See the `LICENSE` file for details.
 **Md. Golam Mostofa**  
 GitHub: https://github.com/gmostofabd
 
+---
