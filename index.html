@@ -129,6 +129,68 @@ a:hover {
   margin: 0.2rem;
 }
 </style>
+
+<!-- VIRTUAL LAB CONTAINER -->
+<div style="
+  background:#ffffff;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.15);
+  padding:1rem;
+  margin-top:2rem;
+">
+
+<!-- ===== START OF VIRTUAL LAB ===== -->
+<style>
+.lab-container{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+.lab-left,.lab-right{
+  flex:1 1 450px;
+}
+.lab-code{
+  background:#1e1e1e;
+  color:#00ff90;
+  padding:1rem;
+  border-radius:8px;
+  font-family:monospace;
+  font-size:14px;
+}
+.lab-highlight{background:#ffee58;color:#000;}
+.lab-board{position:relative;max-width:520px;margin:auto;}
+.lab-board img{width:100%;border-radius:10px;}
+.lab-led{
+  position:absolute;
+  left:62%;
+  top:18%;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:#400;
+  border:2px solid #222;
+}
+.lab-led.on{background:red;box-shadow:0 0 15px red;}
+.lab-panel{
+  margin-top:1rem;
+  background:#f7f9fc;
+  padding:0.8rem;
+  border-radius:8px;
+  font-family:monospace;
+  font-size:14px;
+}
+.lab-btn{
+  padding:0.4rem 0.9rem;
+  margin:0.2rem;
+  border:none;
+  border-radius:6px;
+  background:#1f3c88;
+  color:white;
+  cursor:pointer;
+}
+.lab-btn:hover{background:#0a9396;}
+</style>
+  
 </head>
 
 <body>
@@ -232,66 +294,7 @@ No software installation is required.
 <b>Concepts:</b> Timer-0 Mode-1, TH0/TL0 preload, TF0 overflow, hardware timing
 </div>
 
-<!-- VIRTUAL LAB CONTAINER -->
-<div style="
-  background:#ffffff;
-  border-radius:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.15);
-  padding:1rem;
-  margin-top:2rem;
-">
 
-<!-- ===== START OF VIRTUAL LAB ===== -->
-<style>
-.lab-container{
-  display:flex;
-  flex-wrap:wrap;
-  gap:1rem;
-}
-.lab-left,.lab-right{
-  flex:1 1 450px;
-}
-.lab-code{
-  background:#1e1e1e;
-  color:#00ff90;
-  padding:1rem;
-  border-radius:8px;
-  font-family:monospace;
-  font-size:14px;
-}
-.lab-highlight{background:#ffee58;color:#000;}
-.lab-board{position:relative;max-width:520px;margin:auto;}
-.lab-board img{width:100%;border-radius:10px;}
-.lab-led{
-  position:absolute;
-  left:62%;
-  top:18%;
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  background:#400;
-  border:2px solid #222;
-}
-.lab-led.on{background:red;box-shadow:0 0 15px red;}
-.lab-panel{
-  margin-top:1rem;
-  background:#f7f9fc;
-  padding:0.8rem;
-  border-radius:8px;
-  font-family:monospace;
-  font-size:14px;
-}
-.lab-btn{
-  padding:0.4rem 0.9rem;
-  margin:0.2rem;
-  border:none;
-  border-radius:6px;
-  background:#1f3c88;
-  color:white;
-  cursor:pointer;
-}
-.lab-btn:hover{background:#0a9396;}
-</style>
 
 <div class="lab-container">
 
@@ -451,3 +454,4 @@ ARDU-8051 is an educational open-source hardware platform.
 </body>
 
 </html>
+
