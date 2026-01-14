@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARDU-8051 Virtual Lab | ADC0804 Experiment</title>
+
+<style>
+:root {
+  --primary:#1f3c88;
+  --accent:#0a9396;
+  --light:#f5f7fa;
+  --dark:#333;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--light);
+  color: var(--dark);
+}
+
+header {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  padding: 1.8rem 1rem;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.9rem;
+}
+
+header p {
+  margin-top: 0.4rem;
+  font-size: 1rem;
+}
+
+section {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2rem 1.5rem;
+}
+
+h2 {
+  color: var(--primary);
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.3rem;
+}
+
+.lab-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 900px) {
+  .lab-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.box {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.slider {
+  width: 100%;
+}
+
+.led-panel {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.led {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background: #444;
+  box-shadow: inset 0 0 5px #000;
+}
+
+.led.on {
+  background: #ff3b3b;
+  box-shadow: 0 0 12px red;
+}
+
+.readout {
+  font-family: monospace;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.code-box {
+  background: #111;
+  color: #00ff88;
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+footer {
+  background: #111;
+  color: #ccc;
+  text-align: center;
+  padding: 1.2rem;
+  font-size: 0.85rem;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>ADC0804 Virtual Experiment</h1>
+  <p>ARDU-8051 Interactive Browser Lab</p>
+</header>
+
+<section>
+<h2>🎯 Experiment Objective</h2>
+<p>
+To understand <b>analog-to-digital conversion</b> using <b>ADC0804</b> and
+observe how an analog voltage is converted into an 8-bit digital value
+and read by the <b>8051 Port-0</b>.
+</p>
+</section>
+
+<section class="lab-layout">
+
+<!-- LEFT: CONTROLS -->
+<div class="box">
+<h2>🧪 Analog Input (ADC0804)</h2>
+
+<label><b>Analog Voltage (0–5V)</b></label>
+<input type="range" min="0" max="255" value="0" class="slider" id="adcSlider">
+
+<p class="readout">
+Analog Value (8-bit): <span id="adcValue">0</span>
+</p>
+
+<p class="readout">
+Equivalent Voltage: <span id="adcVolt">0.00</span> V
+</p>
+
+<hr>
+
+<h3>📟 Port-0 Output (P0.7 … P0.0)</h3>
+<div class="led-panel" id="ledPanel"></div>
+
+<div class="readout">
+Binary: <span id="binaryOut">00000000</span><br>
+HEX: <span id="hexOut">00h</span>
+</div>
+</div>
+
+<!-- RIGHT: THEORY + CODE -->
+<div class="box">
+<h2>🧠 Working Principle</h2>
+<ul>
+  <li>ADC0804 converts analog voltage to 8-bit digital data</li>
+  <li>Digital output is connected to <b>Port-0</b></li>
+  <li>Higher voltage → higher binary value</li>
+  <li>Each LED represents one bit of Port-0</li>
+</ul>
+
+<h2>💻 Sample 8051 Assembly Code</h2>
+<div class="code-box">
+ORG 0000H<br>
+MAIN:<br>
+&nbsp;&nbsp;MOV P0, #0FFH &nbsp;&nbsp;; Configure P0 as input<br>
+HERE:<br>
+&nbsp;&nbsp;MOV A, P0 &nbsp;&nbsp;&nbsp;&nbsp;; Read ADC data<br>
+&nbsp;&nbsp;SJMP HERE<br>
+END
+</div>
+
+<p style="margin-top:1rem;">
+In real hardware, ADC0804 control signals (<b>WR, RD, INTR</b>)
+manage conversion timing.  
+This virtual lab focuses on <b>data interpretation</b>.
+</p>
+</div>
+
+</section>
+
+<section>
+<p>
+⬅ <a href="../index.html">Back to ARDU-8051 Home</a>
+</p>
+</section>
+
+<footer>
+<p>
+ARDU-8051 Virtual Laboratory © 2026<br>
+Open-Source Educational Platform
+</p>
+</footer>
+
+<script>
+const slider = document.getElementById("adcSlider");
+const adcValue = document.getElementById("adcValue");
+const adcVolt = document.getElementById("adcVolt");
+const binaryOut = document.getElementById("binaryOut");
+const hexOut = document.getElementById("hexOut");
+const ledPanel = document.getElementById("ledPanel");
+
+// Create LEDs
+const leds = [];
+for (let i = 0; i < 8; i++) {
+  const led = document.createElement("div");
+  led.className = "led";
+  ledPanel.appendChild(led);
+  leds.push(led);
+}
+
+function updateADC(value) {
+  adcValue.textContent = value;
+  adcVolt.textContent = (value * 5 / 255).toFixed(2);
+
+  let bin = value.toString(2).padStart(8, "0");
+  binaryOut.textContent = bin;
+  hexOut.textContent = value.toString(16).toUpperCase().padStart(2,"0") + "h";
+
+  // Update LEDs (P0.7 on left)
+  for (let i = 0; i < 8; i++) {
+    leds[i].classList.toggle("on", bin[i] === "1");
+  }
+}
+
+slider.addEventListener("input", e => {
+  updateADC(parseInt(e.target.value));
+});
+
+// Initialize
+updateADC(0);
+</script>
+
+</body>
+</html>

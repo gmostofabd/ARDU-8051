@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARDU-8051 Virtual Lab | LED Blinking</title>
+
+<style>
+:root{
+  --primary:#1f3c88;
+  --accent:#0a9396;
+  --bg:#f4f6fb;
+}
+
+body{
+  margin:0;
+  font-family:Segoe UI, Roboto, Arial, sans-serif;
+  background:var(--bg);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:white;
+  padding:1.8rem;
+  text-align:center;
+}
+
+header h1{
+  margin:0;
+  font-size:1.8rem;
+}
+
+header p{
+  margin-top:0.4rem;
+  font-size:1rem;
+}
+
+/* ---------- LAYOUT ---------- */
+section{
+  max-width:1100px;
+  margin:auto;
+  padding:2rem 1.2rem;
+}
+
+.lab-container{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1.5rem;
+}
+
+/* ---------- CODE PANEL ---------- */
+.code-panel{
+  flex:1 1 420px;
+}
+
+.code-panel h2{
+  color:var(--primary);
+}
+
+.code-box{
+  background:#1e1e1e;
+  color:#00ff90;
+  padding:1rem;
+  border-radius:10px;
+  font-family:monospace;
+  font-size:14px;
+  min-height:260px;
+  white-space:pre;
+}
+
+.highlight{
+  background:#ffee58;
+  color:#000;
+}
+
+.btn{
+  padding:0.45rem 1rem;
+  border:none;
+  border-radius:6px;
+  background:var(--primary);
+  color:white;
+  cursor:pointer;
+  margin-right:0.4rem;
+  margin-top:0.6rem;
+}
+
+.btn:hover{
+  background:var(--accent);
+}
+
+.status-box{
+  margin-top:0.8rem;
+  background:#eef2ff;
+  padding:0.6rem;
+  border-radius:6px;
+  font-family:monospace;
+}
+
+/* ---------- BOARD PANEL ---------- */
+.board-panel{
+  flex:1 1 420px;
+}
+
+.board-panel h2{
+  color:var(--primary);
+}
+
+.board{
+  position:relative;
+  max-width:480px;
+  margin:auto;
+}
+
+.board img{
+  width:100%;
+  border-radius:12px;
+}
+
+/* LED Position matches ARDU-8051 P1.0 */
+.led{
+  position:absolute;
+  left:63%;
+  top:19%;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:#400;
+  border:2px solid #222;
+}
+
+.led.on{
+  background:red;
+  box-shadow:0 0 16px red;
+}
+
+.panel{
+  margin-top:0.8rem;
+  background:#f7f9fc;
+  padding:0.6rem;
+  border-radius:6px;
+  font-family:monospace;
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  text-align:center;
+  font-size:0.85rem;
+  padding:1.2rem;
+  background:#111;
+  color:#ccc;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>ARDU-8051 Virtual Lab</h1>
+  <p>Experiment 01 — Digital Output Control (LED Blinking)</p>
+</header>
+
+<section>
+<div class="lab-container">
+
+<!-- ================= CODE SIDE ================= -->
+<div class="code-panel">
+<h2>8051 Assembly Program</h2>
+
+<div id="code" class="code-box">
+ORG 0000H
+MAIN:
+  SETB P1.0
+DELAY:
+  ACALL WAIT
+  CLR P1.0
+  ACALL WAIT
+  SJMP MAIN
+WAIT:
+  MOV R7,#255
+W1:
+  MOV R6,#255
+W2:
+  DJNZ R6,W2
+  DJNZ R7,W1
+  RET
+END
+</div>
+
+<button class="btn" onclick="step()">Step</button>
+<button class="btn" onclick="run()">Run</button>
+<button class="btn" onclick="resetLab()">Reset</button>
+
+<div class="status-box">
+P1.0 = <span id="p10">0</span>
+</div>
+</div>
+
+<!-- ================= BOARD SIDE ================= -->
+<div class="board-panel">
+<h2>Hardware Visualization</h2>
+
+<div class="board">
+<img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/ARDU-8051-3D-1.png">
+<div id="led" class="led"></div>
+</div>
+
+<div class="panel">
+Port-1 (Binary): <span id="p1bin">00000000</span><br>
+Port-1 (HEX): <span id="p1hex">00</span>
+</div>
+
+<div class="panel">
+<b>Observation:</b><br>
+LED connected to <b>P1.0</b> toggles HIGH / LOW based on
+software delay loops.
+</div>
+</div>
+
+</div>
+</section>
+
+<footer>
+ARDU-8051 Open-Source Educational Virtual Laboratory<br>
+Maintainer: Md. Golam Mostofa
+</footer>
+
+<script>
+const codeLines = document.getElementById("code").innerText.split("\n");
+let pc = 0;
+let p1 = 0;
+let runTimer = null;
+
+const led = document.getElementById("led");
+
+function updateUI(){
+  document.getElementById("p10").innerText = p1 & 1;
+  document.getElementById("p1bin").innerText = p1.toString(2).padStart(8,"0");
+  document.getElementById("p1hex").innerText = p1.toString(16).toUpperCase().padStart(2,"0");
+  led.classList.toggle("on", p1 & 1);
+}
+
+function highlight(){
+  document.getElementById("code").innerHTML =
+    codeLines.map((l,i)=> i===pc ? `<span class="highlight">${l}</span>` : l).join("\n");
+}
+
+function step(){
+  highlight();
+  const line = codeLines[pc];
+
+  if(line.includes("SETB P1.0")) p1 |= 1;
+  if(line.includes("CLR P1.0")) p1 &= 0xFE;
+
+  pc = (pc + 1) % codeLines.length;
+  updateUI();
+}
+
+function run(){
+  if(runTimer) return;
+  runTimer = setInterval(()=>{
+    p1 ^= 1;
+    updateUI();
+  },700);
+}
+
+function resetLab(){
+  clearInterval(runTimer);
+  runTimer = null;
+  pc = 0;
+  p1 = 0;
+  updateUI();
+  highlight();
+}
+
+updateUI();
+highlight();
+</script>
+
+</body>
+</html>
