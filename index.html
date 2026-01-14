@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARDU-8051 EDU-PRO | Open-Source 8051 Learning Platform</title>
+
+<style>
+:root {
+  --primary:#1f3c88;
+  --secondary:#f2f2f2;
+  --accent:#0a9396;
+  --light:#f9f9f9;
+  --dark:#333;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+  color: var(--dark);
+  background: #ffffff;
+}
+
+header {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  max-width: 900px;
+  margin: auto;
+  font-size: 1.1rem;
+}
+
+section {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.section-light {
+  background: var(--light);
+}
+
+h2 {
+  color: var(--primary);
+  border-bottom: 2px solid var(--secondary);
+  padding-bottom: 0.3rem;
+}
+
+img.responsive {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.center {
+  text-align: center;
+}
+
+.highlight-box {
+  background: #eef6ff;
+  border-left: 5px solid var(--primary);
+  padding: 1rem;
+  margin: 1.5rem 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+th {
+  background: var(--secondary);
+}
+
+caption {
+  caption-side: bottom;
+  font-weight: bold;
+  padding-top: 0.5rem;
+}
+
+details {
+  background: #f7f7f7;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+footer {
+  background: #111;
+  color: #ccc;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.badge {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin: 0.2rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>ARDU-8051 EDU-PRO</h1>
+  <p>An Arduino-Compatible, Open-Source ATmel 8051 Hardware Learning Platform</p>
+  <div>
+    <span class="badge">8051</span>
+    <span class="badge">Education</span>
+    <span class="badge">Open Hardware</span>
+    <span class="badge">USBasp</span>
+  </div>
+</header>
+
+<section class="center">
+  <img class="responsive" src="https://github.com/gmostofabd/ARDU-8051/blob/abfb65496c42ffb5566fd5242e189f0a0ee783f1/3d/Ardu-51_Front_Angle_1.png" alt="ARDU-8051 Board">
+</section>
+
+<section>
+<h2>📌 Overview</h2>
+<p>
+ARDU-8051 is a low-cost, open-source, Arduino-compatible development board based on the AT89S52 (8051 core),
+designed specifically for embedded systems education.  
+It combines <b>classical 8051 pedagogy</b> with a <b>modern simulation-first workflow</b>.
+</p>
+</section>
+
+<section class="section-light">
+<h2>🌟 Motivation</h2>
+<div class="highlight-box">
+The 8051 microcontroller is still widely taught — but the teaching hardware has not evolved.
+ARDU-8051 bridges this gap by combining simulation, open hardware, and real-world workflows.
+</div>
+
+<ul>
+  <li>Replaces obsolete trainer boards</li>
+  <li>Eliminates proprietary programmers</li>
+  <li>Preserves low-level architectural clarity</li>
+</ul>
+</section>
+
+<section>
+<h2>🎯 Design Goals</h2>
+<ul>
+  <li>Preserve traditional 8051 education</li>
+  <li>Simulation-to-hardware continuity</li>
+  <li>Low-cost, reproducible labs</li>
+  <li>Assembly-level transparency</li>
+</ul>
+</section>
+
+<section class="section-light">
+<h2>🧩 Platform Highlights</h2>
+<ul>
+  <li><b>AT89S52</b> with 11.0592 MHz crystal</li>
+  <li>On-board <b>USBasp (ATmega8A)</b></li>
+  <li><b>ADC0804</b> for analog experiments</li>
+  <li>Arduino UNO compatible headers</li>
+  <li>USB Type-B / Type-C option</li>
+  <li>Buffered Port-0 (74HC245)</li>
+</ul>
+</section>
+
+<section>
+<h2>🔬 Simulation-First Workflow</h2>
+<ol>
+  <li>Design in <b>Proteus ISIS</b></li>
+  <li>Write code in <b>MIDE-51</b></li>
+  <li>Verify via simulation</li>
+  <li>Program using <b>AVRDUDE + USBasp</b></li>
+</ol>
+</section>
+
+<section class="section-light">
+<h2>🚀 Quick Start: Blink LED</h2>
+<div class="highlight-box">
+Objective: Blink an LED connected to <b>P1.0 (Arduino D8)</b>
+</div>
+<ol>
+  <li>Write assembly code to toggle P1.0</li>
+  <li>Assemble using MIDE-51</li>
+  <li>Simulate in Proteus</li>
+  <li>Flash HEX using AVRDUDE</li>
+</ol>
+</section>
+
+<section>
+<h2>🧪 Laboratory Experiments</h2>
+
+<details>
+<summary><b>Click to view experiment list</b></summary>
+<ul>
+  <li>LED Control</li>
+  <li>Push Button Input</li>
+  <li>External Interrupt (INT0)</li>
+  <li>Timer-Based Delay</li>
+  <li>UART Communication</li>
+  <li>ADC0804 Interfacing</li>
+</ul>
+</details>
+
+</section>
+
+<section class="section-light">
+<h2>📐 Hardware Design</h2>
+<p class="center">
+<img class="responsive" src="docs/images/ARDU-8051-Circuit.png" alt="Schematic">
+</p>
+</section>
+
+<footer>
+<p>
+Maintainer: <b>Md. Golam Mostofa</b><br>
+GitHub: <a href="https://github.com/gmostofabd">https://github.com/gmostofabd</a><br><br>
+ARDU-8051 is an educational open-source hardware platform.
+</p>
+</footer>
+
+</body>
+</html>
