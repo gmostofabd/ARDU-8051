@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARDU-8051 EDU-PRO | Open-Source 8051 Learning Platform</title>
+<title>ARDU-8051 | Open-Source 8051 Learning Platform</title>
 
 <style>
 :root {
@@ -134,7 +134,7 @@ a:hover {
 <body>
 
 <header>
-  <h1>ARDU-8051 EDU-PRO</h1>
+  <h1>ARDU-8051</h1>
   <p>An Arduino-Compatible, Open-Source ATmel 8051 Hardware Learning Platform</p>
   <div>
     <span class="badge">8051</span>
@@ -216,6 +216,200 @@ Objective: Blink an LED connected to <b>P1.0 (Arduino D8)</b>
 </ol>
 </section>
 
+
+
+<section>
+<h2>🧠 Virtual ARDU-8051 Interactive Lab</h2>
+
+<p>
+This browser-based virtual lab allows students to <b>visually execute 8051 assembly code</b>
+and observe <b>real-time hardware behavior</b> exactly as on the ARDU-8051 board.
+No software installation is required.
+</p>
+
+<div class="highlight-box">
+<b>Experiment:</b> Timer-0 Based LED Blinking (P1.0)<br>
+<b>Concepts:</b> Timer-0 Mode-1, TH0/TL0 preload, TF0 overflow, hardware timing
+</div>
+
+<!-- VIRTUAL LAB CONTAINER -->
+<div style="
+  background:#ffffff;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.15);
+  padding:1rem;
+  margin-top:2rem;
+">
+
+<!-- ===== START OF VIRTUAL LAB ===== -->
+<style>
+.lab-container{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+.lab-left,.lab-right{
+  flex:1 1 450px;
+}
+.lab-code{
+  background:#1e1e1e;
+  color:#00ff90;
+  padding:1rem;
+  border-radius:8px;
+  font-family:monospace;
+  font-size:14px;
+}
+.lab-highlight{background:#ffee58;color:#000;}
+.lab-board{position:relative;max-width:520px;margin:auto;}
+.lab-board img{width:100%;border-radius:10px;}
+.lab-led{
+  position:absolute;
+  left:62%;
+  top:18%;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:#400;
+  border:2px solid #222;
+}
+.lab-led.on{background:red;box-shadow:0 0 15px red;}
+.lab-panel{
+  margin-top:1rem;
+  background:#f7f9fc;
+  padding:0.8rem;
+  border-radius:8px;
+  font-family:monospace;
+  font-size:14px;
+}
+.lab-btn{
+  padding:0.4rem 0.9rem;
+  margin:0.2rem;
+  border:none;
+  border-radius:6px;
+  background:#1f3c88;
+  color:white;
+  cursor:pointer;
+}
+.lab-btn:hover{background:#0a9396;}
+</style>
+
+<div class="lab-container">
+
+<!-- LEFT: CODE -->
+<div class="lab-left">
+<b>8051 Assembly Code (Timer-0)</b>
+<pre id="labCode" class="lab-code">
+ORG 0000H
+MAIN:
+  MOV TMOD,#01H
+LOOP:
+  MOV TH0,#3CH
+  MOV TL0,#0B0H
+  SETB TR0
+WAIT:
+  JNB TF0,WAIT
+  CLR TR0
+  CLR TF0
+  CPL P1.0
+  SJMP LOOP
+END
+</pre>
+
+<button class="lab-btn" onclick="labStep()">Step</button>
+<button class="lab-btn" onclick="labRun()">Run</button>
+<button class="lab-btn" onclick="labReset()">Reset</button>
+
+<div class="lab-panel">
+TH0=3C TL0=B0 TF0=<span id="tf0">0</span> TR0=<span id="tr0">0</span>
+</div>
+</div>
+
+<!-- RIGHT: BOARD -->
+<div class="lab-right">
+<div class="lab-board">
+<img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/ARDU-8051-3D-1.png">
+<div id="labLed" class="lab-led"></div>
+</div>
+
+<div class="lab-panel">
+Port-1: <span id="p1bin">00000000</span> (HEX <span id="p1hex">00</span>)
+</div>
+
+<div class="lab-panel">
+<b>Observation:</b><br>
+LED toggles when <b>Timer-0 overflows</b>, not by software delay.
+</div>
+</div>
+
+</div>
+
+<script>
+const codeLines=document.getElementById("labCode").innerText.split("\n");
+let pc=0,p1=0,tf0=0,tr0=0,runInt=null;
+const led=document.getElementById("labLed");
+
+function updateLab(){
+  document.getElementById("tf0").innerText=tf0;
+  document.getElementById("tr0").innerText=tr0;
+  document.getElementById("p1bin").innerText=p1.toString(2).padStart(8,"0");
+  document.getElementById("p1hex").innerText=p1.toString(16).padStart(2,"0").toUpperCase();
+  if(p1&1)led.classList.add("on");else led.classList.remove("on");
+}
+
+function highlightLab(){
+  document.getElementById("labCode").innerHTML=
+    codeLines.map((l,i)=>i===pc?`<span class="lab-highlight">${l}</span>`:l).join("\n");
+}
+
+function labStep(){
+  highlightLab();
+  const l=codeLines[pc];
+  if(l.includes("SETB TR0"))tr0=1;
+  if(l.includes("CLR TR0"))tr0=0;
+  if(l.includes("CLR TF0"))tf0=0;
+  if(l.includes("CPL P1.0"))p1^=1;
+  pc=(pc+1)%codeLines.length;
+  updateLab();
+}
+
+function labRun(){
+  if(runInt)return;
+  tr0=1;
+  runInt=setInterval(()=>{
+    tf0=1;
+    p1^=1;
+    updateLab();
+    tf0=0;
+  },800);
+}
+
+function labReset(){
+  clearInterval(runInt);
+  runInt=null;pc=0;p1=0;tf0=0;tr0=0;
+  updateLab();highlightLab();
+}
+
+updateLab();highlightLab();
+</script>
+<!-- ===== END OF VIRTUAL LAB ===== -->
+
+</div>
+
+<p class="center">
+<b>Figure:</b> Browser-based ARDU-8051 Timer-0 Virtual Laboratory
+</p>
+</section>
+
+
+
+
+
+
+
+
+
+
+  
 <section>
 <h2>🧪 Laboratory Experiments</h2>
 
@@ -240,6 +434,12 @@ Objective: Blink an LED connected to <b>P1.0 (Arduino D8)</b>
 </p>
 </section>
 
+<iframe
+  src="lab/timer.html"
+  style="width:100%;height:900px;border:none;border-radius:12px;">
+</iframe>
+
+  
 <footer>
 <p>
 Maintainer: <b>Md. Golam Mostofa</b><br>
@@ -250,6 +450,3 @@ ARDU-8051 is an educational open-source hardware platform.
 
 </body>
 </html>
-
-
-
