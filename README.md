@@ -19,7 +19,6 @@ This repository hosts all hardware designs, schematics, documentation, and lab m
 ---
 
 ## 🌟 Motivation
-
 <p align="center">
   <img src="docs/images/block-diagram.png" alt="ARDU-8051 Motivation Diagram" width="650">
 </p>
@@ -35,27 +34,21 @@ Across many universities, students continue to learn **8051 architecture, assemb
 - Hardware that discourages experimentation  
 
 At the same time, many modern development platforms **hide low-level details**, making them unsuitable for foundational learning.
+**ARDU-8051 EDU-PRO was created to bridge this gap.by:** 
 
-ARDU-8051 addresses these challenges by:
 - Reducing hardware and setup complexity  
 - Integrating programming capability directly on the board  
 - Adopting an Arduino-compatible form factor  
 - Embracing open-source hardware principles  
-
-**ARDU-8051 EDU-PRO was created to bridge this gap.** 
 
 ---
 
 ## 🎯 Design Goals
 
 - Preserve traditional 8051 pedagogy used in universities
-
 - Provide simulation-to-hardware continuity
-
 - Eliminate dependency on proprietary programmers
-
 - Enable low-cost, reproducible laboratory setups
-
 - Support both assembly-level learning and real hardware experimentation
 
 > The platform focuses on **conceptual clarity and hands-on learning**, rather than high-performance or industrial applications.
@@ -82,11 +75,34 @@ ARDU-8051 addresses these challenges by:
 
 ---
 
-## 🔌 Pinout Mapping (ARDU-8051 ↔ Arduino Headers)
+## 🔬 Designed for Academic Rigor
+
+This repository is not just a hardware dump. It includes:
+
+- 📘 **User Manual**  
+- 🧪 **Student Lab Manual**  
+- 🧑‍🏫 **Instructor Manual (solutions, waveforms, rubrics)**  
+- 📄 **IEEE-style Platform Description**  
+
+➡️ Documentation directories:
+- [`docs/user-manual/`](docs/user-manual/)
+- [`docs/student-lab-manual/`](docs/student-lab-manual/)
+- [`docs/instructor-manual/`](docs/instructor-manual/)
+
+These materials support:
+- Repeatable experiments  
+- Outcome-Based Education (OBE)  
+- External examination and accreditation  
+
+---
+
+# 🔌 Pinout Mapping (ARDU-8051 ↔ Arduino Headers)
 
 The ARDU-8051 board maps the **AT89S52 (8051 core)** I/O ports to the **Arduino UNO–compatible headers** to ensure familiarity and ease of laboratory use.
 
 ### 📍 Digital I/O Mapping
+
+<div align="center">
 
 | Arduino Pin | 8051 Pin | 8051 Port | Function / Notes |
 |-----------|---------|----------|------------------|
@@ -105,11 +121,15 @@ The ARDU-8051 board maps the **AT89S52 (8051 core)** I/O ports to the **Arduino 
 | D12 | P1.4 | Port 1 | General I/O |
 | D13 | P1.5 | Port 1 | General I/O / On-board LED (if populated) |
 
+</div>
+
 ---
 
 ### 📍 Analog / ADC Mapping (via ADC0804)
 
 ARDU-8051 provides analog input capability using an **ADC0804 (8-bit parallel ADC)**.
+
+<div align="center">
 
 | Arduino Analog Pin | ADC0804 Pin | 8051 Connection | Description |
 |------------------|-----------|----------------|------------|
@@ -121,11 +141,15 @@ ARDU-8051 provides analog input capability using an **ADC0804 (8-bit parallel AD
 | A5 | D4 | P0.4 | ADC Data Bit 4 |
 | — | D5–D7 | P0.5–P0.7 | ADC Data Bits 5–7 |
 
+</div>
+
 > **Note:** Port-0 is buffered using **74HC245** due to its open-drain nature.
 
 ---
 
 ### 📍 Power & Control Pins
+
+<div align="center">
 
 | Arduino Pin | Signal | Description |
 |-----------|--------|------------|
@@ -134,9 +158,12 @@ ARDU-8051 provides analog input capability using an **ADC0804 (8-bit parallel AD
 | RESET | RST | Active-high reset for AT89S52 |
 | AREF | — | Not used (ADC0804 uses Vref/2) |
 
+</div>
 ---
 
 ### 📍 ISP / Programming Interface
+
+<div align="center">
 
 | ISP Pin | Connected To | Description |
 |------|-------------|------------|
@@ -147,6 +174,7 @@ ARDU-8051 provides analog input capability using an **ADC0804 (8-bit parallel AD
 | VCC | +5V | Power |
 | GND | GND | Ground |
 
+</div>
 ---
 
 ### 📝 Design Note
@@ -157,13 +185,11 @@ ARDU-8051 provides analog input capability using an **ADC0804 (8-bit parallel AD
 
 ---
 
-
-
-## 🖼️ Hardware Architecture
+# 🖼️ Hardware Architecture
 
 Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 
-### 🔌 USBasp Programmer (On-board)
+## 🔌 USBasp Programmer (On-board)
 
 - Implemented using **ATmega8A (DIP package)**  
 - Fully compatible with **AVRDUDE**  
@@ -192,6 +218,8 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 | Hardware Programming | AVRDUDE |
 | Programmer | USBasp |
 
+</div>
+
 ---
 
 ## 🚀 Quick Start: Blink LED
@@ -212,17 +240,14 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 
   ---  
 
-## 🧠 Educational Use
+---
 
-This platform is suitable for:
+## ⭐ Who Is This For?
 
-- Undergraduate microcontroller laboratories
-
-- Introductory embedded systems courses
-
-- Assembly language instruction
-
-- ADC and peripheral interfacing experiments
+- 🎓 **Students** learning microcontrollers from the ground up  
+- 🧑‍🏫 **Instructors** teaching 8051-based courses  
+- 🔬 **Researchers** developing educational platforms  
+- 🛠️ **Hobbyists** interested in classical embedded systems  
 
 ---
 
@@ -248,6 +273,8 @@ To understand basic digital output operation using the 8051 GPIO port.
 | Signal | Arduino Pin | 8051 Pin |
 |------|------------|----------|
 | LED  | D8 | P1.0 |
+
+
 
 **Theory**  
 Port-1 of the 8051 is a quasi-bidirectional I/O port. Writing `0` drives the pin LOW and writing `1` drives it HIGH.
@@ -452,7 +479,6 @@ After completing these experiments, students will be able to:
 
 ### 📐 Schematic Design
 ![Schematic Preview](docs/images/ARDU-8051-Circuit.png)
-
 
 ---
 
