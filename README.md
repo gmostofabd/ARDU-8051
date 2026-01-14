@@ -34,7 +34,7 @@ Across many universities, students continue to learn **8051 architecture, assemb
 - Hardware that discourages experimentation  
 
 At the same time, many modern development platforms **hide low-level details**, making them unsuitable for foundational learning.
-**ARDU-8051 EDU-PRO was created to bridge this gap.by:** 
+**ARDU-8051 EDU-PRO was created to bridge this gap by:** 
 
 - Reducing hardware and setup complexity  
 - Integrating programming capability directly on the board  
@@ -102,7 +102,7 @@ The ARDU-8051 board maps the **AT89S52 (8051 core)** I/O ports to the **Arduino 
 
 ### 📍 Digital I/O Mapping
 
-<div align="center">
+<div style="overflow-x:auto;" align="center">
 
 | Arduino Pin | 8051 Pin | 8051 Port | Function / Notes |
 |-----------|---------|----------|------------------|
@@ -122,7 +122,9 @@ The ARDU-8051 board maps the **AT89S52 (8051 core)** I/O ports to the **Arduino 
 | D13 | P1.5 | Port 1 | General I/O / On-board LED (if populated) |
 
 </div>
-
+<div align="center">
+  <b>Table 1. ARDU-8051 ↔ Arduino UNO Digital Pin Mapping</b>
+</div>
 ---
 
 ### 📍 Analog / ADC Mapping (via ADC0804)
@@ -130,7 +132,7 @@ The ARDU-8051 board maps the **AT89S52 (8051 core)** I/O ports to the **Arduino 
 ARDU-8051 provides analog input capability using an **ADC0804 (8-bit parallel ADC)**.
 
 <div align="center">
-
+  
 | Arduino Analog Pin | ADC0804 Pin | 8051 Connection | Description |
 |------------------|-----------|----------------|------------|
 | A0 | Vin | External Analog Input | 0–5V analog signal |
@@ -175,6 +177,7 @@ ARDU-8051 provides analog input capability using an **ADC0804 (8-bit parallel AD
 | GND | GND | Ground |
 
 </div>
+
 ---
 
 ### 📝 Design Note
@@ -195,7 +198,6 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 - Fully compatible with **AVRDUDE**  
 - Supports **on-board programming** and **external ISP**  
 - USB **Type-B / Type-C selectable footprint**
-
 
 ---
 
@@ -238,7 +240,6 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 4. Connect the board via USB  
 5. Program using AVRDUDE:
 
-  ---  
 
 ---
 
@@ -253,10 +254,25 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 
 # 🧪 Example Laboratory Experiments (ARDU-8051)
 
-This section provides **example laboratory experiments** based on the ARDU-8051 pinout mapping.  
+<p align="justify">
+This section provides **example laboratory experiments** based on the ARDU-8051 pinout mapping.  </p>
 Each experiment is designed for **undergraduate embedded systems laboratories** and follows a
 **simulation-first → hardware implementation** methodology.
 
+
+<details>
+<summary><b>List of Experiments(Tap to Expand)</b></summary>
+
+| SN | Experiment Name|
+|--------|------------|
+| 01 | LED |
+| 02 | Push Button |
+| 03 | ADC0804 |
+| 04 | LCD |
+| 05 | Keypad |
+
+
+</details>  
 ---
 
 ### 🔬 Experiment 1: Digital Output Control (LED Blinking)
