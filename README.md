@@ -198,7 +198,7 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 ## 🔌 USBasp Programmer (On-board)
 
 <div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 80%; margin: auto;">
-<img src="https://github.com/gmostofabd/ARDU-8051/blob/66f5e7ad9781a50447be618fe1c089a76fb306bc/hardware/schematic/USBasp-Schematic.png" alt="USBasp Programmer Circuit" width="90%" style="border-radius: 8px;">
+<img src="https://github.com/gmostofabd/ARDU-8051/blob/f0cbe4fa73e1365c64df6c0d663c4b425a755871/hardware/schematic/USBasp-Schematic.png" alt="USBasp Programmer Circuit" width="90%" style="border-radius: 8px;">
 </div>
 
 - Implemented using **ATmega8A (DIP package)**  
