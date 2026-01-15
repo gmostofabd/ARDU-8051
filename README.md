@@ -194,6 +194,10 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 
 ## 🔌 USBasp Programmer (On-board)
 
+<div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 80%; margin: auto;">
+<img src="https://github.com/gmostofabd/ARDU-8051/blob/66f5e7ad9781a50447be618fe1c089a76fb306bc/hardware/schematic/AVRusp-Schematic.png" alt="ARDU-8051 Learning Platform" width="90%" style="border-radius: 8px;">
+</div>
+
 - Implemented using **ATmega8A (DIP package)**  
 - Fully compatible with **AVRDUDE**  
 - Supports **on-board programming** and **external ISP**  
