@@ -190,7 +190,7 @@ ARDU-8051 provides analog input capability using an **ADC0804 (8-bit parallel AD
 
 # 🖼️ Hardware Architecture
 <div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 80%; margin: auto;">
-<img src="https://github.com/gmostofabd/ARDU-8051/blob/2500b0a124e43149f6ea18c06ea832193e863b11/hardware/schematic/ATmel8051-Schematic.png" alt="ARDU-8051 Learning Platform" width="90%" style="border-radius: 8px;">
+<img src="https://github.com/gmostofabd/ARDU-8051/blob/2500b0a124e43149f6ea18c06ea832193e863b11/hardware/schematic/ATmel8051-Schematic.png" alt="ARDU-8051 Core Circuit" width="90%" style="border-radius: 8px;">
 </div>
 
 Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
@@ -198,7 +198,7 @@ Figure 1: Conceptual block diagram of the ARDU-8051 EDU-PRO platform.
 ## 🔌 USBasp Programmer (On-board)
 
 <div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 80%; margin: auto;">
-<img src="https://github.com/gmostofabd/ARDU-8051/blob/66f5e7ad9781a50447be618fe1c089a76fb306bc/hardware/schematic/AVRusp-Schematic.png" alt="USBasp" width="90%" style="border-radius: 8px;">
+<img src="https://github.com/gmostofabd/ARDU-8051/blob/66f5e7ad9781a50447be618fe1c089a76fb306bc/hardware/schematic/USBasp-Schematic.png" alt="USBasp Programmer Circuit" width="90%" style="border-radius: 8px;">
 </div>
 
 - Implemented using **ATmega8A (DIP package)**  
