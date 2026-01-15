@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>8051 Virtual Lab | Stepper Motor</title>
+<style>
+body{font-family:Arial;background:#eef2f7}
+h1{background:#1f3c88;color:#fff;padding:1rem;text-align:center}
+.lab{max-width:900px;margin:auto;background:#fff;padding:1rem;border-radius:12px}
+.stepper{
+  width:140px;height:140px;border:6px solid #333;
+  border-radius:50%;margin:20px auto;
+}
+.arrow{
+  width:6px;height:60px;background:blue;
+  margin:auto;transform-origin:bottom;
+}
+pre{background:#1e1e1e;color:#00ff9c;padding:1rem}
+button{padding:.4rem 1rem}
+</style>
+</head>
+
+<body>
+<h1>Stepper Motor – 8051</h1>
+
+<div class="lab">
+
+<pre>
+; P1.0-P1.3 -> STEPPER COILS
+
+ORG 0000H
+MOV A,#09H
+MOV P1,A
+ACALL DELAY
+
+MOV A,#0CH
+MOV P1,A
+ACALL DELAY
+
+MOV A,#06H
+MOV P1,A
+ACALL DELAY
+
+MOV A,#03H
+MOV P1,A
+ACALL DELAY
+SJMP $
+END
+</pre>
+
+<div class="stepper">
+  <div class="arrow" id="a"></div>
+</div>
+
+<button onclick="step()">Step</button>
+
+</div>
+
+<script>
+let angle=0;
+function step(){
+  angle+=30;
+  document.getElementById("a").style.transform=
+    "rotate("+angle+"deg)";
+}
+</script>
+</body>
+</html>
