@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>8051 Virtual Lab | Servo Motor</title>
+<style>
+body{font-family:Arial;background:#f4f6fb}
+h1{background:#1f3c88;color:#fff;padding:1rem;text-align:center}
+.lab{max-width:900px;margin:auto;background:#fff;padding:1rem;border-radius:12px}
+.servo{
+  width:160px;height:80px;border:6px solid #333;
+  border-radius:10px;margin:20px auto;position:relative;
+}
+.arm{
+  width:6px;height:60px;background:red;
+  position:absolute;left:50%;bottom:10px;
+  transform-origin:bottom;
+}
+pre{background:#1e1e1e;color:#00ff9c;padding:1rem}
+button{padding:.4rem 1rem}
+</style>
+</head>
+
+<body>
+<h1>Servo Motor – 8051</h1>
+
+<div class="lab">
+
+<pre>
+; P1.0 -> SERVO SIGNAL
+
+ORG 0000H
+SETB P1.0
+ACALL DELAY_1MS
+CLR P1.0
+ACALL DELAY_19MS
+SJMP $
+END
+</pre>
+
+<div class="servo">
+  <div class="arm" id="arm"></div>
+</div>
+
+<button onclick="setPos(0)">0°</button>
+<button onclick="setPos(90)">90°</button>
+<button onclick="setPos(180)">180°</button>
+
+</div>
+
+<script>
+function setPos(d){
+  document.getElementById("arm").style.transform=
+    "rotate("+(-90+d)+"deg)";
+}
+</script>
+</body>
+</html>
