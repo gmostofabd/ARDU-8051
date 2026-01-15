@@ -3,211 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ARDU-8051 | Open-Source 8051 Learning Platform</title>
 
+<meta name="description" content="ARDU-8051 is an Arduino-compatible open-source ATmel 8051 learning platform with virtual laboratories.">
+<meta name="author" content="Md. Golam Mostofa">
+
 <style>
-:root {
+:root{
   --primary:#1f3c88;
-  --secondary:#f2f2f2;
   --accent:#0a9396;
   --light:#f9f9f9;
-  --dark:#333;
+  --dark:#2b2b2b;
 }
 
-body {
-  margin: 0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  line-height: 1.6;
-  color: var(--dark);
-  background: #ffffff;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",Roboto,Arial,sans-serif;
+  line-height:1.65;
+  color:var(--dark);
+  background:#fff;
 }
 
-/* ---------- HEADER ---------- */
-header {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  color: white;
-  padding: 3rem 1rem;
-  text-align: center;
+img{max-width:100%;display:block}
+
+/* ================= HEADER ================= */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;
+  padding:3.5rem 1rem;
+  text-align:center;
+}
+header h1{
+  font-size:2.6rem;
+  margin:.2rem 0;
+}
+header p{
+  max-width:900px;
+  margin:auto;
+  font-size:1.1rem;
+}
+.badge{
+  display:inline-block;
+  background:rgba(255,255,255,.2);
+  padding:.35rem .9rem;
+  border-radius:20px;
+  font-size:.8rem;
+  margin:.25rem;
 }
 
-header h1 {
-  font-size: 2.4rem;
-  margin-bottom: 0.5rem;
+/* ================= SECTIONS ================= */
+section{
+  max-width:1100px;
+  margin:auto;
+  padding:2.5rem 1.5rem;
+}
+.section-light{background:var(--light)}
+.center{text-align:center}
+
+h2{
+  color:var(--primary);
+  border-bottom:2px solid #e0e0e0;
+  padding-bottom:.3rem;
 }
 
-header p {
-  max-width: 900px;
-  margin: auto;
-  font-size: 1.1rem;
+/* ================= MEDIA ================= */
+.responsive{
+  border-radius:12px;
+  box-shadow:0 8px 18px rgba(0,0,0,.12);
 }
 
-.badge {
-  display: inline-block;
-  background: var(--accent);
-  color: white;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  margin: 0.2rem;
+/* ================= CONTENT BOX ================= */
+.highlight-box{
+  background:#eef5ff;
+  border-left:5px solid var(--primary);
+  padding:1rem 1.2rem;
+  border-radius:6px;
 }
 
-/* ---------- LAYOUT ---------- */
-section {
-  max-width: 1100px;
-  margin: auto;
-  padding: 2.5rem 1.5rem;
+/* ================= BUTTONS ================= */
+.btn{
+  display:inline-block;
+  margin:.4rem .2rem;
+  padding:.65rem 1.3rem;
+  background:var(--accent);
+  color:#fff;
+  font-weight:600;
+  border-radius:8px;
+  transition:.25s;
+  text-decoration:none;
+}
+.btn:hover{
+  background:#087f82;
+  transform:translateY(-2px);
 }
 
-.section-light {
-  background: var(--light);
+/* ================= VIRTUAL LAB ================= */
+.lab-wrapper{
+  background:#fff;
+  border-radius:14px;
+  padding:1.5rem;
+  box-shadow:0 10px 24px rgba(0,0,0,.15);
+}
+.lab-container{
+  display:flex;
+  gap:1.5rem;
+  flex-wrap:wrap;
+}
+.lab-left,.lab-right{flex:1 1 450px}
+
+.lab-code{
+  background:#1e1e1e;
+  color:#00ff90;
+  padding:1rem;
+  border-radius:8px;
+  font-family:Consolas,monospace;
+  font-size:14px;
+}
+.lab-highlight{
+  background:#ffee58;
+  color:#000;
+}
+.lab-panel{
+  background:#f3f6fb;
+  padding:.6rem;
+  margin-top:.6rem;
+  border-radius:6px;
+  font-family:monospace;
 }
 
-h2 {
-  color: var(--primary);
-  border-bottom: 2px solid var(--secondary);
-  padding-bottom: 0.3rem;
+.lab-btn{
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  padding:.45rem 1rem;
+  cursor:pointer;
+}
+.lab-btn:hover{background:var(--accent)}
+
+.lab-board{
+  position:relative;
+  max-width:520px;
+  margin:auto;
+}
+.lab-led{
+  position:absolute;
+  left:62%;
+  top:18%;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:#400;
+  border:2px solid #222;
+}
+.lab-led.on{
+  background:red;
+  box-shadow:0 0 14px red;
 }
 
-.center { text-align: center; }
-
-/* ---------- MEDIA ---------- */
-img.responsive {
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+/* ================= FOOTER ================= */
+footer{
+  background:#111;
+  color:#ccc;
+  text-align:center;
+  padding:1.6rem;
+  font-size:.9rem;
 }
-
-/* ---------- BOXES ---------- */
-.highlight-box {
-  background: #eef6ff;
-  border-left: 5px solid var(--primary);
-  padding: 1rem;
-  margin: 1.5rem 0;
-}
-
-/* ---------- TABLE ---------- */
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
-}
-
-th { background: var(--secondary); }
-
-/* ---------- LINKS ---------- */
-a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-a:hover { text-decoration: underline; }
-
-/* ---------- BUTTON ---------- */
-.btn {
-  display: inline-block;
-  padding: 0.7rem 1.2rem;
-  background: var(--accent);
-  color: white;
-  border-radius: 8px;
-  font-weight: bold;
-  margin-top: 1rem;
-}
-
-/* ---------- VIRTUAL LAB ---------- */
-.lab-wrapper {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-  padding: 1.5rem;
-}
-
-.lab-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.lab-left, .lab-right {
-  flex: 1 1 450px;
-}
-
-.lab-code {
-  background: #1e1e1e;
-  color: #00ff90;
-  padding: 1rem;
-  border-radius: 8px;
-  font-family: monospace;
-  font-size: 14px;
-}
-
-.lab-highlight {
-  background: #ffee58;
-  color: #000;
-}
-
-.lab-board {
-  position: relative;
-  max-width: 520px;
-  margin: auto;
-}
-
-.lab-board img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.lab-led {
-  position: absolute;
-  left: 62%;
-  top: 18%;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #400;
-  border: 2px solid #222;
-}
-
-.lab-led.on {
-  background: red;
-  box-shadow: 0 0 15px red;
-}
-
-.lab-panel {
-  background: #f7f9fc;
-  padding: 0.8rem;
-  border-radius: 8px;
-  font-family: monospace;
-  font-size: 14px;
-  margin-top: 0.6rem;
-}
-
-.lab-btn {
-  padding: 0.4rem 0.9rem;
-  border: none;
-  border-radius: 6px;
-  background: var(--primary);
-  color: white;
-  cursor: pointer;
-  margin: 0.2rem;
-}
-
-.lab-btn:hover {
-  background: var(--accent);
-}
-
-/* ---------- FOOTER ---------- */
-footer {
-  background: #111;
-  color: #ccc;
-  text-align: center;
-  padding: 1.5rem;
-  font-size: 0.9rem;
-}
+footer a{color:#4dd0e1;text-decoration:none}
 </style>
 </head>
 
@@ -215,38 +180,42 @@ footer {
 
 <header>
   <h1>ARDU-8051</h1>
-  <p>An Arduino-Compatible, Open-Source ATmel 8051 Hardware Learning Platform</p>
+  <p>Arduino-Compatible, Open-Source ATmel 8051 Hardware Learning Platform</p>
   <span class="badge">8051</span>
   <span class="badge">Education</span>
   <span class="badge">Open Hardware</span>
-  <span class="badge">USBasp</span>
+  <span class="badge">Virtual Labs</span>
 </header>
 
+<main>
+
 <section class="center">
-  <img class="responsive" src="https://github.com/gmostofabd/ARDU-8051/blob/df408a92a3a70172843ed24b575624e02ddcc25c/docs/images/Ardu-51_Front_Angle_2.png" alt="ARDU-8051 Board">
+  <img src="./docs/images/Ardu-51_Front_Angle_2.png"
+       alt="ARDU-8051 Development Board"
+       class="responsive">
 </section>
 
 <section>
 <h2>📌 Overview</h2>
 <p>
-ARDU-8051 is a low-cost, open-source, Arduino-compatible development board based on the AT89S52,
-designed for embedded systems education using a simulation-first workflow.
+ARDU-8051 is a low-cost, open-source, Arduino-compatible development board
+based on the AT89S52, designed for simulation-first embedded systems education.
 </p>
 </section>
 
 <section class="section-light">
 <h2>🌟 Motivation</h2>
 <div class="highlight-box">
-8051 is still widely taught, but teaching hardware has not evolved.
-ARDU-8051 modernizes classical learning while preserving architectural clarity.
+The 8051 remains central in engineering education, yet teaching hardware has not evolved.
+ARDU-8051 modernizes learning while preserving architectural transparency.
 </div>
 </section>
 
 <section>
 <h2>🎯 Design Goals</h2>
 <ul>
-  <li>Preserve classical 8051 education</li>
-  <li>Simulation → Hardware continuity</li>
+  <li>Preserve classical 8051 pedagogy</li>
+  <li>Simulation → hardware continuity</li>
   <li>Low-cost reproducible labs</li>
   <li>Assembly-level transparency</li>
 </ul>
@@ -259,7 +228,6 @@ ARDU-8051 modernizes classical learning while preserving architectural clarity.
   <li>On-board USBasp (ATmega8A)</li>
   <li>ADC0804 support</li>
   <li>Arduino UNO compatible headers</li>
-  <li>USB Type-B / Type-C option</li>
   <li>Buffered Port-0</li>
 </ul>
 </section>
@@ -268,9 +236,7 @@ ARDU-8051 modernizes classical learning while preserving architectural clarity.
 <h2>🧠 Interactive Virtual Lab (Demo)</h2>
 <div class="lab-wrapper">
 
-<div class="highlight-box">
-<b>Experiment:</b> Timer-0 LED Blinking (P1.0)
-</div>
+<div class="highlight-box"><b>Experiment:</b> Timer-0 LED Blinking (P1.0)</div>
 
 <div class="lab-container">
 
@@ -297,18 +263,20 @@ END
 <button class="lab-btn" onclick="labReset()">Reset</button>
 
 <div class="lab-panel">
-TF0=<span id="tf0">0</span> TR0=<span id="tr0">0</span>
+TF0=<span id="tf0">0</span> |
+TR0=<span id="tr0">0</span>
 </div>
 </div>
 
 <div class="lab-right">
 <div class="lab-board">
-<img src="https://github.com/gmostofabd/ARDU-8051/blob/df408a92a3a70172843ed24b575624e02ddcc25c/docs/images/Ardu-51_Front_Angle_1.png">
+<img src="./docs/images/Ardu-51_Front_Angle_1.png"
+     alt="ARDU-8051 Board Layout">
 <div id="labLed" class="lab-led"></div>
 </div>
 
 <div class="lab-panel">
-Port-1: <span id="p1bin">00000000</span> (HEX <span id="p1hex">00</span>)
+P1 = <span id="p1bin">00000000</span> (0x<span id="p1hex">00</span>)
 </div>
 </div>
 
@@ -318,89 +286,91 @@ Port-1: <span id="p1bin">00000000</span> (HEX <span id="p1hex">00</span>)
 
 <section class="section-light">
 <h2>🧪 Virtual Laboratories</h2>
-<a href="lab/adc.html" class="btn">🔢 Launch ADC0804 Virtual Lab</a>
-
-<a href="lab/led.html" class="btn">🔢 Launch LED Blink Virtual Lab</a>  
-  <a href="lab/push-button.html" class="btn">🔢 Launch Push Button Virtual Lab</a> 
-  <a href="lab/seven-segment.html" class="btn">🔢 Launch Seven Segments Virtual Lab</a>  
-  <a href="lab/lcd.html" class="btn">🔢 Launch LCD Virtual Lab</a> 
-  <a href="lab/keypad.html" class="btn">🔢 Launch Keypad Virtual Lab</a>
-  <a href="lab/dc-motor.html" class="btn">🔢 Launch DC Motor Virtual Lab</a>  
-  <a href="lab/stepper-motor.html" class="btn">🔢 Launch Stepper Motor Virtual Lab</a> 
-  <a href="lab/servo-motor.html" class="btn">🔢 Launch Servo Motor Virtual Lab</a> 
+<a href="lab/led.html" class="btn">LED</a>
+<a href="lab/seven-segment.html" class="btn">7 Segment</a>
+<a href="lab/push-button.html" class="btn">Push Button</a>
+<a href="lab/adc.html" class="btn">ADC0804</a>
+<a href="lab/dot-matrix-led.html" class="btn">Dot Matrix LED</a>
+<a href="lab/lcd.html" class="btn">LCD</a>
+<a href="lab/keypad.html" class="btn">Keypad</a>
+<a href="lab/dc-motor.html" class="btn">DC Motor</a>
+<a href="lab/stepper-motor.html" class="btn">Stepper Motor</a>
+<a href="lab/servo-motor.html" class="btn">Servo Motor</a>
+<a href="lab/serial.html" class="btn">Serial</a>
 </section>
 
 <section>
 <h2>📐 Hardware Design</h2>
-<img class="responsive" src="https://github.com/gmostofabd/ARDU-8051/blob/df408a92a3a70172843ed24b575624e02ddcc25c/hardware/schematic/ATmel8051-Schematic.png" alt="ARDU-8051 Schematic">
+<img src="./hardware/schematic/ATmel8051-Schematic.png"
+     alt="ARDU-8051 Schematic"
+     class="responsive">
 </section>
 
-  
 <section>
 <h2>📐 AVRusp Programmer Circuit</h2>
-<img class="responsive" src="hardware/schematic/AVRusp-Schematic.png" alt="ARDU-8051 Schematic">
+<img src="./hardware/schematic/AVRusp-Schematic.png"
+     alt="AVRusp Programmer Schematic"
+     class="responsive">
 </section>
+
+</main>
+
 <footer>
 <p>
 Maintainer: <b>Md. Golam Mostofa</b><br>
-GitHub: <a href="https://github.com/gmostofabd">github.com/gmostofabd</a><br>
-ARDU-8051 is an open-source educational hardware platform.
+<a href="https://github.com/gmostofabd">github.com/gmostofabd</a><br>
+ARDU-8051 — Open-Source Educational Hardware Platform
 </p>
 </footer>
 
 <script>
-const codeLines = document.getElementById("labCode").innerText.split("\n");
-let pc=0,p1=0,tf0=0,tr0=0,runInt=null;
+const codeLines=document.getElementById("labCode").innerText.split("\n");
+let pc=0,p1=0,tf0=0,tr0=0,runner=null;
 const led=document.getElementById("labLed");
 
-function updateLab(){
-  tf0&&=1;
-  document.getElementById("tf0").innerText=tf0;
-  document.getElementById("tr0").innerText=tr0;
-  document.getElementById("p1bin").innerText=p1.toString(2).padStart(8,"0");
-  document.getElementById("p1hex").innerText=p1.toString(16).toUpperCase().padStart(2,"0");
-  led.classList.toggle("on", p1 & 1);
+function update(){
+  document.getElementById("tf0").textContent=tf0;
+  document.getElementById("tr0").textContent=tr0;
+  document.getElementById("p1bin").textContent=p1.toString(2).padStart(8,"0");
+  document.getElementById("p1hex").textContent=p1.toString(16).toUpperCase().padStart(2,"0");
+  led.classList.toggle("on",(p1&1)===1);
 }
 
-function highlightLab(){
-  document.getElementById("labCode").innerHTML =
+function highlight(){
+  document.getElementById("labCode").innerHTML=
     codeLines.map((l,i)=>i===pc?`<span class="lab-highlight">${l}</span>`:l).join("\n");
 }
 
 function labStep(){
-  highlightLab();
+  highlight();
   const l=codeLines[pc];
-  if(l.includes("SETB TR0"))tr0=1;
-  if(l.includes("CLR TR0"))tr0=0;
-  if(l.includes("CLR TF0"))tf0=0;
-  if(l.includes("CPL P1.0"))p1^=1;
+  if(l.includes("SETB TR0")) tr0=1;
+  if(l.includes("CLR TR0")) tr0=0;
+  if(l.includes("CLR TF0")) tf0=0;
+  if(l.includes("CPL P1.0")) p1^=1;
   pc=(pc+1)%codeLines.length;
-  updateLab();
+  update();
 }
 
 function labRun(){
-  if(runInt)return;
-  tr0=1;
-  runInt=setInterval(()=>{
-    tf0=1;
+  if(runner) return;
+  runner=setInterval(()=>{
+    tr0=1; tf0=1;
     p1^=1;
-    updateLab();
+    update();
     tf0=0;
   },800);
 }
 
 function labReset(){
-  clearInterval(runInt);
-  runInt=null;
+  clearInterval(runner);
+  runner=null;
   pc=0;p1=0;tf0=0;tr0=0;
-  updateLab();highlightLab();
+  highlight();update();
 }
 
-updateLab();highlightLab();
+highlight();update();
 </script>
 
 </body>
 </html>
-
-
-
