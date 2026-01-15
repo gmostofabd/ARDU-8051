@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8051 Virtual Lab | Multiplexed 4-Digit 7-Segment</title>
+
+<style>
+:root{
+  --primary:#1f3c88;
+  --accent:#0a9396;
+}
+body{
+  margin:0;
+  font-family:Segoe UI,Roboto,Arial,sans-serif;
+  background:#f5f7fb;
+}
+header{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;
+  padding:2rem;
+  text-align:center;
+}
+section{
+  max-width:1100px;
+  margin:auto;
+  padding:2rem 1.5rem;
+}
+h2{
+  color:var(--primary);
+  border-bottom:2px solid #ddd;
+}
+
+/* ================= LAB ================= */
+.lab{
+  background:#fff;
+  border-radius:14px;
+  padding:1.5rem;
+  box-shadow:0 8px 22px rgba(0,0,0,.15);
+}
+.lab-container{
+  display:flex;
+  gap:1.5rem;
+  flex-wrap:wrap;
+}
+.left,.right{
+  flex:1 1 450px;
+}
+
+/* ================= CODE ================= */
+pre{
+  background:#1e1e1e;
+  color:#00ff90;
+  padding:1rem;
+  border-radius:8px;
+  font-family:Consolas,monospace;
+  font-size:14px;
+}
+
+/* ================= BUTTONS ================= */
+button{
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  padding:.45rem 1rem;
+  border-radius:6px;
+  cursor:pointer;
+  margin:.3rem .2rem;
+}
+button:hover{background:var(--accent)}
+
+/* ================= 7 SEGMENT ================= */
+.display{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  margin-top:1rem;
+}
+.digit{
+  width:90px;
+  position:relative;
+}
+.seg{
+  position:absolute;
+  background:#400;
+  opacity:.15;
+  transition:.15s;
+}
+.seg.on{
+  background:red;
+  opacity:1;
+  box-shadow:0 0 8px red;
+}
+.seg.a{top:0;left:20px;width:50px;height:10px}
+.seg.b{top:10px;right:0;width:10px;height:40px}
+.seg.c{bottom:10px;right:0;width:10px;height:40px}
+.seg.d{bottom:0;left:20px;width:50px;height:10px}
+.seg.e{bottom:10px;left:0;width:10px;height:40px}
+.seg.f{top:10px;left:0;width:10px;height:40px}
+.seg.g{top:50px;left:20px;width:50px;height:10px}
+
+/* ================= PANEL ================= */
+.panel{
+  background:#eef2f7;
+  padding:.6rem;
+  border-radius:6px;
+  font-family:monospace;
+  margin-top:.6rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>8051 Virtual Lab</h1>
+  <p>Multiplexed 4-Digit 7-Segment Display (Assembly Concept)</p>
+</header>
+
+<section>
+<h2>🧪 Experiment Overview</h2>
+<p>
+This experiment demonstrates <b>multiplexing</b> of a 4-digit 7-segment display
+using an 8051 microcontroller.  
+Only one digit is enabled at a time, but rapid refreshing creates the illusion
+that all digits are ON simultaneously.
+</p>
+
+<div class="lab">
+
+<div class="lab-container">
+
+<!-- ================= LEFT ================= -->
+<div class="left">
+
+<pre>
+; SEGMENTS -> P1
+; DIGIT SELECT -> P2.0 - P2.3
+
+ORG 0000H
+MOV DPTR,#TABLE
+
+MAIN:
+MOV R0,#00H
+
+REFRESH:
+MOV A,R0
+MOVC A,@A+DPTR
+MOV P1,A
+
+MOV P2,#01H      ; Digit 1
+ACALL DELAY
+MOV P2,#02H      ; Digit 2
+ACALL DELAY
+MOV P2,#04H      ; Digit 3
+ACALL DELAY
+MOV P2,#08H      ; Digit 4
+ACALL DELAY
+
+INC R0
+CJNE R0,#04,REFRESH
+MOV R0,#00H
+SJMP REFRESH
+
+TABLE:
+DB 3FH,06H,5BH,4FH
+END
+</pre>
+
+<button onclick="run()">Run</button>
+<button onclick="resetLab()">Reset</button>
+
+<div class="panel">
+Active Digit: <span id="active">1</span><br>
+P1 = <span id="p1">00000000</span><br>
+P2 = <span id="p2">00000001</span>
+</div>
+
+</div>
+
+<!-- ================= RIGHT ================= -->
+<div class="right">
+
+<div class="display" id="display">
+</div>
+
+<div class="panel">
+Segments → P1 (a–g)<br>
+Digit Select → P2.0–P2.3
+</div>
+
+</div>
+
+</div>
+</div>
+</section>
+
+<script>
+/* ================= SEGMENT TABLE ================= */
+const segTable=[0x3F,0x06,0x5B,0x4F];
+const segments=["a","b","c","d","e","f","g"];
+const digits=[];
+let index=0;
+let mux=0;
+let timer=null;
+
+/* create 4 digits */
+const display=document.getElementById("display");
+for(let i=0;i<4;i++){
+  const d=document.createElement("div");
+  d.className="digit";
+  segments.forEach(s=>{
+    const seg=document.createElement("div");
+    seg.className="seg "+s;
+    d.appendChild(seg);
+  });
+  display.appendChild(d);
+  digits.push(d);
+}
+
+/* update display */
+function showDigit(d,val){
+  segments.forEach((s,i)=>{
+    d.querySelector(".seg."+s)
+     .classList.toggle("on",(val>>i)&1);
+  });
+}
+
+/* multiplex refresh */
+function refresh(){
+  digits.forEach(d=>showDigit(d,0));
+
+  const val=segTable[index];
+  showDigit(digits[mux],val);
+
+  document.getElementById("active").textContent=mux+1;
+  document.getElementById("p1").textContent=
+    val.toString(2).padStart(8,"0");
+  document.getElementById("p2").textContent=
+    (1<<mux).toString(2).padStart(8,"0");
+
+  mux=(mux+1)%4;
+  if(mux===0) index=(index+1)%4;
+}
+
+/* controls */
+function run(){
+  if(timer) return;
+  timer=setInterval(refresh,120);
+}
+function resetLab(){
+  clearInterval(timer);
+  timer=null;
+  index=0; mux=0;
+  digits.forEach(d=>showDigit(d,0));
+}
+
+resetLab();
+</script>
+
+</body>
+</html>
