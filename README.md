@@ -98,6 +98,12 @@ These materials support:
 
 # 🔌 Pinout Mapping (ARDU-8051 ↔ Arduino Headers)
 
+<div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 80%; margin: auto;">
+<img src="https://github.com/gmostofabd/ARDU-8051/blob/2d3f2df3c32d196e49d3f183151466b18d6188e6/hardware/schematic/ARDU-8051-Pin-Map-Diagram.png" alt="ARDU-8051 Pin Mapping Diagram" width="90%" style="border-radius: 8px;">
+</div>
+
+
+
 The ARDU-8051 board maps the **AT89S52 (8051 core)** I/O ports to the **Arduino UNO–compatible headers** to ensure familiarity and ease of laboratory use.
 
 ### 📍 Digital I/O Mapping
