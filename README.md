@@ -263,7 +263,9 @@ ARDU-8051 provides analog input capability using an **ADC0804 (8-bit parallel AD
 This section provides **example laboratory experiments** based on the ARDU-8051 pinout mapping.  </p>
 Each experiment is designed for **undergraduate embedded systems laboratories** and follows a
 **simulation-first → hardware implementation** methodology.
+</p>
 
+---
 
 <details>
 <summary><b>List of Experiments(Tap to Expand)</b></summary>
@@ -275,9 +277,8 @@ Each experiment is designed for **undergraduate embedded systems laboratories** 
 | 03 | ADC0804 |
 | 04 | LCD |
 | 05 | Keypad |
+</details> 
 
-
-</details>  
 ---
 
 ### 🔬 Experiment 1: Digital Output Control (LED Blinking)
