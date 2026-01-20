@@ -35,7 +35,7 @@
 </p>
 
 <p align="center">
-  🔗 <a href="https://your-username.github.io/ARDU-8051/">Live Virtual Lab</a> |
+  🔗 <a href="https://gmostofabd.github.io/ARDU-8051/">Live Virtual Lab</a> |
   📘 <a href="docs/">Documentation</a> |
   🧪 <a href="experiments/">Experiments</a>
 </p>
