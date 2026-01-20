@@ -41,6 +41,11 @@
 </p>
 
 ---
+<div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 80%; margin: auto;">
+<img src="https://github.com/gmostofabd/ARDU-8051/blob/abfb65496c42ffb5566fd5242e189f0a0ee783f1/3d/Ardu-51_Front_Angle_1.png" alt="ARDU-8051 Learning Platform" width="50%" style="border-radius: 8px;">
+</div>
+
+---
 
 ## 🌟 Motivation
 
@@ -96,7 +101,7 @@ ARDU-8051 includes a **GitHub Pages–based Virtual Lab**, allowing learners to:
 - Use it for **remote learning, flipped classrooms, and self-study**
 
 👉 **Live Lab:**  
-🔗 https://your-username.github.io/ARDU-8051/
+🔗 https://gmostofabd.github.io/ARDU-8051/
 
 ---
 
