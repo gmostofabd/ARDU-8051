@@ -19,11 +19,8 @@ This repository hosts all hardware designs, schematics, documentation, and lab m
 ---
 
 ## 🌟 Motivation
-<p align="center">
-  <img src="docs/images/block-diagram.png" alt="ARDU-8051 Motivation Diagram" width="650">
-</p>
-
-The **ARDU-8051 EDU-PRO** project was motivated by a simple but persistent reality in engineering education:
+<p align="justify">
+The **ARDU-8051** project was motivated by a simple but persistent reality in engineering education:
 
 > **The 8051 microcontroller is still widely taught, but the tools and hardware used to teach it have not evolved accordingly.**
 
@@ -40,6 +37,11 @@ At the same time, many modern development platforms **hide low-level details**, 
 - Integrating programming capability directly on the board  
 - Adopting an Arduino-compatible form factor  
 - Embracing open-source hardware principles  
+</p>
+
+<p align="center">
+  <img src="docs/images/block-diagram.png" alt="ARDU-8051 Motivation Diagram" width="80%">
+</p>
 
 ---
 
@@ -492,7 +494,7 @@ Stable and noise-free data transfer.
 
 ---
 
-> ## 🎓 Learning Outcomes
+## 🎓 Learning Outcomes
 
 After completing these experiments, students will be able to:
 
