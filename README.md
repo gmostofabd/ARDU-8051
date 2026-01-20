@@ -31,8 +31,9 @@
   </a>
 
 </p>
-
 <!-- ===================== END BADGES ===================== -->
+
+---
 
 <p align="center">
   <strong>ARDU-8051</strong> is an <b>open-source, Arduino-compatible hardware and virtual lab platform</b><br>
@@ -40,9 +41,9 @@
 </p>
 
 <p align="center">
-  🔗 <a href="https://gmostofabd.github.io/ARDU-8051/experiments/index.html">Live Virtual Lab</a> |
+  🔗 <a href="https://your-username.github.io/ARDU-8051/">Live Virtual Lab</a> |
   📘 <a href="docs/">Documentation</a> |
-  🧪 <a href="https://gmostofabd.github.io/ARDU-8051/experiments/">Experiments</a>
+  🧪 <a href="experiments/">Experiments</a>
 </p>
 
 ---
