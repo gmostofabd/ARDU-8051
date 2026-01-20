@@ -17,7 +17,7 @@
     <img src="https://img.shields.io/badge/Platform-8051%20Microcontroller-E65100?style=for-the-badge&logo=chip&logoColor=white">
   </a>
 
-  <a href="https://gmostofabd.github.io/ARDU-8051/experiments/01-led-blink.html">
+  <a href="https://gmostofabd.github.io/ARDU-8051/experiments/01-led-blink">
     <img src="https://img.shields.io/badge/Virtual%20Lab-Online-6A1B9A?style=for-the-badge&logo=googlechrome&logoColor=white">
   </a>
 
