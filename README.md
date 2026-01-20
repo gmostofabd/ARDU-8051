@@ -1,5 +1,5 @@
 # 🚀 ARDU-8051  
-### An Arduino-Compatible Open-Source 8051 Learning & Virtual Lab Platform
+## An Arduino-Compatible Open-Source 8051 Learning Hardware with Virtual Lab Platform
 
 <!-- ===================== BADGES ===================== -->
 
@@ -80,13 +80,18 @@ At the same time, many modern platforms **hide low-level details**, making them 
 ---
 
 ## 🧩 Platform Highlights
-
-- **8051 Core (AT89S52 compatible)**
-- **Arduino UNO–style headers** for easy prototyping
-- **On-board USB programmer** (no external hardware needed)
-- **Supports Assembly Language learning**
-- **Designed for simulation + real hardware parity**
-- **Open-source schematics & documentation**
+- **AT89S52 (8051 core)** with 11.0592 MHz crystal  — widely used in academia  — widely used in academia  
+- **On-board USBasp programmer** (ATmega8A, DIP)  — no external programmer required
+- **AVRDUDE support** — industry-style workflow
+- **ADC0804 integration** — hands-on analog learning
+- **Arduino UNO–compatible headers** — easy expansion  
+- **Proteus + hardware parity** — predictable results
+- **USB Type-B / Type-C option** — long-term usability   
+- **Buffered Port-0 bus** using 74HC245
+- **External 6-pin ISP header**
+- **Onboard Power Rails for +5V, +3.3V and Ground**
+- **UART and I2C Headers** - can connect aensors and devices
+- **Dual support for MCU core (DIP and SOT Packages)**
 
 ---
 
