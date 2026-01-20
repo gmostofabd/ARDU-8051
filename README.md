@@ -35,7 +35,7 @@
 </p>
 
 <p align="center">
-  🔗 <a href="https://github.com/gmostofabd/ARDU-8051/blob/096ad9bf220b0fe6d3e10257f2784e9cf0a66a20/lab/ARDU-8051-Virtual-Lab.html">Live Virtual Lab</a> |
+  🔗 <a href="https://github.com/gmostofabd/ARDU-8051/blob/a9fbb00f836dfdaf5c675a43ddcff30b651f73dc/experiments/index.html">Live Virtual Lab</a> |
   📘 <a href="docs/">Documentation</a> |
   🧪 <a href="experiments/">Experiments</a>
 </p>
