@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARDU-8051 Virtual Lab Dashboard</title>
+
+<style>
+:root{
+  --primary:#1f3c88;
+  --accent:#0a9396;
+}
+body{margin:0;font-family:Segoe UI,Arial;background:#f4f6fb;}
+header{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;padding:2rem;text-align:center;}
+section{max-width:1150px;margin:auto;padding:1.5rem;}
+.lab{background:#fff;border-radius:14px;padding:1.5rem;box-shadow:0 10px 24px rgba(0,0,0,.15);}
+.flex{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.left,.right{flex:1 1 450px;}
+textarea{width:100%;height:300px;background:#1e1e1e;color:#00ff90;border:none;border-radius:8px;padding:1rem;font-family:Consolas,monospace;font-size:14px;resize:vertical;}
+button{background:var(--primary);color:white;border:none;padding:.45rem 1rem;border-radius:6px;cursor:pointer;margin:.4rem .2rem;}
+button:hover{background:var(--accent);}
+select{width:100%;padding:.5rem 1rem;border-radius:6px;border:1px solid #ccc;margin-bottom:1rem;font-family:monospace;}
+.lab-board{position:relative;max-width:520px;margin:auto;}
+.board-img{width:100%;display:block;}
+.led{position:absolute;left:61%;top:19%;width:26px;height:26px;border-radius:50%;background:#400;border:2px solid #222;}
+.led.on{background:red;box-shadow:0 0 15px red;}
+.segment-wrapper{position:absolute;left:20%;top:20%;width:60px;height:100px;}
+.segment{position:absolute;background:#222;border-radius:4px;}
+.segment.horizontal{width:50px;height:12px;}
+.segment.vertical{width:12px;height:40px;}
+.segment.on{background:red;box-shadow:0 0 10px red;}
+#segA {top:0; left:5px;} #segB {top:5px; right:0;} #segC {bottom:5px; right:0;}
+#segD {bottom:0; left:5px;} #segE {bottom:5px; left:0;} #segF {top:5px; left:0;} #segG {top:44px; left:5px;}
+.panel{background:#eef2f7;padding:.6rem;border-radius:6px;font-family:monospace;margin-top:.8rem;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ARDU-8051 Virtual Lab Dashboard</h1>
+  <p id="exp-title">Select an Experiment</p>
+</header>
+
+<section>
+<div class="lab">
+<div class="flex">
+
+<!-- LEFT: CODE + CONTROLS -->
+<div class="left">
+<select id="experimentSelect">
+  <option value="led">LED Blinking</option>
+  <option value="toggle">P1 Toggle Pattern</option>
+  <option value="blink2">Double LED Blink</option>
+  <option value="seven">7-Segment Display Count</option>
+</select>
+
+<textarea id="code"></textarea>
+<div>
+<button onclick="run()">Run</button>
+<button onclick="step()">Step</button>
+<button onclick="stop()">Stop</button>
+<button onclick="resetLab()">Reset</button>
+</div>
+<div class="panel">
+P1 = <span id="p1bin">00000000</span> (0x<span id="p1hex">00</span>)
+</div>
+</div>
+
+<!-- RIGHT: BOARD -->
+<div class="right">
+<div class="lab-board">
+  <img src="./assets/ardu8051_board.png" alt="ARDU-8051 Board" class="board-img">
+  <div id="led" class="led"></div>
+
+  <!-- 7-segment -->
+  <div class="segment-wrapper">
+    <div id="segA" class="segment horizontal"></div>
+    <div id="segB" class="segment vertical"></div>
+    <div id="segC" class="segment vertical"></div>
+    <div id="segD" class="segment horizontal"></div>
+    <div id="segE" class="segment vertical"></div>
+    <div id="segF" class="segment vertical"></div>
+    <div id="segG" class="segment horizontal"></div>
+  </div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<script>
+// ===== EXPERIMENTS =====
+const experiments = {
+  led:{title:"LED Blinking using Timer-0",code:`; LED -> P1.0
+ORG 0000H
+MAIN:
+  CPL P1.0
+  SJMP LOOP
+END`},
+  toggle:{title:"P1 Toggle Pattern",code:`; Toggle all P1 pins
+ORG 0000H
+MAIN:
+  MOV A,#55H
+  MOV P1,A
+LOOP:
+  CPL P1
+  SJMP LOOP
+END`},
+  blink2:{title:"Double LED Blink",code:`; Blink P1.0 and P1.1 alternately
+ORG 0000H
+MAIN:
+LOOP:
+  MOV P1,#03H
+  ACALL DELAY
+  MOV P1,#00H
+  ACALL DELAY
+  SJMP LOOP
+DELAY:
+  MOV R2,#50
+D1: DJNZ R2,D1
+  RET
+END`},
+  seven:{title:"7-Segment Display Count (0-9)",code:`; Display 0-9 on 7-segment P1
+ORG 0000H
+MAIN:
+  MOV R0,#0
+LOOP:
+  MOV A,R0
+  MOV P1,A
+  ACALL DELAY
+  INC R0
+  CJNE R0,#10,LOOP
+  MOV R0,#0
+  SJMP LOOP
+DELAY:
+  MOV R2,#50
+D1: DJNZ R2,D1
+  RET
+END`}
+};
+
+// ===== LAB STATE =====
+let p1=0, timer=null, stepMode=false;
+const led=document.getElementById("led");
+const codeArea=document.getElementById("code");
+const titleEl=document.getElementById("exp-title");
+const segMap=[[1,1,1,1,1,1,0],[0,1,1,0,0,0,0],[1,1,0,1,1,0,1],[1,1,1,1,0,0,1],[0,1,1,0,0,1,1],[1,0,1,1,0,1,1],[1,0,1,1,1,1,1],[1,1,1,0,0,0,0],[1,1,1,1,1,1,1],[1,1,1,1,0,1,1]];
+const segIds=["segA","segB","segC","segD","segE","segF","segG"];
+
+// ===== DISPLAY HELPERS =====
+function updateSevenSeg(value){
+  const num=value%10;
+  segIds.forEach((id,i)=>document.getElementById(id).classList.toggle("on",segMap[num][i]===1));
+}
+function clearSevenSeg(){segIds.forEach(id=>document.getElementById(id).classList.remove("on"));}
+function updateDashboard(){
+  document.getElementById("p1bin").textContent=p1.toString(2).padStart(8,"0");
+  document.getElementById("p1hex").textContent=p1.toString(16).toUpperCase().padStart(2,"0");
+  led.classList.toggle("on",(p1&1)===1);
+  const exp=document.getElementById("experimentSelect").value;
+  if(exp==="seven") updateSevenSeg(p1); else clearSevenSeg();
+}
+
+// ===== RUN / STEP / STOP / RESET =====
+function run(){
+  if(timer) return;
+  stepMode=false;
+  const exp=document.getElementById("experimentSelect").value;
+  timer=setInterval(()=>{
+    simulateStep(exp);
+    updateDashboard();
+  },600);
+}
+function step(){
+  if(timer) stop();
+  stepMode=true;
+  const exp=document.getElementById("experimentSelect").value;
+  simulateStep(exp);
+  updateDashboard();
+}
+function stop(){clearInterval(timer); timer=null;}
+function resetLab(){stop(); p1=0; updateDashboard();}
+
+// ===== SIMULATION LOGIC =====
+function simulateStep(exp){
+  if(exp==="led") p1^=0x01;
+  else if(exp==="toggle") p1^=0xFF;
+  else if(exp==="blink2") p1^=0x03;
+  else if(exp==="seven") p1=(p1+1)%10;
+}
+
+// ===== LOAD EXPERIMENT =====
+function loadExperiment(name){
+  stop();
+  p1=0; clearSevenSeg(); updateDashboard();
+  const exp=experiments[name];
+  codeArea.value=exp.code;
+  titleEl.textContent=exp.title;
+}
+
+// ===== INITIAL LOAD =====
+window.addEventListener("DOMContentLoaded", () => {
+  const firstExperiment = document.getElementById("experimentSelect").value;
+  loadExperiment(firstExperiment);
+});
+
+// ===== SWITCH EXPERIMENT =====
+document.getElementById("experimentSelect").addEventListener("change", e=>{
+  loadExperiment(e.target.value);
+});
+</script>
+
+</body>
+</html>
