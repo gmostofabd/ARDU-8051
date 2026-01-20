@@ -37,14 +37,13 @@ At the same time, many modern development platforms **hide low-level details**, 
 - Integrating programming capability directly on the board  
 - Adopting an Arduino-compatible form factor  
 - Embracing open-source hardware principles  
+
 </p>
 
-<p align="center">
-  <img src="docs/images/block-diagram.png" alt="ARDU-8051 Motivation Diagram" width="80%">
-</p>
 <div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f999f9; width: 80%; margin: auto;">
 <img src="docs/images/block-diagram.png" alt="ARDU-8051 Motivation Diagram" width="90%" style="border-radius: 8px;">
 </div>
+
 ---
 
 ## 🎯 Design Goals
