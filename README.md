@@ -289,7 +289,7 @@ Each experiment is designed for **undergraduate embedded systems laboratories** 
 
 ---
 
-## 🔬 Experiment 1: Digital Output Control (LED Blinking)
+> ## 🔬 Experiment 1: Digital Output Control (LED Blinking)
 
 **Objective**  
 To understand basic digital output operation using the 8051 GPIO port.
@@ -320,7 +320,7 @@ The LED connected to **P1.0** blinks at a fixed interval.
 
 ---
 
-## 🔬 Experiment 2: Digital Input Reading (Push Button)
+> ## 🔬 Experiment 2: Digital Input Reading (Push Button)
 
 **Objective**  
 To read a digital input and control an output conditionally.
@@ -349,7 +349,7 @@ The LED turns ON only while the push button is pressed.
 
 ---
 
-## 🔬 Experiment 3: External Interrupt (INT0)
+> ## 🔬 Experiment 3: External Interrupt (INT0)
 
 **Objective**  
 To demonstrate interrupt-driven programming using the **INT0** external interrupt.
@@ -378,7 +378,7 @@ The LED toggles state every time the button is pressed.
 
 ---
 
-## 🔬 Experiment 4: Timer-0 Delay Generation
+> ## 🔬 Experiment 4: Timer-0 Delay Generation
 
 **Objective**  
 To generate precise time delays using **Timer-0**.
@@ -406,7 +406,7 @@ The LED blinks with a consistent and repeatable time period.
 
 ---
 
-## 🔬 Experiment 5: Serial Communication (UART)
+> ## 🔬 Experiment 5: Serial Communication (UART)
 
 **Objective**  
 To transmit serial data using the 8051 UART.
@@ -434,7 +434,7 @@ Correct characters appear on the serial terminal.
 
 ---
 
-## 🔬 Experiment 6: Analog-to-Digital Conversion (ADC0804)
+> ## 🔬 Experiment 6: Analog-to-Digital Conversion (ADC0804)
 
 **Objective**  
 To read analog voltage using the on-board **ADC0804**.
@@ -464,7 +464,7 @@ Digital output varies proportionally with the input voltage.
 
 ---
 
-## 🔬 Experiment 7: Port-0 Bus Interfacing
+> ## 🔬 Experiment 7: Port-0 Bus Interfacing
 
 **Objective**  
 To understand **buffered Port-0 operation** using the 74HC245 bus buffer.
@@ -492,7 +492,7 @@ Stable and noise-free data transfer.
 
 ---
 
-## 🎓 Learning Outcomes
+> ## 🎓 Learning Outcomes
 
 After completing these experiments, students will be able to:
 
