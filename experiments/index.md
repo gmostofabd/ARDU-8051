@@ -1,36 +1,17 @@
 ---
-title: ARDU-8051 Laboratory Experiments
-description: 8051 assembly language experiments with simulation and hardware
+title: ARDU-8051 Virtual Lab Experiments
 ---
 
-# 🧪 ARDU-8051 Laboratory Experiments
+# 🧪 ARDU-8051 Virtual Lab – Experiment Index
 
-<p align="justify">
-This section contains <b>modular undergraduate laboratory experiments</b>
-based on the ARDU-8051 EDU-PRO platform.
-Each experiment follows a
-<b>Simulation → Verification → Hardware</b> methodology.
-</p>
+| # | Experiment | Mode |
+|---|-----------|------|
+| 01 | [LED Blinking (Timer)](01-led-blink.md) | Assembly |
+| 02 | [7-Segment Display](02-seven-segment.md) | Assembly |
+| 03 | [4×4 Keypad with LCD](03-keypad-lcd.md) | Assembly |
+| 04 | [DC Motor Control](04-dc-motor.md) | I/O |
+| 05 | [Stepper Motor](05-stepper-motor.md) | Timer |
+| 06 | [Servo Motor (PWM)](06-servo-motor.md) | PWM |
+| 07 | [8×8 LED Matrix](07-8x8-led-matrix.md) | Multiplexing |
 
----
-
-## 📘 Experiment List
-
-| No | Experiment | Topics Covered | Link |
-|----|-----------|---------------|------|
-| 01 | LED Blinking | GPIO, Delay | [Open](exp01-led/) |
-| 02 | Push Button | Digital Input | [Open](exp02-button/) |
-| 03 | External Interrupt | INT0, ISR | [Open](exp03-interrupt/) |
-| 04 | Timer-0 Delay | Timers | [Open](exp04-timer/) |
-| 05 | UART | Serial Comm | [Open](exp05-uart/) |
-| 06 | ADC0804 | Analog I/O | [Open](exp06-adc/) |
-
----
-
-## 🎓 Learning Outcomes
-
-- Assembly-level GPIO programming
-- Timer & interrupt handling
-- Serial communication
-- ADC interfacing
-- Simulation-to-hardware transfer
+> 💡 Each experiment includes **theory, circuit, assembly code, simulation, and expected output**.
