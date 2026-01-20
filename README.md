@@ -1,29 +1,38 @@
 # 🚀 ARDU-8051  
 ## An Arduino-Compatible Open-Source 8051 Learning Hardware with Virtual Lab Platform
 
+<!-- ===================== ARDU-8051 BADGES ===================== -->
+
 <p align="center">
 
+  <!-- Open Source -->
   <a href="https://opensource.org/osd">
     <img src="https://img.shields.io/badge/Open%20Source-Yes-2E7D32?style=for-the-badge&logo=opensourceinitiative&logoColor=white">
   </a>
 
+  <!-- Education -->
   <a href="https://en.wikipedia.org/wiki/Engineering_education">
     <img src="https://img.shields.io/badge/Education-Embedded%20Systems-1565C0?style=for-the-badge&logo=academia&logoColor=white">
   </a>
 
+  <!-- Platform -->
   <a href="https://en.wikipedia.org/wiki/Intel_MCS-51">
     <img src="https://img.shields.io/badge/Platform-8051%20Microcontroller-E65100?style=for-the-badge&logo=chip&logoColor=white">
   </a>
 
-  <a href="https://gmostofabd.github.io/ARDU-8051/experiments/index.html">
+  <!-- Virtual Lab Online -->
+  <a href="https://your-username.github.io/ARDU-8051/">
     <img src="https://img.shields.io/badge/Virtual%20Lab-Online-6A1B9A?style=for-the-badge&logo=googlechrome&logoColor=white">
   </a>
 
+  <!-- License -->
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-004D40?style=for-the-badge&logo=github&logoColor=white">
   </a>
 
 </p>
+
+<!-- ===================== END BADGES ===================== -->
 
 <p align="center">
   <strong>ARDU-8051</strong> is an <b>open-source, Arduino-compatible hardware and virtual lab platform</b><br>
