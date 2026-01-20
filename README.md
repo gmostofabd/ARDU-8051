@@ -61,7 +61,7 @@ At the same time, many modern development platforms **hide low-level details**, 
   <img src="docs/images/ardu-8051-board.png" alt="ARDU-8051 Board Highlights" width="600">
 </p>
 
-- **AT89S52 (8051 core)** with 11.0592 MHz crystal  — widely used in academia  — widely used in academia  
+- **AT89S52 (8051 core)** with 11.0592 MHz crystal  — widely used in academia
 - **On-board USBasp programmer** (ATmega8A, DIP)  — no external programmer required
 - **AVRDUDE support** — industry-style workflow
 - **ADC0804 integration** — hands-on analog learning
@@ -71,20 +71,29 @@ At the same time, many modern development platforms **hide low-level details**, 
 - **Buffered Port-0 bus** using 74HC245
 - **External 6-pin ISP header**
 - **Onboard Power Rails for +5V, +3.3V and Ground**
+- **UART and I2C Ports** - can be wired with sensors or devices
 - **Dual support for MCU core (DIP and SOT Packages)**
+
+---
+
+## ⭐ Who Is This For?
+
+- 🎓 **Students** learning microcontrollers from the ground up  
+- 🧑‍🏫 **Instructors** teaching 8051-based courses  
+- 🔬 **Researchers** developing educational platforms  
+- 🛠️ **Hobbyists** interested in classical embedded systems  
 
 ---
 
 ## 🔬 Designed for Academic Rigor
 
-This repository is not just a hardware dump. It includes:
+> This repository is not just a hardware dump. It includes:
 
 - 📘 **User Manual**  
 - 🧪 **Student Lab Manual**  
 - 🧑‍🏫 **Instructor Manual (solutions, waveforms, rubrics)**  
-- 📄 **IEEE-style Platform Description**  
 
-➡️ Documentation directories:
+➡️ **Documentation directories:**
 - [`docs/user-manual/`](docs/user-manual/)
 - [`docs/student-lab-manual/`](docs/student-lab-manual/)
 - [`docs/instructor-manual/`](docs/instructor-manual/)
@@ -101,8 +110,6 @@ These materials support:
 <div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 80%; margin: auto;">
 <img src="https://github.com/gmostofabd/ARDU-8051/blob/2d3f2df3c32d196e49d3f183151466b18d6188e6/hardware/schematic/ARDU-8051-Pin-Map-Diagram.png" alt="ARDU-8051 Pin Mapping Diagram" width="90%" style="border-radius: 8px;">
 </div>
-
-
 
 The ARDU-8051 board maps the **AT89S52 (8051 core)** I/O ports to the **Arduino UNO–compatible headers** to ensure familiarity and ease of laboratory use.
 
@@ -128,9 +135,11 @@ The ARDU-8051 board maps the **AT89S52 (8051 core)** I/O ports to the **Arduino 
 | D13 | P1.5 | Port 1 | General I/O / On-board LED (if populated) |
 
 </div>
+
 <div align="center">
   <b>Table 1. ARDU-8051 ↔ Arduino UNO Digital Pin Mapping</b>
 </div>
+
 ---
 
 ### 📍 Analog / ADC Mapping (via ADC0804)
@@ -194,7 +203,7 @@ ARDU-8051 provides analog input capability using an **ADC0804 (8-bit parallel AD
 
 ---
 
-# 🖼️ Hardware Architecture
+## 🖼️ Hardware Architecture
 <div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 80%; margin: auto;">
 <img src="https://github.com/gmostofabd/ARDU-8051/blob/a0209aad601f61815d725e26044691174297ee64/hardware/schematic/ATmel8051-Schematic.png" alt="ARDU-8051 Core Circuit" width="90%" style="border-radius: 8px;">
 </div>
@@ -254,14 +263,7 @@ ARDU-8051 provides analog input capability using an **ADC0804 (8-bit parallel AD
 
 ---
 
-## ⭐ Who Is This For?
 
-- 🎓 **Students** learning microcontrollers from the ground up  
-- 🧑‍🏫 **Instructors** teaching 8051-based courses  
-- 🔬 **Researchers** developing educational platforms  
-- 🛠️ **Hobbyists** interested in classical embedded systems  
-
----
 
 # 🧪 Example Laboratory Experiments (ARDU-8051)
 
@@ -287,7 +289,7 @@ Each experiment is designed for **undergraduate embedded systems laboratories** 
 
 ---
 
-### 🔬 Experiment 1: Digital Output Control (LED Blinking)
+## 🔬 Experiment 1: Digital Output Control (LED Blinking)
 
 **Objective**  
 To understand basic digital output operation using the 8051 GPIO port.
@@ -318,7 +320,7 @@ The LED connected to **P1.0** blinks at a fixed interval.
 
 ---
 
-### 🔬 Experiment 2: Digital Input Reading (Push Button)
+## 🔬 Experiment 2: Digital Input Reading (Push Button)
 
 **Objective**  
 To read a digital input and control an output conditionally.
@@ -347,7 +349,7 @@ The LED turns ON only while the push button is pressed.
 
 ---
 
-### 🔬 Experiment 3: External Interrupt (INT0)
+## 🔬 Experiment 3: External Interrupt (INT0)
 
 **Objective**  
 To demonstrate interrupt-driven programming using the **INT0** external interrupt.
@@ -376,7 +378,7 @@ The LED toggles state every time the button is pressed.
 
 ---
 
-### 🔬 Experiment 4: Timer-0 Delay Generation
+## 🔬 Experiment 4: Timer-0 Delay Generation
 
 **Objective**  
 To generate precise time delays using **Timer-0**.
@@ -404,7 +406,7 @@ The LED blinks with a consistent and repeatable time period.
 
 ---
 
-### 🔬 Experiment 5: Serial Communication (UART)
+## 🔬 Experiment 5: Serial Communication (UART)
 
 **Objective**  
 To transmit serial data using the 8051 UART.
@@ -432,7 +434,7 @@ Correct characters appear on the serial terminal.
 
 ---
 
-### 🔬 Experiment 6: Analog-to-Digital Conversion (ADC0804)
+## 🔬 Experiment 6: Analog-to-Digital Conversion (ADC0804)
 
 **Objective**  
 To read analog voltage using the on-board **ADC0804**.
@@ -462,7 +464,7 @@ Digital output varies proportionally with the input voltage.
 
 ---
 
-### 🔬 Experiment 7: Port-0 Bus Interfacing
+## 🔬 Experiment 7: Port-0 Bus Interfacing
 
 **Objective**  
 To understand **buffered Port-0 operation** using the 74HC245 bus buffer.
@@ -503,14 +505,14 @@ After completing these experiments, students will be able to:
 
 ---
 
-## 🔧 Hardware Design
+# 🔧 Hardware Design
 
-### 📐 Schematic Design
+## 📐 Schematic Design
 
 
 ---
 
-### 🖥️ PCB Design
+## 🖥️ PCB Design
 ![PCB Top View](docs/images/ARDU-8051-PCB-Top.png)
 ![PCB Bottom View](docs/images/ARDU-8051-PCB-Bottom.png)
 
@@ -520,7 +522,7 @@ After completing these experiments, students will be able to:
 
 ---
 
-### 🧱 3D Board Views
+## 🧱 3D Board Views
 <p align="center">
   <img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/ARDU-8051-3D-2.png" width="30%">
   <img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/ARDU-8051-3D-1.png" width="30%">
@@ -531,7 +533,7 @@ After completing these experiments, students will be able to:
 
 ---
 
-## ⚠️ Limitations
+> ## ⚠️ Limitations
 
 ARDU-8051 is an **educational platform** and is not intended for:
 - High-performance computing
