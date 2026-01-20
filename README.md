@@ -35,7 +35,7 @@
 </p>
 
 <p align="center">
-  🔗 <a href="https://github.com/gmostofabd/ARDU-8051/blob/b463c38437cfca14edac9518c56b5a8e06127d07/experiments/01-led-blink.html">Live Virtual Lab</a> |
+  🔗 <a href="https://github.com/gmostofabd/ARDU-8051/blob/b463c38437cfca14edac9518c56b5a8e06127d07/lab/ARDU-8051-Virtual-Lab.html">Live Virtual Lab</a> |
   📘 <a href="docs/">Documentation</a> |
   🧪 <a href="experiments/">Experiments</a>
 </p>
