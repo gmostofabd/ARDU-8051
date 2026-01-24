@@ -1,163 +1,159 @@
 # 🚀 ARDU-8051  
-## An Arduino-Compatible Open-Source 8051 Learning Hardware with Virtual Lab Platform
+### Open-Source Arduino-Compatible 8051 Hardware & Virtual Lab Platform
 
-<!-- ===================== ARDU-8051 BADGES ===================== -->
-
-<p align="center">
-
-  <!-- Open Source -->
-  <a href="https://opensource.org/osd">
-    <img src="https://img.shields.io/badge/Open%20Source-Yes-2E7D32?style=for-the-badge&logo=opensourceinitiative&logoColor=white">
-  </a>
-
-  <!-- Education -->
-  <a href="https://en.wikipedia.org/wiki/Engineering_education">
-    <img src="https://img.shields.io/badge/Education-Embedded%20Systems-1565C0?style=for-the-badge&logo=academia&logoColor=white">
-  </a>
-
-  <!-- Platform -->
-  <a href="https://en.wikipedia.org/wiki/Intel_MCS-51">
-    <img src="https://img.shields.io/badge/Platform-8051%20Microcontroller-E65100?style=for-the-badge&logo=chip&logoColor=white">
-  </a>
-
-  <!-- Virtual Lab Online (FIXED) -->
-  <a href="https://gmostofabd.github.io/ARDU-8051/">
-    <img src="https://img.shields.io/badge/Virtual%20Lab-Online-6A1B9A?style=for-the-badge&logo=googlechrome&logoColor=white">
-  </a>
-
-  <!-- License (FIXED) -->
-  <a href="./LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-004D40?style=for-the-badge&logo=github&logoColor=white">
-  </a>
-
-</p>
-
-<!-- ===================== END BADGES ===================== -->
+> **Learn 8051 microcontroller architecture, assembly language, and interfacing — with real hardware parity and an online virtual lab.**
 
 ---
 
-<p align="center">
-  <strong>ARDU-8051</strong> is an <b>open-source, Arduino-compatible hardware and virtual lab platform</b><br>
-  designed for learning <b>8051 microcontroller architecture, assembly language, timers, interrupts, and interfacing</b>.
-</p>
+## 🏷️ Project Badges
 
 <p align="center">
-  🔗 <a href="https://gmostofabd.github.io/ARDU-8051/">Live Virtual Lab</a> |
-  📘 <a href="https://github.com/gmostofabd/ARDU-8051/tree/main/docs">Documentation</a> |
-  🧪 <a href="https://gmostofabd.github.io/ARDU-8051/experiments/">Experiments</a>
+
+<a href="https://opensource.org/osd">
+  <img src="https://img.shields.io/badge/Open%20Source-Yes-success?style=for-the-badge">
+</a>
+
+<a href="https://en.wikipedia.org/wiki/Embedded_system">
+  <img src="https://img.shields.io/badge/Domain-Embedded%20Systems-blue?style=for-the-badge">
+</a>
+
+<a href="https://en.wikipedia.org/wiki/Intel_MCS-51">
+  <img src="https://img.shields.io/badge/MCU-8051-orange?style=for-the-badge">
+</a>
+
+<a href="https://gmostofabd.github.io/ARDU-8051/">
+  <img src="https://img.shields.io/badge/Virtual%20Lab-Online-purple?style=for-the-badge">
+</a>
+
+<a href="./LICENSE">
+  <img src="https://img.shields.io/badge/License-MIT-darkgreen?style=for-the-badge">
+</a>
+
 </p>
 
 ---
 
-<div align="center" style="border: 2px solid #ddd; padding: 10px; border-radius: 10px; background-color: #f9f9f9; width: 80%; margin: auto;">
-  <img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/Ardu-51_Front_Angle_1.png"
-       alt="ARDU-8051 Learning Platform"
-       width="50%"
-       style="border-radius: 8px;">
-</div>
+## 🌐 Live Links
+
+- 🔬 **Virtual Lab (Online):**  
+  https://gmostofabd.github.io/ARDU-8051/
+
+- 📘 **Documentation:**  
+  https://github.com/gmostofabd/ARDU-8051/tree/main/docs
+
+- 🧪 **Experiments:**  
+  https://gmostofabd.github.io/ARDU-8051/experiments/
 
 ---
 
-## 🌟 Motivation
+## 🧠 What is ARDU-8051?
 
-<p align="justify">
+**ARDU-8051** is a **complete open-source learning platform** designed to teach the **8051 microcontroller** in a modern, practical, and globally accessible way.
 
-The **ARDU-8051** project was motivated by a persistent reality in engineering education:
+It combines:
 
-> **The 8051 microcontroller is still widely taught, but the tools used to teach it have not evolved accordingly.**
+- ✔ Open-source **hardware**
+- ✔ **Assembly-level programming**
+- ✔ **Browser-based virtual lab**
+- ✔ **Real hardware ↔ simulator parity**
+- ✔ **Arduino-compatible form factor**
 
-Across many universities, students continue to learn **8051 architecture, assembly language, timers, interrupts, and parallel I/O** using:
+Suitable for:
+- Engineering universities & colleges  
+- Remote and blended learning  
+- Self-learners and hobbyists  
+- Teachers and lab instructors  
 
+---
+
+## 🎯 Educational Motivation
+
+> **The 8051 microcontroller is still widely taught, but teaching tools are outdated.**
+
+Common problems:
 - Obsolete trainer boards  
-- Proprietary or unavailable programmers  
-- Fragmented workflows disconnected from simulation  
-- Hardware that discourages experimentation  
+- No reliable simulators  
+- Proprietary programmers  
+- Weak connection between theory and practice  
 
-At the same time, many modern platforms **hide low-level details**, making them unsuitable for foundational learning.
+**ARDU-8051 solves this by:**
+- Integrating hardware and simulation
+- Using industry-style workflows
+- Remaining fully open-source
+- Supporting learning anywhere, anytime
 
-**ARDU-8051 bridges this gap by:**  
+---
 
-- Reducing hardware and setup complexity  
-- Integrating programming capability directly on the board  
-- Adopting an Arduino-compatible form factor  
-- Embracing open-source hardware and online experimentation  
+## 🖼️ Hardware Preview
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/Ardu-51_Front_Angle_1.png" width="55%" alt="ARDU-8051 Hardware Board">
 </p>
 
-<div align="center" style="border: 2px solid #ddd; padding: 12px; border-radius: 12px; background-color: #f5f7fa; width: 85%; margin: auto;">
-  <img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/block-diagram.png"
-       alt="ARDU-8051 Block Diagram"
-       width="95%">
-</div>
+---
+
+## 🧩 Hardware Platform Highlights
+
+- **AT89S52 (8051 core)** @ 11.0592 MHz  
+- **On-board USBasp programmer**  
+- **No external programmer required**  
+- **ADC0804** for analog experiments  
+- **Arduino UNO–compatible headers**  
+- **Buffered Port-0 (74HC245)**  
+- **UART & I²C headers**  
+- **External ISP header**  
+- **+5V / +3.3V regulated rails**  
+- **DIP & SMD MCU support**
 
 ---
 
-## 🧩 Platform Highlights
+## 🧪 Virtual Lab Features
 
-- **AT89S52 (8051 core)** with 11.0592 MHz crystal  
-- **On-board USBasp programmer** (ATmega8A, DIP) — no external programmer required  
-- **AVRDUDE support** — industry-style workflow  
-- **ADC0804 integration** — hands-on analog learning  
-- **Arduino UNO–compatible headers** — easy expansion  
-- **Proteus + hardware parity** — predictable results  
-- **USB Type-B / Type-C option** — long-term usability  
-- **Buffered Port-0 bus** using 74HC245  
-- **External 6-pin ISP header**  
-- **Onboard Power Rails for +5V, +3.3V and Ground**  
-- **UART and I2C Headers** — can connect sensors and devices  
-- **Dual support for MCU core (DIP and SOT Packages)**  
-
----
-
-## 🧪 Virtual Lab Online
-
-ARDU-8051 includes a **GitHub Pages–based Virtual Lab**, allowing learners to:
-
-- Study experiments step-by-step  
-- View circuit diagrams and block diagrams  
-- Understand assembly code execution  
-- Observe expected outputs  
-- Use it for **remote learning, flipped classrooms, and self-study**
-
-👉 **Live Lab:**  
-🔗 https://gmostofabd.github.io/ARDU-8051/
+- Runs fully in the **web browser**
+- Hosted on **GitHub Pages**
+- Step-by-step guided experiments
+- Circuit + assembly code + output together
+- Matches real hardware behavior
+- Ideal for flipped classrooms & remote labs
 
 ---
 
 ## 🧪 Experiment Index
 
-| # | Experiment | Topic |
-|---|-----------|------|
+| No | Experiment | Core Concept |
+|----|-----------|-------------|
 | 01 | LED Blinking using Timer | Timers |
-| 02 | 7-Segment Display Interface | I/O |
-| 03 | Multiplexed 4-Digit 7-Segment | Multiplexing |
+| 02 | 7-Segment Display Interface | Digital I/O |
+| 03 | Multiplexed 4-Digit Display | Multiplexing |
 | 04 | 4×4 Keypad with LCD | Interfacing |
-| 05 | DC Motor Control | Control |
+| 05 | DC Motor Control | Control Systems |
 | 06 | Stepper Motor Control | Sequencing |
 | 07 | Servo Motor Control | PWM |
 | 08 | 8×8 LED Matrix | Scanning |
 
-📂 **Full Experiments:**  
-👉 https://gmostofabd.github.io/ARDU-8051/experiments/
+👉 **Run Experiments Online:**  
+https://gmostofabd.github.io/ARDU-8051/experiments/
 
 ---
 
-## 📁 Repository Structure
+## 📂 Repository Structure
 
 ```text
 ARDU-8051/
 │
-├── docs/                 # Documentation & diagrams
+├── docs/                 # Theory & documentation
 │   └── images/
 │
-├── experiments/          # Virtual lab experiments
+├── experiments/          # Virtual lab (HTML-based)
 │   ├── index.html
 │   ├── 01-led-blink.html
-│   ├── 02-seven-segment.html
 │   └── ...
 │
-├── firmware/             # Assembly source codes
+├── firmware/             # 8051 assembly source codes
+│
 ├── hardware/             # Schematics & PCB files
+│
 ├── assets/               # Images & media
-├── LICENSE
+│
+├── LICENSE               # MIT License
 └── README.md
