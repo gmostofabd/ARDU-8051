@@ -73,7 +73,10 @@
   section {
     margin-bottom: 3rem;
   }
-
+  
+.section-light{background:var(--light)}
+.center{text-align:center}
+  
   section h2 {
     border-left: 5px solid var(--primary);
     padding-left: 0.7rem;
@@ -81,6 +84,40 @@
     font-size: 1.6rem;
   }
 
+  /* ================= MEDIA ================= */
+.responsive{
+  border-radius:14px;
+  box-shadow:0 10px 24px rgba(0,0,0,.14);
+}
+
+/* ================= CONTENT BOX ================= */
+.highlight-box{
+  background:#eef4ff;
+  border-left:5px solid var(--primary);
+  padding:1rem 1.3rem;
+  border-radius:6px;
+}
+
+/* ================= BUTTONS ================= */
+.btn{
+  display:inline-block;
+  margin:.45rem .25rem;
+  padding:.7rem 1.35rem;
+  background:var(--accent);
+  color:#fff;
+  font-weight:600;
+  border-radius:9px;
+  transition:.25s;
+  text-decoration:none;
+}
+.btn:hover,
+.btn:focus{
+  background:#087f82;
+  transform:translateY(-2px);
+}
+
+
+  
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -245,6 +282,27 @@
     </div>
   </section>
 
+
+
+<section class="section-light">
+<h2>🧪 Virtual Laboratories</h2>
+<a href="lab/led.html" class="btn">LED</a>
+<a href="lab/seven-segment.html" class="btn">7 Segment</a>
+<a href="lab/seven-segment-Multiplex.html" class="btn">4-Digit 7-Segment</a>
+<a href="lab/push-button.html" class="btn">Push Button</a>
+<a href="lab/adc.html" class="btn">ADC0804</a>
+<a href="lab/dot-matrix.html" class="btn">Dot Matrix</a>
+<a href="lab/lcd.html" class="btn">LCD</a>
+<a href="lab/keypad.html" class="btn">Keypad</a>
+<a href="lab/dc-motor.html" class="btn">DC Motor</a>
+<a href="lab/stepper-motor.html" class="btn">Stepper Motor</a>
+<a href="lab/servo-motor.html" class="btn">Servo Motor</a>
+<a href="lab/serial.html" class="btn">Serial</a>
+</section>
+
+
+  
+
 </main>
 
 <footer>
@@ -253,6 +311,7 @@
 
 </body>
 </html>
+
 
 
 
