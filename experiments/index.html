@@ -1,36 +1,213 @@
----
-title: ARDU-8051 Laboratory Experiments
-description: 8051 assembly language experiments with simulation and hardware
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ARDU-8051 Virtual Lab | Experiments</title>
 
-# 🧪 ARDU-8051 Laboratory Experiments
+  <!-- SEO Meta -->
+  <meta name="description" content="ARDU-8051 Virtual Lab experiments for learning 8051 microcontroller, assembly language, timers, interrupts, and interfacing.">
+  <meta name="keywords" content="8051 virtual lab, embedded systems experiments, 8051 assembly, AT89S52, engineering virtual lab">
+  <meta name="author" content="Golam Mostofa">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<p align="justify">
-This section contains <b>modular undergraduate laboratory experiments</b>
-based on the ARDU-8051 EDU-PRO platform.
-Each experiment follows a
-<b>Simulation → Verification → Hardware</b> methodology.
-</p>
+  <!-- Open Graph (Social Preview) -->
+  <meta property="og:title" content="ARDU-8051 Virtual Lab Experiments">
+  <meta property="og:description" content="Hands-on 8051 microcontroller experiments with real hardware parity.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gmostofabd.github.io/ARDU-8051/experiments/">
 
----
+  <!-- Simple CSS -->
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.6;
+    }
 
-## 📘 Experiment List
+    header {
+      background: #1e293b;
+      color: #fff;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
 
-| No | Experiment | Topics Covered | Link |
-|----|-----------|---------------|------|
-| 01 | LED Blinking | GPIO, Delay | [Open](exp01-led/) |
-| 02 | Push Button | Digital Input | [Open](exp02-button/) |
-| 03 | External Interrupt | INT0, ISR | [Open](exp03-interrupt/) |
-| 04 | Timer-0 Delay | Timers | [Open](exp04-timer/) |
-| 05 | UART | Serial Comm | [Open](exp05-uart/) |
-| 06 | ADC0804 | Analog I/O | [Open](exp06-adc/) |
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
 
----
+    header p {
+      max-width: 800px;
+      margin: 0.8rem auto 0;
+      font-size: 1rem;
+      color: #cbd5e1;
+    }
 
-## 🎓 Learning Outcomes
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
 
-- Assembly-level GPIO programming
-- Timer & interrupt handling
-- Serial communication
-- ADC interfacing
-- Simulation-to-hardware transfer
+    .intro {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .intro p {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #1e40af;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+    }
+
+    .card a {
+      display: inline-block;
+      margin-top: 0.8rem;
+      text-decoration: none;
+      color: #ffffff;
+      background: #2563eb;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .card a:hover {
+      background: #1d4ed8;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      margin-top: 3rem;
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: #93c5fd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>ARDU-8051 Virtual Lab</h1>
+  <p>
+    Hands-on experiments for learning the 8051 microcontroller —
+    assembly language, timers, interrupts, and hardware interfacing.
+  </p>
+</header>
+
+<main>
+
+  <section class="intro">
+    <p>
+      This virtual lab is part of the <strong>ARDU-8051 open-source learning platform</strong>.
+      Each experiment is designed to match real hardware behavior, enabling
+      effective learning for students, teachers, and self-learners worldwide.
+    </p>
+  </section>
+
+  <section class="grid">
+
+    <div class="card">
+      <h3>01. LED Blinking using Timer</h3>
+      <p>Learn timer configuration and delay generation using 8051 assembly.</p>
+      <a href="01-led-blink.html">Open Experiment</a>
+    </div>
+
+    <div class="card">
+      <h3>02. 7-Segment Display Interface</h3>
+      <p>Understand digital I/O ports and numeric display using 7-segment LEDs.</p>
+      <a href="02-seven-segment.html">Open Experiment</a>
+    </div>
+
+    <div class="card">
+      <h3>03. Multiplexed 4-Digit Display</h3>
+      <p>Learn display multiplexing and efficient port usage techniques.</p>
+      <a href="03-multiplexed-display.html">Open Experiment</a>
+    </div>
+
+    <div class="card">
+      <h3>04. 4×4 Keypad with LCD</h3>
+      <p>Explore keypad scanning and LCD interfacing with the 8051.</p>
+      <a href="04-keypad-lcd.html">Open Experiment</a>
+    </div>
+
+    <div class="card">
+      <h3>05. DC Motor Control</h3>
+      <p>Control DC motors using digital outputs and driver circuits.</p>
+      <a href="05-dc-motor.html">Open Experiment</a>
+    </div>
+
+    <div class="card">
+      <h3>06. Stepper Motor Control</h3>
+      <p>Learn step sequencing and precise motion control.</p>
+      <a href="06-stepper-motor.html">Open Experiment</a>
+    </div>
+
+    <div class="card">
+      <h3>07. Servo Motor Control</h3>
+      <p>Generate PWM signals using timers for servo positioning.</p>
+      <a href="07-servo-motor.html">Open Experiment</a>
+    </div>
+
+    <div class="card">
+      <h3>08. 8×8 LED Matrix</h3>
+      <p>Understand row-column scanning and persistence of vision.</p>
+      <a href="08-led-matrix.html">Open Experiment</a>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    © 2026 Golam Mostofa ·
+    <a href="https://github.com/gmostofabd/ARDU-8051">GitHub Repository</a> ·
+    <a href="../">Main Virtual Lab</a>
+  </p>
+  <p>
+    Open-source educational platform for embedded systems learning.
+  </p>
+</footer>
+
+</body>
+</html>
