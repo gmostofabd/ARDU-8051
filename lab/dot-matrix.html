@@ -2,174 +2,106 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>ARDU-8051 Virtual Lab | 8×8 LED Dot Matrix</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARDU-8051 Virtual Lab | Push Button with Debounce</title>
 
 <style>
-:root{
-  --primary:#1f3c88;
-  --accent:#0a9396;
-  --bg:#f4f6fb;
-}
-
 body{
   margin:0;
-  font-family:Segoe UI, Roboto, Arial, sans-serif;
-  background:var(--bg);
-  color:#333;
+  font-family:Segoe UI,Arial;
+  background:#f4f6fb;
 }
-
-/* ---------- HEADER ---------- */
 header{
-  background:linear-gradient(135deg,var(--primary),var(--accent));
+  background:linear-gradient(135deg,#1f3c88,#0a9396);
   color:white;
   padding:1.8rem;
   text-align:center;
 }
-
-header h1{
-  margin:0;
-  font-size:1.8rem;
-}
-
-header p{
-  margin-top:0.4rem;
-  font-size:1rem;
-}
-
-/* ---------- LAYOUT ---------- */
 section{
-  max-width:1100px;
+  max-width:1150px;
   margin:auto;
-  padding:2rem 1.2rem;
+  padding:1.5rem;
 }
+h2{color:#1f3c88}
 
-.lab-container{
+/* ===== LAB ===== */
+.lab{
+  background:white;
+  border-radius:14px;
+  padding:1.5rem;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+.flex{
   display:flex;
-  flex-wrap:wrap;
   gap:1.5rem;
+  flex-wrap:wrap;
+}
+.left,.right{
+  flex:1 1 450px;
 }
 
-/* ---------- CODE PANEL ---------- */
-.code-panel{
-  flex:1 1 420px;
-}
-
-.code-panel h2{
-  color:var(--primary);
-}
-
-.code-box{
+/* ===== CODE ===== */
+pre{
   background:#1e1e1e;
-  color:#00ff90;
+  color:#00ff9c;
   padding:1rem;
-  border-radius:10px;
-  font-family:monospace;
+  border-radius:8px;
+  font-family:Consolas,monospace;
   font-size:14px;
-  min-height:280px;
-  white-space:pre;
+  overflow-x:auto;
 }
 
-.highlight{
-  background:#ffee58;
-  color:#000;
-}
-
-.btn{
-  padding:0.45rem 1rem;
-  border:none;
-  border-radius:6px;
-  background:var(--primary);
-  color:white;
-  cursor:pointer;
-  margin-right:0.4rem;
-  margin-top:0.6rem;
-}
-
-.btn:hover{
-  background:var(--accent);
-}
-
-.status-box{
-  margin-top:0.8rem;
-  background:#eef2ff;
-  padding:0.6rem;
-  border-radius:6px;
-  font-family:monospace;
-}
-
-/* ---------- BOARD PANEL ---------- */
-.board-panel{
-  flex:1 1 420px;
-}
-
-.board-panel h2{
-  color:var(--primary);
-}
-
+/* ===== BOARD AREA ===== */
 .board{
   position:relative;
-  max-width:480px;
+  max-width:520px;
   margin:auto;
 }
-
 .board img{
   width:100%;
   border-radius:12px;
+  box-shadow:0 8px 18px rgba(0,0,0,.2);
 }
 
-/* LED (P1.0) */
-.led{
+/* ===== DOT MATRIX ===== */
+.matrix{
   position:absolute;
-  left:63%;
-  top:19%;
-  width:26px;
-  height:26px;
-  border-radius:50%;
-  background:#400;
-  border:2px solid #222;
+  top:28%;
+  left:60%;
+  display:grid;
+  grid-template-columns:repeat(8,18px);
+  gap:5px;
 }
-
+.led{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#300;
+  box-shadow:inset 0 0 5px #000;
+}
 .led.on{
   background:red;
-  box-shadow:0 0 16px red;
+  box-shadow:0 0 8px red;
 }
 
-/* Push Button (P3.2 / INT0 style) */
-.button{
-  position:absolute;
-  left:32%;
-  top:48%;
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  background:#ddd;
-  border:3px solid #444;
-  cursor:pointer;
-}
-
-.button:active,
-.button.pressed{
-  background:#aaa;
-  box-shadow:inset 0 0 8px #000;
-}
-
+/* ===== PANEL ===== */
 .panel{
-  margin-top:0.8rem;
-  background:#f7f9fc;
-  padding:0.6rem;
+  background:#eef2f7;
+  padding:.6rem;
   border-radius:6px;
   font-family:monospace;
+  margin-top:.8rem;
 }
-
-/* ---------- FOOTER ---------- */
-footer{
-  text-align:center;
-  font-size:0.85rem;
-  padding:1.2rem;
-  background:#111;
-  color:#ccc;
+button{
+  background:#1f3c88;
+  color:white;
+  border:none;
+  padding:.4rem 1rem;
+  border-radius:6px;
+  cursor:pointer;
+  margin:.4rem .2rem;
 }
+button:hover{background:#0a9396}
 </style>
 </head>
 
@@ -177,137 +109,147 @@ footer{
 
 <header>
   <h1>ARDU-8051 Virtual Lab</h1>
-  <p>Experiment — Push Button with Software Debouncing</p>
+  <p>8×8 LED Dot Matrix Display Interfacing (8051 Assembly)</p>
 </header>
 
 <section>
-<div class="lab-container">
+<h2>🧪 Experiment Description</h2>
+<p>
+This experiment demonstrates interfacing an <b>8×8 LED Dot Matrix Display</b>
+with the <b>ARDU-8051 hardware platform</b>.
+Rows are driven through <b>Port-1</b> and columns through <b>Port-2</b>.
+Row scanning and column pattern data are controlled using assembly-level multiplexing.
+</p>
 
-<!-- ================= CODE SIDE ================= -->
-<div class="code-panel">
-<h2>8051 Assembly Program (Debounced Input)</h2>
+<div class="lab">
+<div class="flex">
 
-<div id="code" class="code-box">
+<!-- ===== LEFT ===== -->
+<div class="left">
+
+<pre>
+; -------- ARDU-8051 PIN MAPPING --------
+; ROWS    -> P1.0 – P1.7
+; COLUMNS -> P2.0 – P2.7
+
 ORG 0000H
+MOV DPTR,#PATTERN
+
 MAIN:
-  JB  P3.2, MAIN     ; wait for button press (active LOW)
-  ACALL DEBOUNCE
-  CPL P1.0           ; toggle LED
-WAIT_RELEASE:
-  JNB P3.2, WAIT_RELEASE
-  SJMP MAIN
+MOV R0,#08H        ; 8 rows
+MOV A,#01H         ; Initial row select
 
-DEBOUNCE:
-  MOV R7,#50
-D1:
-  MOV R6,#255
-D2:
-  DJNZ R6,D2
-  DJNZ R7,D1
-  RET
+SCAN:
+MOV P1,A           ; Activate one row
+MOVC A,@A+DPTR     ; Read pattern
+MOV P2,A           ; Send column data
+ACALL DELAY
+
+RL A               ; Next row
+DJNZ R0,SCAN
+SJMP MAIN
+
+; Character Pattern ('A')
+PATTERN:
+DB 3CH
+DB 66H
+DB 66H
+DB 7EH
+DB 66H
+DB 66H
+DB 66H
+DB 00H
+
+DELAY:
+MOV R7,#255
+DJNZ R7,$
+RET
+
 END
+</pre>
+
+<button onclick="nextChar()">Next Pattern</button>
+<button onclick="clearMatrix()">Clear</button>
+
 </div>
 
-<button class="btn" onclick="pressButton()">Press Button</button>
-<button class="btn" onclick="resetLab()">Reset</button>
-
-<div class="status-box">
-Button (P3.2): <span id="btnState">1</span><br>
-LED (P1.0): <span id="ledState">0</span>
-</div>
-</div>
-
-<!-- ================= BOARD SIDE ================= -->
-<div class="board-panel">
-<h2>Hardware Visualization</h2>
+<!-- ===== RIGHT ===== -->
+<div class="right">
 
 <div class="board">
-<img src="https://raw.githubusercontent.com/gmostofabd/ARDU-8051/main/docs/images/ARDU-8051-3D-1.png">
+  <!-- Replace with your real ARDU-8051 board image -->
+  <img src="./docs/images/Ardu-51_Front_Angle_2.png" alt="ARDU-8051 Board">
 
-<div id="led" class="led"></div>
-<div id="button" class="button"></div>
+  <div class="matrix" id="matrix"></div>
 </div>
 
 <div class="panel">
-Port-1 (HEX): <span id="p1hex">00</span><br>
-Port-3 (HEX): <span id="p3hex">FF</span>
+ROWS → P1.0–P1.7 (ARDU-8051)<br>
+COLUMNS → P2.0–P2.7<br>
+Method → Multiplexed Scanning
 </div>
 
-<div class="panel">
-<b>Concept:</b><br>
-Mechanical switches bounce. The delay routine ensures
-only a <b>single valid press</b> is detected.
-</div>
 </div>
 
+</div>
 </div>
 </section>
 
-<footer>
-ARDU-8051 Open-Source Virtual Laboratory<br>
-Maintainer: Md. Golam Mostofa
-</footer>
-
 <script>
-let p1 = 0;
-let p3 = 0xFF; // P3.2 high (not pressed)
-let debounceLock = false;
-
-const led = document.getElementById("led");
-const button = document.getElementById("button");
-
-function updateUI(){
-  led.classList.toggle("on", p1 & 1);
-  document.getElementById("ledState").innerText = p1 & 1;
-  document.getElementById("btnState").innerText = (p3 >> 2) & 1;
-  document.getElementById("p1hex").innerText = p1.toString(16).toUpperCase().padStart(2,"0");
-  document.getElementById("p3hex").innerText = p3.toString(16).toUpperCase();
+const matrix=document.getElementById("matrix");
+let leds=[];
+for(let i=0;i<64;i++){
+  let d=document.createElement("div");
+  d.className="led";
+  matrix.appendChild(d);
+  leds.push(d);
 }
 
-function pressButton(){
-  if(debounceLock) return;
+/* Pattern table (like DB in 8051 assembly) */
+const patterns=[
+[
+  0b00111100,
+  0b01100110,
+  0b01100110,
+  0b01111110,
+  0b01100110,
+  0b01100110,
+  0b01100110,
+  0b00000000
+],
+[
+  0b01100110,
+  0b01100110,
+  0b01100110,
+  0b01111110,
+  0b01100110,
+  0b01100110,
+  0b01100110,
+  0b00000000
+]
+];
 
-  debounceLock = true;
-  button.classList.add("pressed");
+let index=0;
 
-  // simulate bounce
-  let bounce = 6;
-  const bounceTimer = setInterval(()=>{
-    p3 ^= (1 << 2);
-    updateUI();
-    bounce--;
-    if(bounce === 0){
-      clearInterval(bounceTimer);
-      p3 &= ~(1 << 2); // stable LOW
-      debounceDelay();
+function render(pattern){
+  leds.forEach(l=>l.classList.remove("on"));
+  for(let r=0;r<8;r++){
+    for(let c=0;c<8;c++){
+      if(pattern[r] & (1<<(7-c))){
+        leds[r*8+c].classList.add("on");
+      }
     }
-  },40);
+  }
 }
 
-function debounceDelay(){
-  setTimeout(()=>{
-    p1 ^= 1; // toggle LED
-    updateUI();
-
-    // release button
-    setTimeout(()=>{
-      p3 |= (1 << 2);
-      button.classList.remove("pressed");
-      debounceLock = false;
-      updateUI();
-    },300);
-  },300);
+function nextChar(){
+  render(patterns[index]);
+  index=(index+1)%patterns.length;
 }
 
-function resetLab(){
-  p1 = 0;
-  p3 = 0xFF;
-  debounceLock = false;
-  button.classList.remove("pressed");
-  updateUI();
+function clearMatrix(){
+  leds.forEach(l=>l.classList.remove("on"));
 }
-
-updateUI();
 </script>
 
 </body>

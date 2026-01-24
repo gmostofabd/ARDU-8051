@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARDU-8051 | Virtual Lab</title>
+
+<style>
+:root {
+  --primary: #1565C0;
+  --accent: #6A1B9A;
+  --success: #2E7D32;
+  --hardware: #E65100;
+  --bg: #f4f6f8;
+  --card: #ffffff;
+  --text: #263238;
+}
+
+body { margin:0; font-family:"Segoe UI", Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); }
+header { background: linear-gradient(135deg,var(--primary),var(--accent)); color:#fff; padding:1.5rem 1rem; text-align:center; }
+header h1 { margin:0; font-size:2rem; } header p { margin-top:0.4rem; font-size:1rem; opacity:0.95; }
+nav a { color:#fff; text-decoration:none; margin:0 0.6rem; font-size:0.9rem; opacity:0.9; }
+nav a:hover { text-decoration:underline; }
+
+main { max-width:1300px; margin:2rem auto; padding:0 1rem; }
+.dashboard { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin-bottom:2rem; }
+.code-section, .sim-section, .schematic-section { background:var(--card); border-radius:14px; padding:1rem; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+.schematic-section img { width:100%; border-radius:14px; object-fit:contain; max-height:400px; }
+.code-section pre { background:#1e1e1e; color:#dcdcdc; padding:1rem; border-radius:10px; overflow-x:auto; font-size:0.9rem; max-height:400px; overflow-y:scroll; }
+.sim-section { position:relative; min-height:450px; }
+.sim-section img.hardware-bg { width:100%; border-radius:14px; }
+
+.led { width:30px; height:30px; border-radius:50%; background:#444; position:absolute; box-shadow:inset 0 0 5px rgba(0,0,0,0.5); transition:0.2s; }
+
+/* 7-segment container */
+.seven-segment { position:absolute; width:80px; height:140px; top:50%; left:50%; transform:translate(-50%, -50%); }
+.seg { background:#444; border-radius:4px; transition:0.2s; }
+.seg.on { background:#ff0000; box-shadow:0 0 20px #ff1744; }
+
+/* Segments layout: a,b,c,d,e,f,g */
+.seg.a { position:absolute; top:0; left:20px; width:40px; height:10px; }
+.seg.b { top:10px; right:0; width:10px; height:60px; }
+.seg.c { bottom:10px; right:0; width:10px; height:60px; }
+.seg.d { bottom:0; left:20px; width:40px; height:10px; }
+.seg.e { bottom:10px; left:0; width:10px; height:60px; }
+.seg.f { top:10px; left:0; width:10px; height:60px; }
+.seg.g { top:65px; left:20px; width:40px; height:10px; }
+
+button.control-btn { padding:0.5rem 1rem; margin:0.5rem 0.2rem 0 0; border:none; border-radius:8px; background:var(--primary); color:#fff; cursor:pointer; font-size:0.9rem; transition:0.2s; }
+button.control-btn:hover { opacity:0.9; }
+
+@media(max-width:1024px){ .dashboard{ grid-template-columns:1fr 1fr; } }
+@media(max-width:700px){ .dashboard{ grid-template-columns:1fr; } }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ARDU-8051 Virtual Lab</h1>
+  <p>Interactive 8051 Assembly Simulation with LEDs & 7-Segment Display</p>
+  <nav>
+    <a href="../index.html">Dashboard</a>
+    <a href="../experiments/">Experiments</a>
+    <a href="../docs/">Docs</a>
+    <a href="../firmware/">Assembly Code</a>
+  </nav>
+</header>
+
+<main>
+<section class="dashboard">
+
+<!-- Schematic -->
+<div class="schematic-section">
+  <h2>🖼️ Circuit Schematic</h2>
+  <img src="../docs/images/led-blink-schematic.png" alt="Proteus Schematic">
+  <p style="font-size:0.85rem;">Proteus schematic</p>
+</div>
+
+<!-- Assembly Code -->
+<div class="code-section">
+  <h2>💻 8051 Assembly Code</h2>
+  <pre id="asm-code">
+ORG 0000H
+MAIN:
+    MOV TMOD,#01H
+AGAIN:
+    MOV TH0,#3CH
+    MOV TL0,#0B0H
+    SETB TR0
+WAIT:
+    JNB TF0,WAIT
+    CLR TR0
+    CLR TF0
+    CPL P1.0
+    CPL P1.1
+    MOV A,#5
+    ACALL DISP7
+    SJMP AGAIN
+
+DISP7:
+    ; Display A on 7-segment
+    RET
+END
+  </pre>
+  <div>
+    <button class="control-btn" onclick="runSim()">Run</button>
+    <button class="control-btn" onclick="stepSim()">Step</button>
+    <button class="control-btn" onclick="stopSim()">Stop</button>
+    <button class="control-btn" onclick="resetSim()">Reset</button>
+  </div>
+</div>
+
+<!-- Simulation -->
+<div class="sim-section">
+  <h2>🖥️ Hardware Simulation</h2>
+  <img src="../docs/images/ardu-8051-hardware.png" alt="ARDU-8051 Hardware" class="hardware-bg">
+
+  <!-- LEDs -->
+  <div class="led" id="led0" style="top:50px; left:50px;"></div>
+  <div class="led" id="led1" style="top:50px; left:100px;"></div>
+
+  <!-- 7-segment -->
+  <div class="seven-segment">
+    <div class="seg a" id="seg-a"></div>
+    <div class="seg b" id="seg-b"></div>
+    <div class="seg c" id="seg-c"></div>
+    <div class="seg d" id="seg-d"></div>
+    <div class="seg e" id="seg-e"></div>
+    <div class="seg f" id="seg-f"></div>
+    <div class="seg g" id="seg-g"></div>
+  </div>
+</div>
+
+</section>
+
+<section>
+<h2>🎯 Objective</h2>
+<p>Learn how 8051 timers and assembly code control multiple LEDs and a 7-segment display.</p>
+</section>
+
+<section>
+<h2>📘 Theory</h2>
+<p>Assembly instructions toggle LEDs and load values into the accumulator. These values are shown on the 7-segment display.</p>
+</section>
+
+</main>
+
+<footer>
+© 2026 ARDU-8051 Virtual Lab · Interactive Simulation
+</footer>
+
+<script>
+// LED & Step Simulation
+let leds = [document.getElementById('led0'), document.getElementById('led1')];
+let stepIndex = 0;
+let instructions = ["CPL P1.0", "CPL P1.1", "DISP7"];
+let interval;
+
+// 7-segment digit map
+const digits = {
+  0:[1,1,1,1,1,1,0],
+  1:[0,1,1,0,0,0,0],
+  2:[1,1,0,1,1,0,1],
+  3:[1,1,1,1,0,0,1],
+  4:[0,1,1,0,0,1,1],
+  5:[1,0,1,1,0,1,1],
+  6:[1,0,1,1,1,1,1],
+  7:[1,1,1,0,0,0,0],
+  8:[1,1,1,1,1,1,1],
+  9:[1,1,1,1,0,1,1]
+};
+
+const segs = ['seg-a','seg-b','seg-c','seg-d','seg-e','seg-f','seg-g'];
+let currentDigit = 0;
+
+function runSim() { stopSim(); interval=setInterval(stepSim, 800); }
+
+function stepSim(){
+  if(stepIndex >= instructions.length){ stepIndex=0; resetSim(); return; }
+  let inst = instructions[stepIndex];
+
+  if(inst.includes("P1.0")) toggleLed(0);
+  if(inst.includes("P1.1")) toggleLed(1);
+  if(inst.includes("DISP7")) show7Seg(currentDigit++ % 10);
+
+  stepIndex++;
+}
+
+function toggleLed(i){
+  let led = leds[i];
+  if(led.style.backgroundColor==='rgb(255,23,16)'){
+    led.style.backgroundColor='#444';
+    led.style.boxShadow='inset 0 0 5px rgba(0,0,0,0.5)';
+  } else {
+    led.style.backgroundColor='#ff1710';
+    led.style.boxShadow='0 0 20px #ff1744';
+  }
+}
+
+function show7Seg(digit){
+  let map = digits[digit];
+  for(let i=0;i<segs.length;i++){
+    document.getElementById(segs[i]).className = map[i] ? 'seg '+segs[i]+' on' : 'seg '+segs[i];
+  }
+}
+
+function stopSim(){ clearInterval(interval); }
+function resetSim(){ stopSim(); leds.forEach(l=>{l.style.backgroundColor='#444'; l.style.boxShadow='inset 0 0 5px rgba(0,0,0,0.5)';}); show7Seg(0); stepIndex=0; currentDigit=0; }
+</script>
+</body>
+</html>
