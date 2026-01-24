@@ -1,227 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>ARDU-8051 | Open-Source 8051 Virtual Lab & Hardware Learning Platform</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="ARDU-8051 is an open-source learning platform combining real 8051-compatible hardware with a browser-based virtual lab for embedded systems education.">
-  <meta name="author" content="Golam Mostofa">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARDU-8051 | Open-Source 8051 Learning Platform</title>
 
-  <!-- Simple, clean styling for beginners -->
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      margin: 0;
-      background: #f8fafc;
-      color: #1f2937;
-      line-height: 1.7;
-    }
+<!-- SEO & Academic Metadata -->
+<meta name="description" content="ARDU-8051 is an Arduino-compatible open-source ATmel 8051 learning platform with interactive virtual laboratories for embedded systems education.">
+<meta name="keywords" content="8051, AT89S52, Arduino Compatible, Embedded Systems, Virtual Lab, Open Hardware, Engineering Education">
+<meta name="author" content="Md. Golam Mostofa">
 
-    header {
-      background: #0f172a;
-      color: #ffffff;
-      padding: 2.5rem 1rem;
-      text-align: center;
-    }
+<!-- OpenGraph -->
+<meta property="og:title" content="ARDU-8051 | Open-Source 8051 Learning Platform">
+<meta property="og:description" content="Modernizing classical 8051 education with open hardware and virtual laboratories.">
+<meta property="og:type" content="website">
 
-    header h1 {
-      margin: 0;
-      font-size: 2.2rem;
-    }
+<style>
+:root{
+  --primary:#1f3c88;
+  --accent:#0a9396;
+  --light:#f5f7fb;
+  --dark:#2b2b2b;
+}
 
-    header p {
-      max-width: 850px;
-      margin: 1rem auto 0;
-      color: #cbd5e1;
-      font-size: 1.05rem;
-    }
+*{box-sizing:border-box}
 
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 2.5rem 1rem;
-    }
+html{scroll-behavior:smooth}
 
-    section {
-      margin-bottom: 3rem;
-    }
+body{
+  margin:0;
+  font-family:"Segoe UI",Roboto,Arial,sans-serif;
+  line-height:1.65;
+  color:var(--dark);
+  background:#fff;
+}
 
-    h2 {
-      color: #1e40af;
-      margin-bottom: 0.8rem;
-    }
+img{
+  max-width:100%;
+  height:auto;
+  display:block;
+}
 
-    p {
-      max-width: 900px;
-    }
+/* ================= HEADER ================= */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;
+  padding:3.8rem 1rem;
+  text-align:center;
+}
+header h1{
+  font-size:2.7rem;
+  margin:.3rem 0;
+  letter-spacing:.5px;
+}
+header p{
+  max-width:900px;
+  margin:auto;
+  font-size:1.1rem;
+  opacity:.95;
+}
+.badge{
+  display:inline-block;
+  background:rgba(255,255,255,.18);
+  padding:.4rem 1rem;
+  border-radius:20px;
+  font-size:.78rem;
+  margin:.3rem;
+}
 
-    ul {
-      max-width: 900px;
-      padding-left: 1.2rem;
-    }
+/* ================= SECTIONS ================= */
+section{
+  max-width:1100px;
+  margin:auto;
+  padding:2.6rem 1.6rem;
+}
+.section-light{background:var(--light)}
+.center{text-align:center}
 
-    li {
-      margin-bottom: 0.5rem;
-    }
+h2{
+  color:var(--primary);
+  border-bottom:2px solid #e0e0e0;
+  padding-bottom:.35rem;
+  margin-bottom:1.2rem;
+}
 
-    .box {
-      background: #ffffff;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.07);
-    }
+/* ================= MEDIA ================= */
+.responsive{
+  border-radius:14px;
+  box-shadow:0 10px 24px rgba(0,0,0,.14);
+}
 
-    .buttons a {
-      display: inline-block;
-      margin: 0.5rem 0.5rem 0 0;
-      padding: 0.6rem 1.2rem;
-      background: #2563eb;
-      color: #ffffff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.95rem;
-    }
+/* ================= CONTENT BOX ================= */
+.highlight-box{
+  background:#eef4ff;
+  border-left:5px solid var(--primary);
+  padding:1rem 1.3rem;
+  border-radius:6px;
+}
 
-    .buttons a:hover {
-      background: #1d4ed8;
-    }
+/* ================= BUTTONS ================= */
+.btn{
+  display:inline-block;
+  margin:.45rem .25rem;
+  padding:.7rem 1.35rem;
+  background:var(--accent);
+  color:#fff;
+  font-weight:600;
+  border-radius:9px;
+  transition:.25s;
+  text-decoration:none;
+}
+.btn:hover,
+.btn:focus{
+  background:#087f82;
+  transform:translateY(-2px);
+}
 
-    footer {
-      background: #020617;
-      color: #cbd5e1;
-      text-align: center;
-      padding: 1.8rem 1rem;
-      font-size: 0.85rem;
-    }
+/* ================= VIRTUAL LAB ================= */
+.lab-wrapper{
+  background:#fff;
+  border-radius:16px;
+  padding:1.6rem;
+  box-shadow:0 12px 28px rgba(0,0,0,.16);
+}
+.lab-container{
+  display:flex;
+  gap:1.6rem;
+  flex-wrap:wrap;
+}
+.lab-left,.lab-right{flex:1 1 460px}
 
-    footer a {
-      color: #93c5fd;
-      text-decoration: none;
-    }
+.lab-code{
+  background:#1e1e1e;
+  color:#00ff90;
+  padding:1rem;
+  border-radius:8px;
+  font-family:Consolas,monospace;
+  font-size:14px;
+  overflow:auto;
+}
+.lab-highlight{
+  background:#ffee58;
+  color:#000;
+  display:block;
+}
+.lab-panel{
+  background:#f3f6fb;
+  padding:.6rem;
+  margin-top:.6rem;
+  border-radius:6px;
+  font-family:monospace;
+}
 
-    footer a:hover {
-      text-decoration: underline;
-    }
-  </style>
+.lab-btn{
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  padding:.45rem 1rem;
+  margin-top:.6rem;
+  cursor:pointer;
+}
+.lab-btn:hover{background:var(--accent)}
+
+.lab-board{
+  position:relative;
+  max-width:520px;
+  margin:auto;
+}
+.lab-led{
+  position:absolute;
+  left:62%;
+  top:18%;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:#400;
+  border:2px solid #222;
+}
+.lab-led.on{
+  background:red;
+  box-shadow:0 0 14px red;
+}
+
+/* ================= FOOTER ================= */
+footer{
+  background:#111;
+  color:#ccc;
+  text-align:center;
+  padding:1.8rem;
+  font-size:.9rem;
+}
+footer a{color:#4dd0e1;text-decoration:none}
+footer a:hover{text-decoration:underline}
+</style>
 </head>
 
 <body>
 
 <header>
   <h1>ARDU-8051</h1>
-  <p>
-    An open-source educational platform that combines real 8051-compatible hardware
-    with a browser-based virtual lab — designed for students, teachers, and self-learners worldwide.
-  </p>
+  <p>Arduino-Compatible, Open-Source ATmel 8051 Hardware Learning Platform</p>
+  <span class="badge">8051</span>
+  <span class="badge">Education</span>
+  <span class="badge">Open Hardware</span>
+  <span class="badge">Virtual Labs</span>
 </header>
 
 <main>
 
-  <!-- What is this project -->
-  <section class="box">
-    <h2>📘 What is ARDU-8051?</h2>
-    <p>
-      <strong>ARDU-8051</strong> is a learning platform built to make the classic
-      <strong>8051 microcontroller</strong> easy to understand through:
-    </p>
-    <ul>
-      <li>Real hardware concepts using an <strong>AT89S52 (8051 core)</strong></li>
-      <li>Assembly language programming</li>
-      <li>A web-based <strong>virtual lab / simulator</strong></li>
-      <li>Step-by-step experiments that match real hardware behavior</li>
-    </ul>
-    <p>
-      The goal is simple:  
-      <strong>learn embedded systems clearly, practically, and affordably.</strong>
-    </p>
-  </section>
+<section class="center">
+  <img src="./docs/images/Ardu-51_Front_Angle_2.png"
+       alt="ARDU-8051 Development Board"
+       class="responsive"
+       onerror="this.style.display='none'">
+</section>
 
-  <!-- Who it is for -->
-  <section>
-    <h2>👩‍🎓 Who is this for?</h2>
-    <div class="box">
-      <ul>
-        <li>Diploma & engineering students learning microcontrollers</li>
-        <li>College teachers and lab instructors</li>
-        <li>Beginners starting with embedded systems</li>
-        <li>Self-learners without access to physical lab equipment</li>
-      </ul>
-    </div>
-  </section>
+<section>
+<h2>📌 Overview</h2>
+<p>
+ARDU-8051 is a low-cost, open-source, Arduino-compatible development board
+based on the AT89S52, designed for simulation-first embedded systems education
+with seamless transition to physical hardware.
+</p>
+</section>
 
-  <!-- Repository structure -->
-  <section>
-    <h2>📁 Repository Structure (Beginner Friendly)</h2>
-    <div class="box">
-      <p>This repository is organized so that anyone can understand it easily:</p>
-      <ul>
-        <li><strong>index.html</strong> → Main landing page (this page)</li>
-        <li><strong>experiments/</strong> → All virtual lab experiments</li>
-        <li><strong>assets/</strong> → Images, schematics, and styles</li>
-        <li><strong>README.md</strong> → Project documentation</li>
-        <li><strong>LICENSE</strong> → MIT open-source license</li>
-      </ul>
-      <p>
-        Each experiment inside the <code>experiments</code> folder is a standalone,
-        easy-to-run HTML page.
-      </p>
-    </div>
-  </section>
+<section class="section-light">
+<h2>🌟 Motivation</h2>
+<div class="highlight-box">
+The 8051 remains central in engineering education, yet teaching hardware has not evolved.
+ARDU-8051 modernizes learning while preserving architectural transparency and assembly-level understanding.
+</div>
+</section>
 
-  <!-- Experiments -->
-  <section>
-    <h2>🧪 Virtual Lab Experiments</h2>
-    <div class="box">
-      <p>The virtual lab includes experiments such as:</p>
-      <ul>
-        <li>LED blinking using timers</li>
-        <li>7-segment display interfacing</li>
-        <li>Multiplexed 4-digit displays</li>
-        <li>4×4 keypad with LCD</li>
-        <li>DC motor, stepper motor, and servo motor control</li>
-        <li>8×8 LED matrix scanning</li>
-      </ul>
+<section>
+<h2>🎯 Design Goals</h2>
+<ul>
+  <li>Preserve classical 8051 pedagogy</li>
+  <li>Simulation → hardware continuity</li>
+  <li>Low-cost reproducible laboratories</li>
+  <li>Assembly-level transparency</li>
+</ul>
+</section>
 
-      <div class="buttons">
-        <a href="experiments/">Open Experiments</a>
-        <a href="https://github.com/gmostofabd/ARDU-8051">View on GitHub</a>
-      </div>
-    </div>
-  </section>
+<section class="section-light">
+<h2>🧩 Platform Highlights</h2>
+<ul>
+  <li>AT89S52 @ 11.0592 MHz</li>
+  <li>On-board USBasp (ATmega8A)</li>
+  <li>ADC0804 integration</li>
+  <li>Arduino UNO-compatible headers</li>
+  <li>Buffered Port-0 architecture</li>
+</ul>
+</section>
 
-  <!-- Open source -->
-  <section>
-    <h2>🌍 Open-Source & Educational</h2>
-    <div class="box">
-      <p>
-        ARDU-8051 is released under the <strong>MIT License</strong>.
-        You are free to:
-      </p>
-      <ul>
-        <li>Use it in classrooms and labs</li>
-        <li>Modify and extend experiments</li>
-        <li>Share and redistribute the project</li>
-        <li>Build your own hardware or simulator on top of it</li>
-      </ul>
-      <p>
-        This project is designed with long-term educational use in mind.
-      </p>
-    </div>
-  </section>
+<section>
+<h2>🧠 Interactive Virtual Lab (Demo)</h2>
+<div class="lab-wrapper">
+
+<div class="highlight-box"><b>Experiment:</b> Timer-0 LED Blinking (P1.0)</div>
+
+<div class="lab-container">
+
+<div class="lab-left">
+<pre id="labCode" class="lab-code">
+ORG 0000H
+MAIN:
+  MOV TMOD,#01H
+LOOP:
+  MOV TH0,#3CH
+  MOV TL0,#0B0H
+  SETB TR0
+WAIT:
+  JNB TF0,WAIT
+  CLR TR0
+  CLR TF0
+  CPL P1.0
+  SJMP LOOP
+END
+</pre>
+
+<button class="lab-btn" onclick="labStep()">Step</button>
+<button class="lab-btn" onclick="labRun()">Run</button>
+<button class="lab-btn" onclick="labReset()">Reset</button>
+
+<div class="lab-panel">
+TF0=<span id="tf0">0</span> |
+TR0=<span id="tr0">0</span>
+</div>
+</div>
+
+<div class="lab-right">
+<div class="lab-board">
+<img src="./docs/images/Ardu-51_Front_1.png.png"
+     alt="ARDU-8051 Board Layout"
+     onerror="this.style.display='none'">
+<div id="labLed" class="lab-led"></div>
+</div>
+
+<div class="lab-panel">
+P1 = <span id="p1bin">00000000</span> (0x<span id="p1hex">00</span>)
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="section-light">
+<h2>🧪 Virtual Laboratories</h2>
+<a href="lab/led.html" class="btn">LED</a>
+<a href="lab/seven-segment.html" class="btn">7 Segment</a>
+<a href="lab/seven-segment-Multiplex.html" class="btn">4-Digit 7-Segment</a>
+<a href="lab/push-button.html" class="btn">Push Button</a>
+<a href="lab/adc.html" class="btn">ADC0804</a>
+<a href="lab/dot-matrix.html" class="btn">Dot Matrix</a>
+<a href="lab/lcd.html" class="btn">LCD</a>
+<a href="lab/keypad.html" class="btn">Keypad</a>
+<a href="lab/dc-motor.html" class="btn">DC Motor</a>
+<a href="lab/stepper-motor.html" class="btn">Stepper Motor</a>
+<a href="lab/servo-motor.html" class="btn">Servo Motor</a>
+<a href="lab/serial.html" class="btn">Serial</a>
+</section>
+
+<section>
+<h2>📐 Hardware Design</h2>
+<img src="./hardware/schematic/ATmel8051-Schematic.png" alt="ARDU-8051 Schematic" class="responsive">
+</section>
+
+<section>
+<h2>📐 USBasp Programmer Circuit</h2>
+<img src="./hardware/schematic/USBasp-Schematic.png" alt="USBasp Programmer Schematic" class="responsive">
+</section>
 
 </main>
 
 <footer>
-  <p>
-    © 2026 Golam Mostofa ·
-    <a href="https://github.com/gmostofabd/ARDU-8051">GitHub Repository</a>
-  </p>
-  <p>
-    Keywords: 8051 microcontroller, virtual lab, embedded systems education,
-    AT89S52, assembly language learning, open-source hardware.
-  </p>
+<p>
+Maintainer: <b>Md. Golam Mostofa</b><br>
+<a href="https://github.com/gmostofabd">github.com/gmostofabd</a><br>
+ARDU-8051 — Open-Source Educational Hardware Platform
+</p>
 </footer>
+
+<script>
+const raw=document.getElementById("labCode").innerText.trim().split("\n");
+let pc=0,p1=0,tf0=0,tr0=0,runner=null;
+const led=document.getElementById("labLed");
+const codeBox=document.getElementById("labCode");
+
+function render(){
+  codeBox.innerHTML=raw.map((l,i)=>
+    i===pc?`<span class="lab-highlight">${l}</span>`:l
+  ).join("\n");
+
+  document.getElementById("tf0").textContent=tf0;
+  document.getElementById("tr0").textContent=tr0;
+  document.getElementById("p1bin").textContent=p1.toString(2).padStart(8,"0");
+  document.getElementById("p1hex").textContent=p1.toString(16).toUpperCase().padStart(2,"0");
+  led.classList.toggle("on",(p1&1)===1);
+}
+
+function labStep(){
+  const l=raw[pc];
+  if(l.includes("SETB TR0")) tr0=1;
+  if(l.includes("CLR TR0")) tr0=0;
+  if(l.includes("CLR TF0")) tf0=0;
+  if(l.includes("CPL P1.0")) p1^=1;
+  pc=(pc+1)%raw.length;
+  render();
+}
+
+function labRun(){
+  if(runner) return;
+  runner=setInterval(()=>{
+    tr0=1; tf0=1;
+    p1^=1;
+    render();
+    tf0=0;
+  },800);
+}
+
+function labReset(){
+  clearInterval(runner);
+  runner=null;
+  pc=0;p1=0;tf0=0;tr0=0;
+  render();
+}
+
+render();
+</script>
 
 </body>
 </html>
