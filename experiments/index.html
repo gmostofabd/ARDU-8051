@@ -73,10 +73,7 @@
   section {
     margin-bottom: 3rem;
   }
-  
-.section-light{background:var(--light)}
-.center{text-align:center}
-  
+
   section h2 {
     border-left: 5px solid var(--primary);
     padding-left: 0.7rem;
@@ -84,40 +81,6 @@
     font-size: 1.6rem;
   }
 
-  /* ================= MEDIA ================= */
-.responsive{
-  border-radius:14px;
-  box-shadow:0 10px 24px rgba(0,0,0,.14);
-}
-
-/* ================= CONTENT BOX ================= */
-.highlight-box{
-  background:#eef4ff;
-  border-left:5px solid var(--primary);
-  padding:1rem 1.3rem;
-  border-radius:6px;
-}
-
-/* ================= BUTTONS ================= */
-.btn{
-  display:inline-block;
-  margin:.45rem .25rem;
-  padding:.7rem 1.35rem;
-  background:var(--accent);
-  color:#fff;
-  font-weight:600;
-  border-radius:9px;
-  transition:.25s;
-  text-decoration:none;
-}
-.btn:hover,
-.btn:focus{
-  background:#087f82;
-  transform:translateY(-2px);
-}
-
-
-  
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -197,7 +160,7 @@
     <a href="docs/">Documentation</a>
     <a href="hardware/">Hardware</a>
     <a href="firmware/">Assembly Code</a>
-    <a href="https://github.com/gmostofabd/ARDU-8051">GitHub</a>
+    <a href="https://github.com/your-username/ARDU-8051">GitHub</a>
   </nav>
 </header>
 
@@ -219,89 +182,107 @@
 
     <div class="grid">
 
-     <div class="card">
+      <div class="card">
         <span class="tag">Timer</span>
         <h3>LED Blinking</h3>
         <p>Understand 8051 timers and delay generation using assembly language.</p>
-        <a href="01-led-blink.html">Open Experiment</a>
+        <a href="../lab/led.html">Open Experiment</a>
       </div>
-      
 
+      
       <div class="card">
         <span class="tag">I/O</span>
         <h3>7-Segment Display</h3>
         <p>Interface a single 7-segment display and learn port manipulation.</p>
-        <a href="02-seven-segment.html">Open Experiment</a>
+        <a href="../lab/seven-segment.html">Open Experiment</a>
       </div>
 
       <div class="card">
         <span class="tag">Multiplexing</span>
         <h3>4-Digit 7-Segment</h3>
         <p>Display multi-digit numbers using multiplexing techniques.</p>
-        <a href="./lab/seven-segment.html">Open Experiment</a>
+        <a href="../lab/seven-segment-Multiplex.html">Open Experiment</a>
       </div>
 
       <div class="card">
         <span class="tag">Interfacing</span>
         <h3>4×4 Keypad + LCD</h3>
         <p>Read keypad input and display values on an LCD module.</p>
-        <a href="04-keypad-lcd.html">Open Experiment</a>
+        <a href="../lab/keypad.html">Open Experiment</a>
       </div>
 
       <div class="card">
         <span class="tag">Control</span>
         <h3>DC Motor Control</h3>
         <p>Control DC motor direction and ON/OFF using digital outputs.</p>
-        <a href="05-dc-motor.html">Open Experiment</a>
+        <a href="../lab/dc-motor.html">Open Experiment</a>
       </div>
 
       <div class="card">
         <span class="tag">PWM</span>
         <h3>Servo Motor</h3>
         <p>Generate PWM signals using timers to control servo position.</p>
-        <a href="06-servo-motor.html">Open Experiment</a>
+        <a href="../lab/servo-motor.html">Open Experiment</a>
       </div>
 
       <div class="card">
         <span class="tag">Scanning</span>
         <h3>8×8 LED Matrix</h3>
         <p>Learn matrix scanning and persistence of vision techniques.</p>
-        <a href="07-led-matrix.html">Open Experiment</a>
+        <a href="../lab/dot-matrix.html">Open Experiment</a>
       </div>
-      
+
+
       <div class="card">
         <span class="tag">Timer</span>
         <h3>LED Blinking</h3>
         <p>Understand 8051 timers and delay generation using assembly language.</p>
-        <a href="./lab/led.html">Open Experiment</a>
+        <a href="../lab/*push-button.html">Open Experiment</a>
       </div>
 
 
+      <div class="card">
+        <span class="tag">Timer</span>
+        <h3>LED Blinking</h3>
+        <p>Understand 8051 timers and delay generation using assembly language.</p>
+        <a href="../lab/adc.html">Open Experiment</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Timer</span>
+        <h3>LED Blinking</h3>
+        <p>Understand 8051 timers and delay generation using assembly language.</p>
+        <a href="../lab/keypad.html">Open Experiment</a>
+      </div>
+
+
+       <div class="card">
+        <span class="tag">Timer</span>
+        <h3>LED Blinking</h3>
+        <p>Understand 8051 timers and delay generation using assembly language.</p>
+        <a href="../lab/stepper-motor.html">Open Experiment</a>
+      </div>
+
+
+
+            <div class="card">
+        <span class="tag">Timer</span>
+        <h3>LED Blinking</h3>
+        <p>Understand 8051 timers and delay generation using assembly language.</p>
+        <a href="../lab/Serial.html">Open Experiment</a>
+      </div>
+
+     <div class="card">
+        <span class="tag">Timer</span>
+        <h3>LED Chaser</h3>
+        <p>Understand 8051 timers and delay generation using assembly language.</p>
+        <a href="01-led-blink.html">Open Experiment</a>
+      </div>
       
 
+      
     </div>
   </section>
-
-
-
-<section class="section-light">
-<h2>🧪 Virtual Laboratories</h2>
-<a href="lab/led.html" class="btn">LED</a>
-<a href="lab/seven-segment.html" class="btn">7 Segment</a>
-<a href="lab/seven-segment-Multiplex.html" class="btn">4-Digit 7-Segment</a>
-<a href="lab/push-button.html" class="btn">Push Button</a>
-<a href="lab/adc.html" class="btn">ADC0804</a>
-<a href="lab/dot-matrix.html" class="btn">Dot Matrix</a>
-<a href="lab/lcd.html" class="btn">LCD</a>
-<a href="lab/keypad.html" class="btn">Keypad</a>
-<a href="lab/dc-motor.html" class="btn">DC Motor</a>
-<a href="lab/stepper-motor.html" class="btn">Stepper Motor</a>
-<a href="lab/servo-motor.html" class="btn">Servo Motor</a>
-<a href="lab/serial.html" class="btn">Serial</a>
-</section>
-
-
-  
 
 </main>
 
@@ -311,8 +292,6 @@
 
 </body>
 </html>
-
-
 
 
 
