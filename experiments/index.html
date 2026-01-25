@@ -6,146 +6,142 @@
 <title>ARDU-8051 | Virtual Lab Dashboard</title>
 
 <style>
-  :root {
-    --primary: #1565C0;
-    --secondary: #2E7D32;
-    --accent: #6A1B9A;
-    --hardware: #E65100;
-    --bg: #f5f7fa;
-    --card: #ffffff;
-    --text: #263238;
-  }
+:root{
+  --primary:#1565C0;
+  --secondary:#2E7D32;
+  --accent:#6A1B9A;
+  --hardware:#E65100;
+  --bg:#f5f7fa;
+  --card:#ffffff;
+  --text:#263238;
+}
 
-  body {
-    margin: 0;
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-  }
+*{box-sizing:border-box}
 
-  header {
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    color: #fff;
-    padding: 2rem 1rem;
-    text-align: center;
-  }
+body{
+  margin:0;
+  font-family:"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
 
-  header h1 {
-    margin: 0;
-    font-size: 2.4rem;
-    letter-spacing: 1px;
-  }
+/* ===== HEADER ===== */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;
+  padding:2.2rem 1rem;
+  text-align:center;
+}
+header h1{
+  margin:0;
+  font-size:2.4rem;
+  letter-spacing:1px;
+}
+header p{
+  margin-top:.5rem;
+  font-size:1.1rem;
+  opacity:.95;
+}
 
-  header p {
-    margin-top: 0.5rem;
-    font-size: 1.1rem;
-    opacity: 0.95;
-  }
+/* ===== NAV ===== */
+nav{
+  display:flex;
+  justify-content:center;
+  gap:1rem;
+  margin-top:1rem;
+  flex-wrap:wrap;
+}
+nav a{
+  text-decoration:none;
+  color:#fff;
+  background:rgba(255,255,255,.18);
+  padding:.45rem 1rem;
+  border-radius:20px;
+  font-size:.9rem;
+}
+nav a:hover{
+  background:rgba(255,255,255,.35);
+}
 
-  nav {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-    flex-wrap: wrap;
-  }
+/* ===== MAIN ===== */
+main{
+  max-width:1200px;
+  margin:2rem auto;
+  padding:0 1rem;
+}
+section{
+  margin-bottom:3rem;
+}
+section h2{
+  border-left:5px solid var(--primary);
+  padding-left:.7rem;
+  margin-bottom:1.2rem;
+  font-size:1.6rem;
+}
 
-  nav a {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255,255,255,0.15);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    transition: background 0.3s;
-  }
+/* ===== GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.5rem;
+}
 
-  nav a:hover {
-    background: rgba(255,255,255,0.3);
-  }
+/* ===== CARD ===== */
+.card{
+  background:var(--card);
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  padding:1.4rem;
+  transition:.25s;
+}
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+}
+.card h3{
+  margin-top:.2rem;
+  color:var(--primary);
+}
+.card p{
+  font-size:.95rem;
+  line-height:1.5;
+}
 
-  main {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
+/* ===== TAG ===== */
+.tag{
+  display:inline-block;
+  background:var(--hardware);
+  color:#fff;
+  font-size:.8rem;
+  padding:.2rem .6rem;
+  border-radius:12px;
+  margin-bottom:.5rem;
+}
 
-  section {
-    margin-bottom: 3rem;
-  }
+/* ===== BUTTON ===== */
+.card a{
+  display:inline-block;
+  margin-top:.8rem;
+  text-decoration:none;
+  color:#fff;
+  background:var(--secondary);
+  padding:.45rem 1.1rem;
+  border-radius:20px;
+  font-size:.85rem;
+}
+.card a:hover{opacity:.9}
 
-  section h2 {
-    border-left: 5px solid var(--primary);
-    padding-left: 0.7rem;
-    margin-bottom: 1.2rem;
-    font-size: 1.6rem;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .card {
-    background: var(--card);
-    border-radius: 14px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    padding: 1.4rem;
-    transition: transform 0.25s, box-shadow 0.25s;
-  }
-
-  .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
-  }
-
-  .card h3 {
-    margin-top: 0;
-    color: var(--primary);
-  }
-
-  .tag {
-    display: inline-block;
-    background: var(--hardware);
-    color: #fff;
-    font-size: 0.90rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 12px;
-    margin-bottom: 0.6rem;
-  }
-
-  .card p {
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-
-  .card a {
-    display: inline-block;
-    margin-top: 0.8rem;
-    text-decoration: none;
-    color: #fff;
-    background: var(--secondary);
-    padding: 0.45rem 1rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-  }
-
-  .card a:hover {
-    opacity: 0.9;
-  }
-
-  footer {
-    text-align: center;
-    padding: 1.5rem;
-    font-size: 0.85rem;
-    color: #555;
-  }
-
-  footer span {
-    color: var(--accent);
-    font-weight: bold;
-  }
+/* ===== FOOTER ===== */
+footer{
+  text-align:center;
+  padding:1.5rem;
+  font-size:.85rem;
+  color:#555;
+}
+footer span{
+  color:var(--accent);
+  font-weight:bold;
+}
 </style>
 </head>
 
@@ -153,142 +149,113 @@
 
 <header>
   <h1>ARDU-8051 Virtual Lab</h1>
-  <p>Online Experiments for 8051 Microcontroller Learning</p>
+  <p>Interactive 8051 Assembly & Hardware Experiments</p>
 
   <nav>
     <a href="#experiments">Experiments</a>
     <a href="docs/">Documentation</a>
     <a href="hardware/">Hardware</a>
-    <a href="firmware/">Assembly Code</a>
-    <a href="https://github.com/your-username/ARDU-8051">GitHub</a>
+    <a href="firmware/">Assembly</a>
+    <a href="https://github.com/gmostofabd/ARDU-8051" target="_blank">GitHub</a>
   </nav>
 </header>
 
 <main>
 
-  <section>
-    <h2>📘 About the Virtual Lab</h2>
-    <p>
-      The <strong>ARDU-8051 Virtual Lab</strong> is designed to support
-      <b>assembly language programming</b>, <b>hardware interfacing</b>, and
-      <b>conceptual understanding</b> of the 8051 microcontroller.
-      Each experiment includes theory, block diagrams, assembly code,
-      and expected outputs — suitable for classroom and self-study use.
-    </p>
-  </section>
+<section>
+<h2>📘 About the Virtual Lab</h2>
+<p>
+The <b>ARDU-8051 Virtual Lab</b> supports hands-on learning of
+<b>8051 assembly programming</b>, <b>hardware interfacing</b>,
+and <b>microcontroller fundamentals</b>.
+Each experiment follows real ARDU-8051 pin mappings and is suitable
+for classroom teaching, labs, and self-study.
+</p>
+</section>
 
-  <section id="experiments">
-    <h2>🧪 Experiment Dashboard</h2>
+<section id="experiments">
+<h2>🧪 Experiment Dashboard</h2>
 
-    <div class="grid">
+<div class="grid">
 
-      <div class="card">
-        <span class="tag">Timer</span>
-        <h3>LED Blinking</h3>
-        <p>Understand 8051 timers and delay generation using assembly language.</p>
-        <a href="../lab/led.html">Open Experiment</a>
-      </div>
+<div class="card">
+<span class="tag">Timer</span>
+<h3>LED Blinking</h3>
+<p>Generate delays using Timer-0 and toggle an LED on Port-1.</p>
+<a href="lab/led.html">Open Experiment</a>
+</div>
 
-      
-      <div class="card">
-        <span class="tag">I/O</span>
-        <h3>7-Segment Display</h3>
-        <p>Interface a single 7-segment display and learn port manipulation.</p>
-        <a href="../lab/seven-segment.html">Open Experiment</a>
-      </div>
+<div class="card">
+<span class="tag">Display</span>
+<h3>7-Segment Display</h3>
+<p>Interface a single 7-segment display using 8051 I/O ports.</p>
+<a href="lab/seven-segment.html">Open Experiment</a>
+</div>
 
-      <div class="card">
-        <span class="tag">Multiplexing</span>
-        <h3>4-Digit 7-Segment</h3>
-        <p>Display multi-digit numbers using multiplexing techniques.</p>
-        <a href="../lab/seven-segment-Multiplex.html">Open Experiment</a>
-      </div>
+<div class="card">
+<span class="tag">Multiplexing</span>
+<h3>4-Digit 7-Segment</h3>
+<p>Display multi-digit numbers using time-multiplexing.</p>
+<a href="lab/seven-segment-Multiplex.html">Open Experiment</a>
+</div>
 
-      <div class="card">
-        <span class="tag">Interfacing</span>
-        <h3>4×4 Keypad + LCD</h3>
-        <p>Read keypad input and display values on an LCD module.</p>
-        <a href="../lab/keypad.html">Open Experiment</a>
-      </div>
+<div class="card">
+<span class="tag">Input</span>
+<h3>Push Button</h3>
+<p>Read digital inputs and control outputs using polling.</p>
+<a href="lab/push-button.html">Open Experiment</a>
+</div>
 
-      <div class="card">
-        <span class="tag">Control</span>
-        <h3>DC Motor Control</h3>
-        <p>Control DC motor direction and ON/OFF using digital outputs.</p>
-        <a href="../lab/dc-motor.html">Open Experiment</a>
-      </div>
+<div class="card">
+<span class="tag">Matrix</span>
+<h3>4×4 Keypad + LCD</h3>
+<p>Scan a matrix keypad and display characters on LCD.</p>
+<a href="lab/keypad.html">Open Experiment</a>
+</div>
 
-      <div class="card">
-        <span class="tag">PWM</span>
-        <h3>Servo Motor</h3>
-        <p>Generate PWM signals using timers to control servo position.</p>
-        <a href="../lab/servo-motor.html">Open Experiment</a>
-      </div>
+<div class="card">
+<span class="tag">Analog</span>
+<h3>ADC0804</h3>
+<p>Read analog signals using external ADC interfacing.</p>
+<a href="lab/adc.html">Open Experiment</a>
+</div>
 
-      <div class="card">
-        <span class="tag">Scanning</span>
-        <h3>Push Button</h3>
-        <p>Learn matrix scanning and persistence of vision techniques.</p>
-        <a href="../lab/push-button.html">Open Experiment</a>
-      </div>
+<div class="card">
+<span class="tag">Motor</span>
+<h3>DC Motor</h3>
+<p>Control DC motor ON/OFF and direction.</p>
+<a href="lab/dc-motor.html">Open Experiment</a>
+</div>
 
+<div class="card">
+<span class="tag">Pulse</span>
+<h3>Stepper Motor</h3>
+<p>Generate step sequences to rotate a stepper motor.</p>
+<a href="lab/stepper-motor.html">Open Experiment</a>
+</div>
 
-      <div class="card">
-        <span class="tag">Analog</span>
-        <h3>Analog Reading</h3>
-        <p>Understand 8051 timers and delay generation using assembly language.</p>
-        <a href="../lab/adc.html">Open Experiment</a>
-      </div>
+<div class="card">
+<span class="tag">PWM</span>
+<h3>Servo Motor</h3>
+<p>Control servo angle using software-generated PWM.</p>
+<a href="lab/servo-motor.html">Open Experiment</a>
+</div>
 
-      <div class="card">
-        <span class="tag">Input Matrix</span>
-        <h3> Keypad +LCD</h3>
-        <p>Understand 8051 timers and delay generation using assembly language.</p>
-        <a href="../lab/keypad.html">Open Experiment</a>
-      </div>
+<div class="card">
+<span class="tag">UART</span>
+<h3>Serial Communication</h3>
+<p>Transmit and receive data using 8051 UART.</p>
+<a href="lab/serial.html">Open Experiment</a>
+</div>
 
-
-       <div class="card">
-        <span class="tag">Pulse</span>
-        <h3>Stepper Motor</h3>
-        <p>Understand 8051 timers and delay generation using assembly language.</p>
-        <a href="../lab/stepper-motor.html">Open Experiment</a>
-      </div>
-
-
-
-            <div class="card">
-        <span class="tag">Communication</span>
-        <h3>Serial Communication</h3>
-        <p>Understand 8051 timers and delay generation using assembly language.</p>
-        <a href="../lab/Serial.html">Open Experiment</a>
-      </div>
-
-     <div class="card">
-        <span class="tag">Delay</span>
-        <h3>LED Chaser</h3>
-        <p>Understand 8051 timers and delay generation using assembly language.</p>
-        <a href="01-led-blink.html">Open Experiment</a>
-      </div>
-      
-
-      
-    </div>
-  </section>
+</div>
+</section>
 
 </main>
 
 <footer>
-  © 2026 <span>ARDU-8051</span> Virtual Lab · Open-Source · Education Focused
+© 2026 <span>ARDU-8051</span> · Open-Source · Education Focused
 </footer>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
