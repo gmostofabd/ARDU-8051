@@ -3,312 +3,356 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ARDU-8051 | Virtual Experiment Dashboard</title>
 
 <style>
-:root{
-  --primary:#1e3a8a;
-  --accent:#0ea5a4;
-  --bg:#f5f7fb;
-  --card:#ffffff;
-  --text:#1f2937;
-  --muted:#6b7280;
+/* ===== COLOR VARIABLES ===== */
+:root {
+  --primary: #1e40af;
+  --accent: #0ea5e9;
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #4b5563;
+  --hover: #1e3a8a;
+  --btn-hover: #0b2540;
 }
 
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Segoe UI,Roboto,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
+/* ===== DARK MODE VARIABLES ===== */
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --hover: #3b82f6;
+  --btn-hover: #2563eb;
+  --primary: #60a5fa;
+  --accent: #38bdf8;
 }
+
+/* ===== GLOBAL STYLES ===== */
+*{box-sizing:border-box;margin:0;padding:0;transition:all 0.25s ease;}
+body{font-family:"Segoe UI", Roboto, Arial, sans-serif;background:var(--bg);color:var(--text);transition:background 0.3s, color 0.3s;}
 
 /* ===== HEADER ===== */
 header{
-  background:linear-gradient(135deg,var(--primary),var(--accent));
+  background: linear-gradient(135deg,var(--primary),var(--accent));
   color:white;
-  padding:2.5rem 1rem;
+  padding:3rem 1rem;
   text-align:center;
+  position:relative;
+  border-bottom: 3px solid var(--accent);
 }
-header h1{margin:0;font-size:2.4rem}
-header p{margin:.6rem auto;max-width:850px;opacity:.95}
+header h1{margin:0;font-size:2.6rem;}
+header p{margin:.6rem auto;max-width:850px;opacity:.95;font-size:1.05rem;}
+#themeToggle{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.85);border:none;padding:.6rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;color:#1e3a8a;transition:.3s;}
+#themeToggle:hover{background:rgba(255,255,255,1);transform:scale(1.05);}
 
 /* ===== SECTION ===== */
-section{
-  max-width:1200px;
-  margin:auto;
-  padding:2.5rem 1.5rem;
-}
-section h2{
-  text-align:center;
-  margin-bottom:2rem;
-  color:var(--primary);
-}
+section{max-width:1200px;margin:auto;padding:3rem 1.5rem;}
+section h2{text-align:center;margin-bottom:1.5rem;color:var(--primary);font-size:2rem;}
+
+/* ===== SEARCH + RESET ===== */
+#searchResetContainer{display:flex;justify-content:center;align-items:center;gap:.8rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+#searchResetContainer input#searchBar{flex:1 1 250px;max-width:400px;padding:.6rem 1rem;border-radius:8px;border:1px solid #cbd5e1;font-size:1rem;background:var(--card);color:var(--text);}
+[data-theme="dark"] #searchBar{border-color:#475569;background:#1e293b;color:#f1f5f9;}
+#searchResetContainer button#resetBtn{padding:.5rem 1rem;border:none;border-radius:6px;background:#f43f5e;color:white;font-weight:600;cursor:pointer;flex-shrink:0;}
+#searchResetContainer button#resetBtn:hover{background:#be123c;transform:scale(1.05);}
+
+/* ===== CATEGORY BUTTONS ===== */
+#filterButtons{text-align:center;margin-bottom:1rem;}
+#filterButtons button{margin:.3rem .3rem;padding:.5rem 1rem;border:none;border-radius:6px;background:var(--primary);color:white;font-weight:500;cursor:pointer;transition:transform .2s,background .25s;}
+#filterButtons button:hover{background:var(--btn-hover);transform:scale(1.05);}
+#filterButtons button.active{background:var(--accent);}
 
 /* ===== GRID ===== */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
-  gap:1.8rem;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:2rem;}
 
 /* ===== CARD ===== */
-.card{
-  background:var(--card);
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,.1);
-  padding:1.4rem;
-  display:grid;
-  grid-template-columns:1fr 120px;
-  gap:1.2rem;
-  min-height:190px;
-  transition:.25s;
-}
-.card:hover{transform:translateY(-4px)}
-
-.card-content{
-  display:flex;
-  flex-direction:column;
-}
-
-.tag{
-  display:inline-block;
-  background:#e0f2fe;
-  color:#0369a1;
-  font-size:.75rem;
-  padding:.25rem .55rem;
-  border-radius:6px;
-  margin-bottom:.4rem;
-  width:fit-content;
-}
-
-.card h3{
-  margin:.2rem 0 .4rem;
-  color:var(--primary);
-}
-
-.card p{
-  font-size:.92rem;
-  line-height:1.45;
-  color:var(--muted);
-  flex-grow:1;
-}
-
-.card a{
-  margin-top:.8rem;
-  text-decoration:none;
-  color:white;
-  background:var(--primary);
-  padding:.55rem .9rem;
-  border-radius:8px;
-  font-size:.9rem;
-  width:fit-content;
-}
-.card a:hover{background:#162d6a}
+.card{background:var(--card);border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,.12);padding:1.6rem;display:grid;grid-template-columns:1fr 120px;gap:1.4rem;min-height:200px;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease,background .3s,color .3s;}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.2);}
+.card-content{display:flex;flex-direction:column;}
+.card h3{margin:.3rem 0 .5rem;color:var(--primary);font-size:1.25rem;}
+.card p{font-size:.95rem;line-height:1.5;color:var(--muted);flex-grow:1;}
+.card a{margin-top:1rem;text-decoration:none;color:white;background:linear-gradient(120deg,var(--primary),var(--accent));padding:.55rem 1rem;border-radius:8px;font-size:.92rem;width:fit-content;font-weight:500;}
+.card a:hover{background:var(--btn-hover);transform:scale(1.05);}
 
 /* ===== IMAGE COLUMN ===== */
-.media{
-  display:flex;
-  flex-direction:column;
-  gap:.6rem;
-}
-
-.media img{
-  width:100%;
-  height:70px;
-  object-fit:cover;
-  border-radius:8px;
-  cursor:pointer;
-  border:1px solid #e5e7eb;
-}
-
-/* GIF auto-play on hover */
-.media img.gif:hover{
-  filter:brightness(1.05);
-}
+.media{display:flex;flex-direction:column;gap:.6rem;}
+.media img{width:100%;height:70px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;cursor:pointer;transition:transform .25s ease,filter .25s ease,border .25s ease;}
+[data-theme="dark"] .media img{border-color:#334155;}
+.media img:hover{transform:scale(1.05);filter:brightness(1.05);}
 
 /* ===== MODAL ===== */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-}
-.modal img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:10px;
-  box-shadow:0 20px 40px rgba(0,0,0,.5);
-}
-.modal.active{display:flex}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:999;}
+.modal img{max-width:90%;max-height:90%;border-radius:10px;box-shadow:0 20px 40px rgba(0,0,0,.5);}
+.modal.active{display:flex;}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:500px){.card{grid-template-columns:1fr;}.media img{height:60px;}}
+
+/* ===== CATEGORY TAG COLORS ===== */
+.tag[data-type="Timer"]{background:#e0f2fe;color:#0369a1;}
+[data-theme="dark"] .tag[data-type="Timer"]{background:#1e3a8af0;color:#a5f3fc;}
+
+.tag[data-type="Display"]{background:#fef3c7;color:#b45309;}
+[data-theme="dark"] .tag[data-type="Display"]{background:#78350f;color:#fcd34d;}
+
+.tag[data-type="Multiplexing"]{background:#ede9fe;color:#5b21b6;}
+[data-theme="dark"] .tag[data-type="Multiplexing"]{background:#4c1d95;color:#c4b5fd;}
+
+.tag[data-type="Input"]{background:#dcfce7;color:#15803d;}
+[data-theme="dark"] .tag[data-type="Input"]{background:#166534;color:#bbf7d0;}
+
+.tag[data-type="Matrix"]{background:#fee2e2;color:#b91c1c;}
+[data-theme="dark"] .tag[data-type="Matrix"]{background:#7f1d1d;color:#fecaca;}
+
+.tag[data-type="Analog"]{background:#e0f7fa;color:#006064;}
+[data-theme="dark"] .tag[data-type="Analog"]{background:#004d4d;color:#81ecec;}
+
+.tag[data-type="Motor"]{background:#fff7ed;color:#c2410c;}
+[data-theme="dark"] .tag[data-type="Motor"]{background:#7c2d12;color:#fdba74;}
+
+.tag[data-type="Pulse"]{background:#f0fdfa;color:#0f766e;}
+[data-theme="dark"] .tag[data-type="Pulse"]{background:#134e4a;color:#5eead4;}
+
+.tag[data-type="PWM"]{background:#fef9c3;color:#713f12;}
+[data-theme="dark"] .tag[data-type="PWM"]{background:#78350f;color:#fde68a;}
+
+.tag[data-type="UART"]{background:#ede9fe;color:#4f46e5;}
+[data-theme="dark"] .tag[data-type="UART"]{background:#312e81;color:#c7d2fe;}
 </style>
 </head>
-
-<body>
+<body data-theme="light">
 
 <header>
   <h1>ARDU-8051 Virtual Laboratory</h1>
   <p>Interactive, simulation-based 8051 microcontroller experiments mapped directly to the ARDU-8051 hardware platform.</p>
+  <button id="themeToggle">🌙 Dark Mode</button>
 </header>
 
 <section id="experiments">
 <h2>🧪 Experiment Dashboard</h2>
 
-<div class="grid">
+<div id="searchResetContainer">
+  <input type="text" id="searchBar" placeholder="Search by experiment name or type...">
+  <button id="resetBtn">Reset Filters</button>
+</div>
 
-<!-- ===== CARD TEMPLATE ===== -->
+<div id="filterButtons">
+  <button data-filter="all" class="active">All</button>
+  <button data-filter="Timer">Timer</button>
+  <button data-filter="Display">Display</button>
+  <button data-filter="Multiplexing">Multiplexing</button>
+  <button data-filter="Input">Input</button>
+  <button data-filter="Matrix">Matrix</button>
+  <button data-filter="Analog">Analog</button>
+  <button data-filter="Motor">Motor</button>
+  <button data-filter="Pulse">Pulse</button>
+  <button data-filter="PWM">PWM</button>
+  <button data-filter="UART">UART</button>
+</div>
 
-<div class="card">
+<div class="grid" id="experimentGrid">
+
+<!-- ===== EXPERIMENT CARDS ===== -->
+<div class="card" data-type="Timer">
   <div class="card-content">
-    <span class="tag">Timer</span>
+    <span class="tag" data-type="Timer">Timer</span>
     <h3>LED Blinking</h3>
     <p>Generate delays using Timer-0 and toggle an LED on Port-1.</p>
-    <a href="../lab/led.html">Open Experiment</a>
+    <a href="../lab/led.html" target="_blank">Open Experiment</a>
   </div>
   <div class="media">
     <img src="assets/images/led-circuit.png" onclick="preview(this)">
-    <img src="assets/images/led-sim.gif" class="gif" onclick="preview(this)">
+    <img src="assets/images/led-sim.gif" onclick="preview(this)">
   </div>
 </div>
 
-<div class="card">
+<div class="card" data-type="Display">
   <div class="card-content">
-    <span class="tag">Display</span>
+    <span class="tag" data-type="Display">Display</span>
     <h3>7-Segment Display</h3>
     <p>Interface a single 7-segment display using 8051 I/O ports.</p>
-    <a href="../lab/seven-segment.html">Open Experiment</a>
+    <a href="../lab/seven-segment.html" target="_blank">Open Experiment</a>
   </div>
   <div class="media">
     <img src="assets/images/7seg-circuit.png" onclick="preview(this)">
-    <img src="assets/images/7seg-sim.gif" class="gif" onclick="preview(this)">
+    <img src="assets/images/7seg-sim.gif" onclick="preview(this)">
   </div>
 </div>
 
-<div class="card">
+<div class="card" data-type="Multiplexing">
   <div class="card-content">
-    <span class="tag">Multiplexing</span>
+    <span class="tag" data-type="Multiplexing">Multiplexing</span>
     <h3>4-Digit 7-Segment</h3>
     <p>Display multi-digit numbers using time-multiplexing.</p>
-    <a href="../lab/seven-segment-Multiplex.html">Open Experiment</a>
+    <a href="../lab/seven-segment-Multiplex.html" target="_blank">Open Experiment</a>
   </div>
   <div class="media">
     <img src="assets/images/4seg-circuit.png" onclick="preview(this)">
-    <img src="assets/images/4seg-sim.gif" class="gif" onclick="preview(this)">
+    <img src="assets/images/4seg-sim.gif" onclick="preview(this)">
   </div>
 </div>
 
-<div class="card">
+<div class="card" data-type="Input">
   <div class="card-content">
-    <span class="tag">Input</span>
+    <span class="tag" data-type="Input">Input</span>
     <h3>Push Button</h3>
     <p>Read digital inputs and control outputs using polling.</p>
-    <a href="../lab/push-button.html">Open Experiment</a>
+    <a href="../lab/push-button.html" target="_blank">Open Experiment</a>
   </div>
   <div class="media">
     <img src="assets/images/button-circuit.png" onclick="preview(this)">
-    <img src="assets/images/button-sim.gif" class="gif" onclick="preview(this)">
+    <img src="assets/images/button-sim.gif" onclick="preview(this)">
   </div>
 </div>
 
-<div class="card">
+<div class="card" data-type="Matrix">
   <div class="card-content">
-    <span class="tag">Matrix</span>
+    <span class="tag" data-type="Matrix">Matrix</span>
     <h3>4×4 Keypad + LCD</h3>
     <p>Scan a matrix keypad and display characters on LCD.</p>
-    <a href="../lab/keypad.html">Open Experiment</a>
+    <a href="../lab/keypad.html" target="_blank">Open Experiment</a>
   </div>
   <div class="media">
     <img src="assets/images/keypad-circuit.png" onclick="preview(this)">
-    <img src="assets/images/keypad-sim.gif" class="gif" onclick="preview(this)">
+    <img src="assets/images/keypad-sim.gif" onclick="preview(this)">
   </div>
 </div>
 
-<div class="card">
+<div class="card" data-type="Analog">
   <div class="card-content">
-    <span class="tag">Analog</span>
+    <span class="tag" data-type="Analog">Analog</span>
     <h3>ADC0804</h3>
     <p>Read analog signals using external ADC interfacing.</p>
-    <a href="../lab/adc.html">Open Experiment</a>
+    <a href="../lab/adc.html" target="_blank">Open Experiment</a>
   </div>
   <div class="media">
     <img src="assets/images/adc-circuit.png" onclick="preview(this)">
-    <img src="assets/images/adc-sim.gif" class="gif" onclick="preview(this)">
+    <img src="assets/images/adc-sim.gif" onclick="preview(this)">
   </div>
 </div>
 
-<div class="card">
+<div class="card" data-type="Motor">
   <div class="card-content">
-    <span class="tag">Motor</span>
+    <span class="tag" data-type="Motor">Motor</span>
     <h3>DC Motor</h3>
     <p>Control DC motor ON/OFF and direction.</p>
-    <a href="../lab/dc-motor.html">Open Experiment</a>
+    <a href="../lab/dc-motor.html" target="_blank">Open Experiment</a>
   </div>
   <div class="media">
     <img src="assets/images/dc-circuit.png" onclick="preview(this)">
-    <img src="assets/images/dc-sim.gif" class="gif" onclick="preview(this)">
+    <img src="assets/images/dc-sim.gif" onclick="preview(this)">
   </div>
 </div>
 
-<div class="card">
+<div class="card" data-type="Pulse">
   <div class="card-content">
-    <span class="tag">Pulse</span>
+    <span class="tag" data-type="Pulse">Pulse</span>
     <h3>Stepper Motor</h3>
     <p>Generate step sequences to rotate a stepper motor.</p>
-    <a href="../lab/stepper-motor.html">Open Experiment</a>
+    <a href="../lab/stepper-motor.html" target="_blank">Open Experiment</a>
   </div>
   <div class="media">
     <img src="assets/images/stepper-circuit.png" onclick="preview(this)">
-    <img src="assets/images/stepper-sim.gif" class="gif" onclick="preview(this)">
+    <img src="assets/images/stepper-sim.gif" onclick="preview(this)">
   </div>
 </div>
 
-<div class="card">
+<div class="card" data-type="PWM">
   <div class="card-content">
-    <span class="tag">PWM</span>
+    <span class="tag" data-type="PWM">PWM</span>
     <h3>Servo Motor</h3>
     <p>Control servo angle using software-generated PWM.</p>
-    <a href="../lab/servo-motor.html">Open Experiment</a>
+    <a href="../lab/servo-motor.html" target="_blank">Open Experiment</a>
   </div>
   <div class="media">
     <img src="assets/images/servo-circuit.png" onclick="preview(this)">
-    <img src="assets/images/servo-sim.gif" class="gif" onclick="preview(this)">
+    <img src="assets/images/servo-sim.gif" onclick="preview(this)">
   </div>
 </div>
 
-<div class="card">
+<div class="card" data-type="UART">
   <div class="card-content">
-    <span class="tag">UART</span>
+    <span class="tag" data-type="UART">UART</span>
     <h3>Serial Communication</h3>
     <p>Transmit and receive data using 8051 UART.</p>
-    <a href="../lab/serial.html">Open Experiment</a>
+    <a href="../lab/serial.html" target="_blank">Open Experiment</a>
   </div>
   <div class="media">
     <img src="assets/images/uart-circuit.png" onclick="preview(this)">
-    <img src="assets/images/uart-sim.gif" class="gif" onclick="preview(this)">
+    <img src="assets/images/uart-sim.gif" onclick="preview(this)">
   </div>
 </div>
 
 </div>
 </section>
 
-<!-- ===== MODAL ===== -->
-<div class="modal" id="modal" onclick="closeModal()">
+<div class="modal" id="modal">
   <img id="modalImg">
 </div>
 
 <script>
+// Theme toggle
+const themeBtn = document.getElementById('themeToggle');
+themeBtn.addEventListener('click', ()=>{
+  const body = document.body;
+  if(body.dataset.theme === "light"){
+    body.dataset.theme = "dark";
+    themeBtn.textContent = "☀️ Light Mode";
+  }else{
+    body.dataset.theme = "light";
+    themeBtn.textContent = "🌙 Dark Mode";
+  }
+});
+
+// Image modal
 function preview(img){
+  const modal = document.getElementById('modal');
   document.getElementById('modalImg').src = img.src;
-  document.getElementById('modal').classList.add('active');
+  modal.classList.add('active');
 }
-function closeModal(){
-  document.getElementById('modal').classList.remove('active');
+document.getElementById('modal').addEventListener('click', e=>{
+  if(e.target.id==='modal') e.currentTarget.classList.remove('active');
+});
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape') document.getElementById('modal').classList.remove('active');
+});
+
+// Search/filter functionality
+const searchBar = document.getElementById('searchBar');
+const cards = document.querySelectorAll('.card');
+function filterCards(){
+  const query = searchBar.value.toLowerCase();
+  const activeFilter = document.querySelector('#filterButtons button.active').dataset.filter.toLowerCase();
+  cards.forEach(card=>{
+    const title = card.querySelector('h3').textContent.toLowerCase();
+    const type = card.dataset.type.toLowerCase();
+    const matchesSearch = title.includes(query) || type.includes(query);
+    const matchesFilter = activeFilter === 'all' || type === activeFilter;
+    card.style.display = (matchesSearch && matchesFilter) ? "grid" : "none";
+  });
 }
+searchBar.addEventListener('input', filterCards);
+
+// Category buttons filter
+const filterButtons = document.querySelectorAll('#filterButtons button');
+filterButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    filterButtons.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    filterCards();
+  });
+});
+
+// Reset button
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  searchBar.value = '';
+  filterButtons.forEach(b=>b.classList.remove('active'));
+  document.querySelector('#filterButtons button[data-filter="all"]').classList.add('active');
+  filterCards();
+});
 </script>
 
 </body>
