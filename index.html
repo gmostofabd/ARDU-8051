@@ -25,6 +25,7 @@ body{
   line-height:1.6;
 }
 
+/* ===== HEADER ===== */
 header{
   background:linear-gradient(135deg,var(--primary),#0b2540);
   color:#fff;
@@ -33,27 +34,24 @@ header{
 }
 
 header h1{margin:0;font-size:2.2rem;}
-header p{opacity:.9;max-width:760px;margin:10px auto;}
+header p{opacity:.9;max-width:900px;margin:10px auto;}
 
-main{
-  max-width:1400px;
+/* ===== PAGE GRID (THIS WAS THE MISSING PART) ===== */
+.page{
+  max-width:1700px;
   margin:auto;
   padding:1.5rem;
-}
-
-/* ===== LAYOUT ===== */
-.layout{
   display:grid;
-  grid-template-columns:270px 1fr;
+  grid-template-columns:260px 1fr 320px;
   gap:1.5rem;
   align-items:start;
 }
 
-/* ===== SIDEBAR ===== */
-.sidebar{
+/* ===== LEFT SIDEBAR ===== */
+.left-sidebar{
   position:sticky;
-  top:1rem;
-  height:calc(100vh - 2rem);
+  top:1.2rem;
+  height:calc(100vh - 2.4rem);
   overflow-y:auto;
   background:var(--card);
   border-radius:14px;
@@ -61,37 +59,28 @@ main{
   box-shadow:0 12px 28px rgba(0,0,0,.1);
 }
 
-.sidebar h3{
+.left-sidebar h3{
   margin:.2rem 0 1rem;
   color:var(--primary);
   text-align:center;
 }
 
-/* Sidebar Nav */
 .lab-nav{
   display:flex;
   flex-direction:column;
-  gap:.4rem;
+  gap:.45rem;
 }
 
 .lab-link{
   display:flex;
-  align-items:center;
   gap:.6rem;
   padding:.55rem .7rem;
   border-radius:8px;
+  text-decoration:none;
   color:var(--text);
   font-weight:600;
-  font-size:.95rem;
-  text-decoration:none;
   border-left:4px solid transparent;
-  transition:.2s;
-}
-
-.lab-link .icon{
-  width:22px;
-  text-align:center;
-  font-size:1.1rem;
+  transition:.2s ease;
 }
 
 .lab-link:hover{
@@ -101,35 +90,160 @@ main{
 
 .lab-link.active{
   background:#e0f2f1;
-  border-left:4px solid var(--accent);
+  border-left-color:var(--accent);
   color:#065f5b;
 }
 
-/* ===== CONTENT ===== */
-.content section{margin-bottom:3rem;}
+/* ===== CENTER CONTENT ===== */
+.main{
+  display:flex;
+  flex-direction:column;
+  gap:2rem;
+}
 
 .card{
   background:var(--card);
-  border-radius:14px;
+  border-radius:16px;
   padding:1.6rem;
   box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
-h2{
+h2{margin-top:0;color:var(--primary);}
+
+/* ===== BLURRED BOARD BACKGROUND ===== */
+.board-bg{
+  position:relative;
+  overflow:hidden;
+}
+
+.board-bg::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,.88),rgba(255,255,255,.88)),
+    url("assets/images/ARDU-8051-Board-1a..png") center/cover no-repeat;
+  filter:blur(18px);
+  transform:scale(1.1);
+  z-index:0;
+}
+
+.board-bg > *{
+  position:relative;
+  z-index:1;
+}
+
+/* ===== FIGURE ===== */
+.figure{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.6rem;
+  margin:2.5rem 0;
+}
+
+.figure img{
+  width:80%;
+  max-width:900px;
+  background:#fff;
+  padding:12px;
+  border-radius:14px;
+  box-shadow:0 12px 28px rgba(0,0,0,.12);
+  cursor:zoom-in;
+}
+
+.figure figcaption{
+  font-size:.9rem;
+  color:var(--muted);
+}
+
+/* ===== SVG ===== */
+svg{
+  width:100%;
+  max-width:900px;
+  display:block;
+  margin:auto;
+}
+
+.pin-block rect{
+  transition:.25s;
+}
+.pin-block:hover rect{
+  fill:#c7d2fe;
+  stroke:#1e40af;
+  cursor:pointer;
+}
+
+.label{
+  font-size:12px;
+  font-weight:600;
+  fill:#111;
+}
+
+/* ===== RIGHT SIDEBAR ===== */
+.right-sidebar{
+  position:sticky;
+  top:1.2rem;
+  height:calc(100vh - 2.4rem);
+  overflow-y:auto;
+  background:var(--card);
+  border-radius:14px;
+  padding:1rem;
+  box-shadow:0 12px 28px rgba(0,0,0,.1);
+}
+
+.right-sidebar h3{
+  text-align:center;
+  margin:.2rem 0 1rem;
   color:var(--primary);
-  margin-top:0;
 }
 
-img{
-  max-width:100%;
+.right-sidebar section{
+  margin-bottom:1.4rem;
+}
+
+.right-sidebar img,
+.right-sidebar iframe,
+.right-sidebar a{
+  width:100%;
   border-radius:12px;
+  margin-top:.4rem;
 }
 
-/* Diagram */
-svg{width:100%;max-width:900px;display:block;margin:auto;}
-.label{font-size:12px;fill:#111;font-weight:600}
+/* ===== ZOOM ===== */
+#zoom{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
 
-/* Search */
+#zoom img{
+  max-width:92%;
+  max-height:92%;
+  background:#fff;
+  padding:12px;
+  border-radius:14px;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:1200px){
+  .page{
+    grid-template-columns:1fr;
+  }
+  .left-sidebar,.right-sidebar{
+    position:relative;
+    height:auto;
+  }
+}
+
+
+
+
+/* ===== SEARCH ===== */
 input{
   width:100%;
   padding:12px;
@@ -137,6 +251,11 @@ input{
   border-radius:8px;
   border:1px solid #cbd5e1;
   margin-bottom:1rem;
+}
+
+input:focus{
+  outline:none;
+  border-color:var(--accent);
 }
 
 .grid{
@@ -150,6 +269,7 @@ input{
   padding:1rem;
   border-radius:10px;
   border-left:5px solid var(--accent);
+  cursor:pointer;
 }
 
 footer{
@@ -157,65 +277,156 @@ footer{
   padding:2rem;
   color:var(--muted);
 }
-
-/* ===== MOBILE ===== */
-@media (max-width:900px){
-  .layout{grid-template-columns:1fr;}
-  .sidebar{position:relative;height:auto;}
-}
 </style>
-
-
-<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
-<link rel="manifest" href="assets/icons/site.webmanifest">
-
-
 </head>
 
 <body>
 
 <header>
-  <h1>ARDU-8051: ATmel 8051 Hardware & Virtual Lab Platform</h1>
-  <p>Complete learner-friendly guide for understanding the 8051 board,
-     architecture, ports, and virtual experiments.</p>
+  <h1>ARDU-8051 Virtual Hardware & Learning Platform</h1>
+  <p>Interactive 8051 board, pin-level visualization, and experiment-first learning environment</p>
 </header>
 
-<main>
+<div class="page">
 
-<div class="layout">
-
-<!-- ===== LEFT SIDEBAR ===== -->
-<aside class="sidebar">
+<!-- LEFT SIDEBAR -->
+<aside class="left-sidebar">
   <h3>🧪 Experiments</h3>
-
   <nav class="lab-nav">
-    <a href="lab/led.html" data-path="led" class="lab-link"><span class="icon">💡</span>LED Blinking</a>
-    <a href="lab/seven-segment.html" data-path="seven" class="lab-link"><span class="icon">🔢</span>7 Segment</a>
-    <a href="lab/seven-segment-Multiplex.html" data-path="multiplex" class="lab-link"><span class="icon">📊</span>4-Digit Segment</a>
-    <a href="lab/push-button.html" data-path="button" class="lab-link"><span class="icon">🔘</span>Push Button</a>
-    <a href="lab/adc.html" data-path="adc" class="lab-link"><span class="icon">📈</span>ADC0804</a>
-    <a href="lab/dot-matrix.html" data-path="matrix" class="lab-link"><span class="icon">🧱</span>Dot Matrix</a>
-    <a href="lab/lcd.html" data-path="lcd" class="lab-link"><span class="icon">🖥️</span>LCD</a>
-    <a href="lab/keypad.html" data-path="keypad" class="lab-link"><span class="icon">⌨️</span>Keypad</a>
-    <a href="lab/dc-motor.html" data-path="dc" class="lab-link"><span class="icon">⚙️</span>DC Motor</a>
-    <a href="lab/stepper-motor.html" data-path="stepper" class="lab-link"><span class="icon">🔁</span>Stepper Motor</a>
-    <a href="lab/servo-motor.html" data-path="servo" class="lab-link"><span class="icon">🎯</span>Servo Motor</a>
-    <a href="lab/serial.html" data-path="serial" class="lab-link"><span class="icon">📡</span>Serial UART</a>
+    <a class="lab-link">💡 LED Blinking</a>
+    <a class="lab-link">🔢 7 Segment</a>
+    <a class="lab-link">📊 4 Digit Segment</a>
+    <a class="lab-link">🔘 Push Button</a>
+    <a class="lab-link">📈 ADC0804</a>
+    <a class="lab-link">🧱 Dot Matrix</a>
+    <a class="lab-link">🖥️ LCD</a>
+    <a class="lab-link">⌨️ Keypad</a>
+    <a class="lab-link">⚙️ DC Motor</a>
+    <a class="lab-link">🔁 Stepper Motor</a>
+    <a class="lab-link">🎯 Servo Motor</a>
+    <a class="lab-link">📡 UART</a>
   </nav>
 </aside>
 
-<!-- ===== RIGHT CONTENT ===== -->
-<div class="content">
+<!-- CENTER -->
+<main class="main">
 
+<section class="card board-bg">
+  <h2>ARDU-8051 Hardware Shield</h2>
 
-<section class="center">
-  <img src="assets\images\ARDU-8051-Board-1a..png" width="70%"
-       alt="ARDU-8051 Development Board"
-       class="responsive"
-       onerror="this.style.display='none'">
+  <figure class="figure">
+    <img src="assets/images/ARDU-8051-Board-1a..png" onclick="zoom(this)">
+    <figcaption>ARDU-8051 Development Board – AT89C51 based platform</figcaption>
+  </figure>
+
+   <h2>🧩 8051 Interactive Board</h2>
+  <svg viewBox="0 0 900 420">
+    <rect x="60" y="60" width="780" height="300" rx="20" fill="#e0e7ff" stroke="#1e3a8a" stroke-width="3"/>
+    
+    <!-- Pins -->
+    <g class="pin-block" id="P1.0" data-title="P1.0: LED1"><rect x="110" y="120" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+    <g class="pin-block" id="P1.1" data-title="P1.1: LED2"><rect x="160" y="120" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+    <g class="pin-block" id="P0.0" data-title="P0.0: LCD/7seg"><rect x="110" y="180" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+    <g class="pin-block" id="P0.1" data-title="P0.1: LCD/ADC/7seg"><rect x="160" y="180" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+    <g class="pin-block" id="P2.0" data-title="P2.0: Motor/Stepper"><rect x="110" y="240" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+
+    <!-- CPU -->
+    <g class="pin-block" id="CPU" data-title="8051 CPU"><rect x="350" y="120" width="200" height="160" rx="10" fill="#fff" stroke="#1e3a8a" stroke-width="2"/>
+      <text x="420" y="200" class="label">8051 CPU</text>
+    </g>
+
+    <!-- Lines -->
+    <line id="line-P1.0" x1="130" y1="140" x2="700" y2="100" stroke="#fcd34d" stroke-width="3" stroke-linecap="round" visibility="hidden"/>
+    <line id="line-P1.1" x1="180" y1="140" x2="700" y2="120" stroke="#fcd34d" stroke-width="3" stroke-linecap="round" visibility="hidden"/>
+    <line id="line-P0.0" x1="130" y1="200" x2="700" y2="200" stroke="#10b981" stroke-width="3" stroke-linecap="round" visibility="hidden"/>
+    <line id="line-P0.1" x1="180" y1="200" x2="700" y2="220" stroke="#10b981" stroke-width="3" stroke-linecap="round" visibility="hidden"/>
+    <line id="line-P2.0" x1="130" y1="260" x2="700" y2="300" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" visibility="hidden"/>
+
+    <!-- LEDs -->
+    <circle id="led-P1.0" cx="130" cy="140" r="6" fill="#fcd34d" visibility="hidden"/>
+    <circle id="led-P1.1" cx="180" cy="140" r="6" fill="#fcd34d" visibility="hidden"/>
+
+    <!-- Motor -->
+    <g id="motor-P2.0" transform="translate(130,260)" visibility="hidden">
+      <circle cx="0" cy="0" r="12" fill="#3b82f6"/>
+      <line x1="0" y1="-12" x2="0" y2="12" stroke="#fff" stroke-width="2"/>
+      <line x1="-12" y1="0" x2="12" y2="0" stroke="#fff" stroke-width="2"/>
+    </g>
+
+    <!-- 7-segment -->
+    <g id="7seg-P0.0" transform="translate(200,260)" visibility="hidden">
+      <rect x="0" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+      <rect x="14" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+      <rect x="28" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+      <rect x="42" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+    </g>
+
+    <!-- Stepper Motor -->
+    <g id="stepper-P2.0" transform="translate(300,260)" visibility="hidden">
+      <circle cx="0" cy="0" r="20" fill="#a78bfa"/>
+      <line x1="0" y1="-20" x2="0" y2="20" stroke="#fff" stroke-width="2"/>
+      <line x1="-20" y1="0" x2="20" y2="0" stroke="#fff" stroke-width="2"/>
+    </g>
+  </svg>
+  
+
+  
+ <section class="card">
+  <h2>🔍 Search Experiments</h2>
+  <input type="text" id="search" placeholder="LED, LCD, ADC, DC, 7-Segment, Stepper…">
+  <div class="grid" id="list">
+    <div class="item" data-pins="P1.0,P1.1"><b>LED</b><br>Timer-based blinking</div>
+    <div class="item" data-pins="P0.0,P0.1"><b>LCD</b><br>16×2 Display</div>
+    <div class="item" data-pins="P0.0,P0.1"><b>ADC</b><br>Analog Conversion</div>
+    <div class="item" data-pins="P2.0"><b>DC Motor</b><br>Speed & Direction</div>
+    <div class="item" data-pins="P0.0"><b>7-Segment</b><br>Counting Animation</div>
+    <div class="item" data-pins="P2.0"><b>Stepper Motor</b><br>Step Rotation</div>
+  </div>
 </section>
+ 
+  
+  
+</section>
+
+
+<section class="card">
+  <h2>🧩 8051 Block Diagram</h2>
+  <svg viewBox="0 0 900 420">
+    <!-- Main board -->
+    <rect x="60" y="60" width="780" height="300" rx="20" fill="#e0e7ff" stroke="#1e3a8a" stroke-width="3"/>
+
+    <!-- CPU -->
+    <g class="pin-block" data-title="8051 CPU: Main processing unit">
+      <rect x="110" y="120" width="200" height="160" rx="10" fill="#fff"/>
+      <text x="160" y="205" class="label">8051 CPU</text>
+    </g>
+
+    <!-- Program Memory -->
+    <g class="pin-block" data-title="Program Memory: Stores code">
+      <rect x="350" y="100" width="200" height="80" rx="10" fill="#fff"/>
+      <text x="380" y="145" class="label">Program Memory</text>
+    </g>
+
+    <!-- Data Memory -->
+    <g class="pin-block" data-title="Data Memory: RAM storage">
+      <rect x="350" y="220" width="200" height="80" rx="10" fill="#fff"/>
+      <text x="385" y="265" class="label">Data Memory</text>
+    </g>
+
+    <!-- Timers -->
+    <g class="pin-block" data-title="Timers T0/T1: Timing & delays">
+      <rect x="600" y="110" width="180" height="60" rx="10" fill="#fff"/>
+      <text x="630" y="145" class="label">Timers T0/T1</text>
+    </g>
+
+    <!-- UART & Interrupts -->
+    <g class="pin-block" data-title="UART & Interrupts: Serial communication">
+      <rect x="600" y="200" width="180" height="60" rx="10" fill="#fff"/>
+      <text x="615" y="235" class="label">UART & Interrupts</text>
+    </g>
+  </svg>
+
+ </section> 
 
 
 
@@ -223,106 +434,52 @@ footer{
 <section class="card">
   <h2>📘 What is ARDU-8051?</h2>
   <p>
-    ARDU-8051 is a simulation-first educational platform built around the
-    classical <b>8051 microcontroller architecture</b>.  
-    It enables students to learn assembly programming, timers, interrupts,
-    ports, ADC, motors and serial communication without physical hardware.
+    ARDU-8051 is a simulation-first academic platform designed to help learners
+    understand 8051 architecture, ports, timers, interrupts, UART, and peripheral
+    interfacing using both virtual and real hardware.
   </p>
 </section>
 
-<section class="card">
-  <h2>🧩 8051 Block Diagram</h2>
-
-  <svg viewBox="0 0 900 420">
-    <rect x="60" y="60" width="780" height="300" rx="20"
-          fill="#e0e7ff" stroke="#1e3a8a" stroke-width="3"/>
-    <rect x="110" y="120" width="200" height="160" rx="10" fill="#fff"/>
-    <text x="160" y="205" class="label">8051 CPU</text>
-
-    <rect x="350" y="100" width="200" height="80" rx="10" fill="#fff"/>
-    <text x="380" y="145" class="label">Program Memory</text>
-
-    <rect x="350" y="220" width="200" height="80" rx="10" fill="#fff"/>
-    <text x="385" y="265" class="label">Data Memory</text>
-
-    <rect x="600" y="110" width="180" height="60" rx="10" fill="#fff"/>
-    <text x="630" y="145" class="label">Timers T0/T1</text>
-
-    <rect x="600" y="200" width="180" height="60" rx="10" fill="#fff"/>
-    <text x="615" y="235" class="label">UART & Interrupts</text>
-  </svg>
-</section>
-
-<section class="card">
-  <h2>🔌 I/O Ports</h2>
-  <ul>
-    <li><b>Port 0:</b> Address/Data bus, ADC interface</li>
-    <li><b>Port 1:</b> LEDs, switches, sensors</li>
-    <li><b>Port 2:</b> High address bus</li>
-    <li><b>Port 3:</b> RXD, TXD, INT0, INT1, T0, T1</li>
-  </ul>
-</section>
-
-<section>
-<h2>📐 Hardware Design</h2>
-<img src="docs\images\ATmel8051-Schematic.png" alt="ARDU-8051 Schematic" class="responsive">
-</section>
-
-<section>
-<h2>📐 USBasp Programmer Circuit</h2>
-<img src="docs\images\USBasp-Schematic.png" alt="USBasp Programmer Schematic" class="responsive">
-</section>
-
-
-<section class="card">
-  <h2>🔍 Search Experiments</h2>
-  <input type="text" id="search" placeholder="Type: LED, Timer, LCD, ADC…">
-
-  <div class="grid" id="list">
-    <div class="item"><b>LED</b><br>Timer-based blinking</div>
-    <div class="item"><b>7 Segment</b><br>BCD decoding</div>
-    <div class="item"><b>LCD</b><br>16×2 display</div>
-    <div class="item"><b>ADC</b><br>Analog conversion</div>
-    <div class="item"><b>Motor</b><br>Speed & direction</div>
-  </div>
-</section>
-
-<section class="card">
-  <h2>🧭 How to Learn</h2>
-  <ol>
-    <li>Read board explanation</li>
-    <li>Understand ports & registers</li>
-    <li>Select an experiment</li>
-    <li>Write / modify code</li>
-    <li>Simulate and observe</li>
-  </ol>
-</section>
-
-</div>
-</div>
 </main>
 
-<footer>
-  ARDU-8051 Virtual Lab • Open-Source • GitHub Pages Ready
+<!-- RIGHT SIDEBAR -->
+<aside class="right-sidebar">
+  <h3>📌 Notes & Resources</h3>
+
+  <section>
+    <ul>
+      <li>AT89C51 – 8-bit MCU</li>
+      <li>32 programmable I/O pins</li>
+      <li>2 timers, 1 UART</li>
+      <li>Interrupt-driven design</li>
+    </ul>
+  </section>
+
+  <section>
+    <img src="assets/images/led-connection.png">
+  </section>
+
+  <section>
+    <iframe height="180"
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+      allowfullscreen></iframe>
+  </section>
+</aside>
+
+</div>
+
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+ARDU-8051 Virtual Lab • Open Source • GitHub Pages Ready
 </footer>
 
-<script>
-/* Active sidebar highlight */
-const links=document.querySelectorAll(".lab-link");
-const current=window.location.pathname.toLowerCase();
-links.forEach(l=>{
-  if(current.includes(l.dataset.path)) l.classList.add("active");
-});
+<div id="zoom" onclick="this.style.display='none'"><img></div>
 
-/* Search filter */
-const search=document.getElementById("search");
-const items=document.querySelectorAll(".item");
-search.addEventListener("keyup",()=>{
-  const q=search.value.toLowerCase();
-  items.forEach(i=>{
-    i.style.display=i.innerText.toLowerCase().includes(q)?"block":"none";
-  });
-});
+<script>
+function zoom(img){
+  const z=document.getElementById("zoom");
+  z.style.display="flex";
+  z.querySelector("img").src=img.src;
+}
 </script>
 
 </body>
