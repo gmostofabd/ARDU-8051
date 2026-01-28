@@ -2,214 +2,247 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>ARDU-8051 Full Virtual Lab</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARDU-8051 Virtual Lab Dashboard</title>
-
 <style>
 :root{
-  --primary:#1f3c88;
-  --accent:#0a9396;
+  --bg:#f5f7fb; --card:#ffffff; --primary:#1e3a8a; --accent:#0ea5a4; --text:#1f2937; --muted:#6b7280;
 }
-body{margin:0;font-family:Segoe UI,Arial;background:#f4f6fb;}
-header{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;padding:2rem;text-align:center;}
-section{max-width:1150px;margin:auto;padding:1.5rem;}
-.lab{background:#fff;border-radius:14px;padding:1.5rem;box-shadow:0 10px 24px rgba(0,0,0,.15);}
-.flex{display:flex;gap:1.5rem;flex-wrap:wrap;}
-.left,.right{flex:1 1 450px;}
-textarea{width:100%;height:300px;background:#1e1e1e;color:#00ff90;border:none;border-radius:8px;padding:1rem;font-family:Consolas,monospace;font-size:14px;resize:vertical;}
-button{background:var(--primary);color:white;border:none;padding:.45rem 1rem;border-radius:6px;cursor:pointer;margin:.4rem .2rem;}
-button:hover{background:var(--accent);}
-select{width:100%;padding:.5rem 1rem;border-radius:6px;border:1px solid #ccc;margin-bottom:1rem;font-family:monospace;}
-.lab-board{position:relative;max-width:520px;margin:auto;}
-.board-img{width:100%;display:block;}
-.led{position:absolute;left:61%;top:19%;width:26px;height:26px;border-radius:50%;background:#400;border:2px solid #222;}
-.led.on{background:red;box-shadow:0 0 15px red;}
-.segment-wrapper{position:absolute;left:20%;top:20%;width:60px;height:100px;}
-.segment{position:absolute;background:#222;border-radius:4px;}
-.segment.horizontal{width:50px;height:12px;}
-.segment.vertical{width:12px;height:40px;}
-.segment.on{background:red;box-shadow:0 0 10px red;}
-#segA {top:0; left:5px;} #segB {top:5px; right:0;} #segC {bottom:5px; right:0;}
-#segD {bottom:0; left:5px;} #segE {bottom:5px; left:0;} #segF {top:5px; left:0;} #segG {top:44px; left:5px;}
-.panel{background:#eef2f7;padding:.6rem;border-radius:6px;font-family:monospace;margin-top:.8rem;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto;background:var(--bg);color:var(--text);line-height:1.6;}
+header{background:linear-gradient(135deg,var(--primary),#0b2540);color:#fff;padding:2rem 1rem;text-align:center;}
+header h1{margin:0;font-size:2.2rem;}
+header p{opacity:.9;max-width:900px;margin:10px auto;}
+.page{max-width:1700px;margin:auto;padding:1.5rem;display:grid;grid-template-columns:260px 1fr 320px;gap:1.5rem;align-items:start;}
+.left-sidebar{position:sticky;top:1.2rem;height:calc(100vh - 2.4rem);overflow-y:auto;background:var(--card);border-radius:14px;padding:1rem;box-shadow:0 12px 28px rgba(0,0,0,.1);}
+.left-sidebar h3{margin:.2rem 0 1rem;color:var(--primary);text-align:center;}
+.lab-nav{display:flex;flex-direction:column;gap:.45rem;}
+.lab-link{display:flex;gap:.6rem;padding:.55rem .7rem;border-radius:8px;text-decoration:none;color:var(--text);font-weight:600;border-left:4px solid transparent;transition:.2s ease;cursor:pointer;}
+.lab-link:hover{background:#eef2ff;transform:translateX(3px);}
+.lab-link.active{background:#e0f2f1;border-left-color:var(--accent);color:#065f5b;}
+.main{display:flex;flex-direction:column;gap:2rem;}
+.card{background:var(--card);border-radius:16px;padding:1.6rem;box-shadow:0 10px 25px rgba(0,0,0,.08);}
+h2{margin-top:0;color:var(--primary);}
+.board-bg{position:relative;overflow:hidden;}
+.board-bg::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.88),rgba(255,255,255,.88)),url("assets/images/ARDU-8051-Board-1a..png") center/cover no-repeat;filter:blur(18px);transform:scale(1.1);z-index:0;}
+.board-bg > *{position:relative;z-index:1;}
+.figure{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin:2.5rem 0;}
+.figure img{width:80%;max-width:900px;background:#fff;padding:12px;border-radius:14px;box-shadow:0 12px 28px rgba(0,0,0,.12);cursor:zoom-in;}
+.figure figcaption{font-size:.9rem;color:var(--muted);}
+svg{width:100%;max-width:900px;display:block;margin:auto;}
+.pin-block rect{transition:.25s;}
+.pin-block:hover rect{fill:#c7d2fe;stroke:#1e40af;cursor:pointer;}
+.label{font-size:12px;font-weight:600;fill:#111;}
+#segDisplay{display:grid;grid-template-columns:repeat(4,80px);justify-content:center;gap:10px;margin:1rem 0 2rem;}
+.digit svg rect{transition:fill 0.25s ease, transform 0.2s ease;transform-origin:center center;}
+.digit svg rect:hover{transform:scale(1.05);}
+#pinControls{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
+.port h4{text-align:center;margin:0 0 .5rem;}
+.port .pins{display:flex;justify-content:center;gap:2px;}
+.port .pins button{width:28px; height:28px;border:1px solid var(--muted);border-radius:4px;background:#fff;cursor:pointer;transition: background .2s, transform .1s;}
+.port .pins button:hover{transform:scale(1.1);}
+#port-P0 .pins button{--pin-color:#3b82f6;}
+#port-P1 .pins button{--pin-color:#10b981;}
+#port-P2 .pins button{--pin-color:#f59e0b;}
+#port-P3 .pins button{--pin-color:#8b5cf6;}
+.port .pins button.active{background:var(--pin-color);color:#fff;font-weight:600;}
+input{width:100%;padding:12px;font-size:1rem;border-radius:8px;border:1px solid #cbd5e1;margin-bottom:1rem;}
+input:focus{outline:none;border-color:var(--accent);}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+.item{background:#f8fafc;padding:1rem;border-radius:10px;border-left:5px solid var(--accent);cursor:pointer;}
+.right-sidebar{position:sticky;top:1.2rem;height:calc(100vh - 2.4rem);overflow-y:auto;background:var(--card);border-radius:14px;padding:1rem;box-shadow:0 12px 28px rgba(0,0,0,.1);}
+.right-sidebar h3{text-align:center;margin:.2rem 0 1rem;color:var(--primary);}
+.right-sidebar section{margin-bottom:1.4rem;}
+.right-sidebar img,.right-sidebar iframe,.right-sidebar a{width:100%;border-radius:12px;margin-top:.4rem;}
+#zoom{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:9999;}
+#zoom img{max-width:92%;max-height:92%;background:#fff;padding:12px;border-radius:14px;}
+@media (max-width:1200px){.page{grid-template-columns:1fr;}.left-sidebar,.right-sidebar{position:relative;height:auto;}}
+footer{text-align:center;padding:2rem;color:var(--muted);}
 </style>
 </head>
 <body>
-
 <header>
-  <h1>ARDU-8051 Virtual Lab Dashboard</h1>
-  <p id="exp-title">Select an Experiment</p>
+<h1>ARDU-8051 Full Virtual Lab</h1>
+<p>Interactive 8051 board, all common components, experiment-first learning</p>
 </header>
 
-<section>
-<div class="lab">
-<div class="flex">
+<div class="page">
 
-<!-- LEFT: CODE + CONTROLS -->
-<div class="left">
-<select id="experimentSelect">
-  <option value="led">LED Blinking</option>
-  <option value="toggle">P1 Toggle Pattern</option>
-  <option value="blink2">Double LED Blink</option>
-  <option value="seven">7-Segment Display Count</option>
-</select>
+<!-- LEFT SIDEBAR -->
+<aside class="left-sidebar">
+<h3>🧪 Experiments</h3>
+<nav class="lab-nav">
+<a class="lab-link">💡 LED Blinking</a>
+<a class="lab-link">🔢 7 Segment</a>
+<a class="lab-link">📊 4 Digit Segment</a>
+<a class="lab-link">🔘 Push Button</a>
+<a class="lab-link">📈 ADC0804</a>
+<a class="lab-link">🧱 Dot Matrix</a>
+<a class="lab-link">🖥️ LCD</a>
+<a class="lab-link">⌨️ Keypad</a>
+<a class="lab-link">⚙️ DC Motor</a>
+<a class="lab-link">🔁 Stepper Motor</a>
+<a class="lab-link">🎯 Servo Motor</a>
+<a class="lab-link">📡 UART</a>
+</nav>
+</aside>
 
-<textarea id="code"></textarea>
-<div>
-<button onclick="run()">Run</button>
-<button onclick="step()">Step</button>
-<button onclick="stop()">Stop</button>
-<button onclick="resetLab()">Reset</button>
-</div>
-<div class="panel">
-P1 = <span id="p1bin">00000000</span> (0x<span id="p1hex">00</span>)
-</div>
-</div>
+<!-- CENTER -->
+<main class="main">
 
-<!-- RIGHT: BOARD -->
-<div class="right">
-<div class="lab-board">
-  <img src="./assets/ardu8051_board.png" alt="ARDU-8051 Board" class="board-img">
-  <div id="led" class="led"></div>
+<section class="card board-bg">
+<h2>ARDU-8051 Hardware Shield</h2>
+<figure class="figure">
+<img src="assets/images/ARDU-8051-Board-1a..png" onclick="zoom(this)">
+<figcaption>ARDU-8051 AT89C51 Development Board</figcaption>
+</figure>
 
-  <!-- 7-segment -->
-  <div class="segment-wrapper">
-    <div id="segA" class="segment horizontal"></div>
-    <div id="segB" class="segment vertical"></div>
-    <div id="segC" class="segment vertical"></div>
-    <div id="segD" class="segment horizontal"></div>
-    <div id="segE" class="segment vertical"></div>
-    <div id="segF" class="segment vertical"></div>
-    <div id="segG" class="segment horizontal"></div>
-  </div>
-</div>
-</div>
-
-</div>
+<!-- Binary pin toggles -->
+<section class="card">
+<h2>💻 Binary Pin Control (P0–P3)</h2>
+<div id="pinControls">
+  <div class="port" id="port-P0"><h4>P0</h4><div class="pins"></div></div>
+  <div class="port" id="port-P1"><h4>P1</h4><div class="pins"></div></div>
+  <div class="port" id="port-P2"><h4>P2</h4><div class="pins"></div></div>
+  <div class="port" id="port-P3"><h4>P3</h4><div class="pins"></div></div>
 </div>
 </section>
 
+<h2>🧩 8051 Interactive Board</h2>
+<svg viewBox="0 0 900 420">
+<rect x="60" y="60" width="780" height="300" rx="20" fill="#e0e7ff" stroke="#1e3a8a" stroke-width="3"/>
+<!-- CPU -->
+<g class="pin-block" id="CPU"><rect x="350" y="120" width="200" height="160" rx="10" fill="#fff" stroke="#1e3a8a" stroke-width="2"/><text x="420" y="200" class="label">8051 CPU</text></g>
+<!-- Pins -->
+<g class="pin-block" id="P1.0"><rect x="110" y="120" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+<g class="pin-block" id="P1.1"><rect x="160" y="120" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+<g class="pin-block" id="P0.0"><rect x="110" y="180" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+<g class="pin-block" id="P0.1"><rect x="160" y="180" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+<g class="pin-block" id="P2.0"><rect x="110" y="240" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+<!-- LEDs -->
+<circle id="led-P1.0" cx="130" cy="140" r="6" fill="#fcd34d" visibility="hidden"/>
+<circle id="led-P1.1" cx="180" cy="140" r="6" fill="#fcd34d" visibility="hidden"/>
+<!-- 7-Segment -->
+<g id="7seg-P0.0" transform="translate(200,260)" visibility="hidden">
+<rect x="0" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+<rect x="14" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+<rect x="28" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+<rect x="42" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+</g>
+<!-- Motors -->
+<g id="motor-P2.0" transform="translate(130,260)" visibility="hidden">
+<circle cx="0" cy="0" r="12" fill="#3b82f6"/>
+<line x1="0" y1="-12" x2="0" y2="12" stroke="#fff" stroke-width="2"/>
+<line x1="-12" y1="0" x2="12" y2="0" stroke="#fff" stroke-width="2"/>
+</g>
+<g id="stepper-P2.0" transform="translate(300,260)" visibility="hidden">
+<circle cx="0" cy="0" r="20" fill="#a78bfa"/>
+<line x1="0" y1="-20" x2="0" y2="20" stroke="#fff" stroke-width="2"/>
+<line x1="-20" y1="0" x2="20" y2="0" stroke="#fff" stroke-width="2"/>
+</g>
+
+</svg>
+
+<section class="card">
+<h2>🔍 Search Experiments</h2>
+<input type="text" id="search" placeholder="LED, LCD, ADC, DC, 7-Segment, Stepper…">
+<div class="grid" id="list">
+<div class="item" data-exp="led">LED Blinking</div>
+<div class="item" data-exp="7seg">7-Segment</div>
+<div class="item" data-exp="4digit">4-Digit 7-Segment</div>
+<div class="item" data-exp="push">Push Button</div>
+<div class="item" data-exp="adc">ADC0804</div>
+<div class="item" data-exp="lcd">LCD</div>
+<div class="item" data-exp="motor">DC Motor</div>
+<div class="item" data-exp="stepper">Stepper Motor</div>
+<div class="item" data-exp="servo">Servo Motor</div>
+<div class="item" data-exp="dot">Dot Matrix</div>
+<div class="item" data-exp="keypad">Keypad</div>
+<div class="item" data-exp="uart">UART</div>
+</div>
+</section>
+
+</section>
+</main>
+
+<!-- RIGHT SIDEBAR -->
+<aside class="right-sidebar">
+<h3>📌 Notes & Resources</h3>
+<section>
+<ul>
+<li>AT89C51 – 8-bit MCU</li>
+<li>32 programmable I/O pins</li>
+<li>2 timers, 1 UART</li>
+<li>Interrupt-driven design</li>
+</ul>
+</section>
+<section>
+<img src="assets/images/led-connection.png">
+</section>
+<section>
+<iframe height="180" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+</section>
+</aside>
+</div>
+
+<footer>ARDU-8051 Virtual Lab • Open Source • GitHub Pages Ready</footer>
+<div id="zoom" onclick="this.style.display='none'"><img></div>
+
 <script>
-// ===== EXPERIMENTS =====
-const experiments = {
-  led:{title:"LED Blinking using Timer-0",code:`; LED -> P1.0
-ORG 0000H
-MAIN:
-  CPL P1.0
-  SJMP LOOP
-END`},
-  toggle:{title:"P1 Toggle Pattern",code:`; Toggle all P1 pins
-ORG 0000H
-MAIN:
-  MOV A,#55H
-  MOV P1,A
-LOOP:
-  CPL P1
-  SJMP LOOP
-END`},
-  blink2:{title:"Double LED Blink",code:`; Blink P1.0 and P1.1 alternately
-ORG 0000H
-MAIN:
-LOOP:
-  MOV P1,#03H
-  ACALL DELAY
-  MOV P1,#00H
-  ACALL DELAY
-  SJMP LOOP
-DELAY:
-  MOV R2,#50
-D1: DJNZ R2,D1
-  RET
-END`},
-  seven:{title:"7-Segment Display Count (0-9)",code:`; Display 0-9 on 7-segment P1
-ORG 0000H
-MAIN:
-  MOV R0,#0
-LOOP:
-  MOV A,R0
-  MOV P1,A
-  ACALL DELAY
-  INC R0
-  CJNE R0,#10,LOOP
-  MOV R0,#0
-  SJMP LOOP
-DELAY:
-  MOV R2,#50
-D1: DJNZ R2,D1
-  RET
-END`}
-};
+// ZOOM IMAGE
+function zoom(img){const z=document.getElementById("zoom"); z.style.display="flex"; z.querySelector("img").src=img.src;}
 
-// ===== LAB STATE =====
-let p1=0, timer=null, stepMode=false;
-const led=document.getElementById("led");
-const codeArea=document.getElementById("code");
-const titleEl=document.getElementById("exp-title");
-const segMap=[[1,1,1,1,1,1,0],[0,1,1,0,0,0,0],[1,1,0,1,1,0,1],[1,1,1,1,0,0,1],[0,1,1,0,0,1,1],[1,0,1,1,0,1,1],[1,0,1,1,1,1,1],[1,1,1,0,0,0,0],[1,1,1,1,1,1,1],[1,1,1,1,0,1,1]];
-const segIds=["segA","segB","segC","segD","segE","segF","segG"];
-
-// ===== DISPLAY HELPERS =====
-function updateSevenSeg(value){
-  const num=value%10;
-  segIds.forEach((id,i)=>document.getElementById(id).classList.toggle("on",segMap[num][i]===1));
-}
-function clearSevenSeg(){segIds.forEach(id=>document.getElementById(id).classList.remove("on"));}
-function updateDashboard(){
-  document.getElementById("p1bin").textContent=p1.toString(2).padStart(8,"0");
-  document.getElementById("p1hex").textContent=p1.toString(16).toUpperCase().padStart(2,"0");
-  led.classList.toggle("on",(p1&1)===1);
-  const exp=document.getElementById("experimentSelect").value;
-  if(exp==="seven") updateSevenSeg(p1); else clearSevenSeg();
-}
-
-// ===== RUN / STEP / STOP / RESET =====
-function run(){
-  if(timer) return;
-  stepMode=false;
-  const exp=document.getElementById("experimentSelect").value;
-  timer=setInterval(()=>{
-    simulateStep(exp);
-    updateDashboard();
-  },600);
-}
-function step(){
-  if(timer) stop();
-  stepMode=true;
-  const exp=document.getElementById("experimentSelect").value;
-  simulateStep(exp);
-  updateDashboard();
-}
-function stop(){clearInterval(timer); timer=null;}
-function resetLab(){stop(); p1=0; updateDashboard();}
-
-// ===== SIMULATION LOGIC =====
-function simulateStep(exp){
-  if(exp==="led") p1^=0x01;
-  else if(exp==="toggle") p1^=0xFF;
-  else if(exp==="blink2") p1^=0x03;
-  else if(exp==="seven") p1=(p1+1)%10;
-}
-
-// ===== LOAD EXPERIMENT =====
-function loadExperiment(name){
-  stop();
-  p1=0; clearSevenSeg(); updateDashboard();
-  const exp=experiments[name];
-  codeArea.value=exp.code;
-  titleEl.textContent=exp.title;
-}
-
-// ===== INITIAL LOAD =====
-window.addEventListener("DOMContentLoaded", () => {
-  const firstExperiment = document.getElementById("experimentSelect").value;
-  loadExperiment(firstExperiment);
+// DYNAMIC PIN GENERATION
+['P0','P1','P2','P3'].forEach(port=>{
+  const container=document.querySelector(`#port-${port} .pins`);
+  for(let i=0;i<8;i++){
+    const btn=document.createElement('button'); btn.innerText=i; btn.dataset.pin=`${port}.${i}`;
+    btn.addEventListener('click',()=>{btn.classList.toggle('active'); updatePinLED(btn.dataset.pin);});
+    container.appendChild(btn);
+  }
 });
 
-// ===== SWITCH EXPERIMENT =====
-document.getElementById("experimentSelect").addEventListener("change", e=>{
-  loadExperiment(e.target.value);
+// PIN TO LED FUNCTION
+function updatePinLED(pin){const ledMap={'P1.0':'led-P1.0','P1.1':'led-P1.1'}; if(ledMap[pin]){const el=document.getElementById(ledMap[pin]); el.setAttribute('visibility',el.getAttribute('visibility')==='visible'?'hidden':'visible');}}
+
+// SEARCH
+const search=document.getElementById("search");
+const items=document.querySelectorAll(".item");
+search.addEventListener("keyup",()=>{const q=search.value.toLowerCase(); items.forEach(i=>i.style.display=i.innerText.toLowerCase().includes(q)?"block":"none");});
+
+// RESET BOARD
+function resetBoard(){
+  clearInterval(window.lcdInterval); clearInterval(window.adcInterval);
+  clearInterval(window.ledInterval); clearInterval(window.segInterval);
+  clearInterval(window.dcInterval); clearInterval(window.stepperInterval);
+  clearInterval(window.servoInterval);
+  document.querySelectorAll(".pin-block rect").forEach(r=>r.setAttribute("fill","#fff"));
+  document.querySelectorAll("circle, g[id^='motor'], g[id^='7seg']").forEach(e=>e.setAttribute("visibility","hidden"));
+  const lcd=document.getElementById("lcd-overlay"); if(lcd) lcd.remove();
+  const adc=document.getElementById("adc-overlay"); if(adc) adc.remove();
+}
+
+// EXPERIMENTS FUNCTIONS
+function runLED(){ resetBoard(); const led1=document.getElementById("led-P1.0"); const led2=document.getElementById("led-P1.1"); let state=false; window.ledInterval=setInterval(()=>{state=!state; led1.setAttribute("visibility",state?"visible":"hidden"); led2.setAttribute("visibility",!state?"visible":"hidden");},500); }
+
+function run7Seg(){ resetBoard(); const seg=document.getElementById("7seg-P0.0"); seg.setAttribute("visibility","visible"); let num=0; window.segInterval=setInterval(()=>{seg.setAttribute("transform",`translate(200,260) rotate(${num*36})`); num=(num+1)%10;},300); }
+
+function runDCMotor(){ resetBoard(); const motor=document.getElementById("motor-P2.0"); motor.setAttribute("visibility","visible"); let deg=0; window.dcInterval=setInterval(()=>{motor.setAttribute("transform",`translate(130,260) rotate(${deg})`); deg=(deg+15)%360;},200); }
+
+function runStepper(){ resetBoard(); const stepper=document.getElementById("stepper-P2.0"); stepper.setAttribute("visibility","visible"); let deg=0; window.stepperInterval=setInterval(()=>{stepper.setAttribute("transform",`translate(300,260) rotate(${deg})`); deg=(deg+30)%360;},400); }
+
+// SIDEBAR LINK CLICK
+document.querySelectorAll(".lab-link").forEach(link=>{
+  link.addEventListener("click",()=>{
+    document.querySelectorAll(".lab-link").forEach(l=>l.classList.remove("active"));
+    link.classList.add("active");
+    const exp=link.innerText.split(" ")[1].toLowerCase();
+    if(exp==="led") runLED();
+    else if(exp==="7") run7Seg();
+    else if(exp==="dc") runDCMotor();
+    else if(exp==="stepper") runStepper();
+  });
 });
 </script>
-
 </body>
 </html>
