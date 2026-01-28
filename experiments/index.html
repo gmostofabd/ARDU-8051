@@ -2,380 +2,247 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>ARDU-8051 Full Virtual Lab</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARDU-8051 | Virtual Experiment Dashboard</title>
-
 <style>
-/* ===== COLOR VARIABLES ===== */
-:root {
-  --primary: #1e40af;
-  --accent: #0ea5e9;
-  --bg: #f5f7fb;
-  --card: #ffffff;
-  --text: #1f2937;
-  --muted: #4b5563;
-  --hover: #1e3a8a;
-  --btn-hover: #0b2540;
+:root{
+  --bg:#f5f7fb; --card:#ffffff; --primary:#1e3a8a; --accent:#0ea5a4; --text:#1f2937; --muted:#6b7280;
 }
-
-/* ===== DARK MODE VARIABLES ===== */
-[data-theme="dark"] {
-  --bg: #0f172a;
-  --card: #1e293b;
-  --text: #f1f5f9;
-  --muted: #94a3b8;
-  --hover: #3b82f6;
-  --btn-hover: #2563eb;
-  --primary: #60a5fa;
-  --accent: #38bdf8;
-}
-
-/* ===== GLOBAL STYLES ===== */
-*{box-sizing:border-box;margin:0;padding:0;transition:all 0.25s ease;}
-body{font-family:"Segoe UI", Roboto, Arial, sans-serif;background:var(--bg);color:var(--text);transition:background 0.3s, color 0.3s;}
-
-/* ===== HEADER ===== */
-header{
-  background: linear-gradient(135deg,var(--primary),var(--accent));
-  color:white;
-  padding:3rem 1rem;
-  text-align:center;
-  position:relative;
-  border-bottom: 3px solid var(--accent);
-}
-header h1{margin:0;font-size:2.6rem;}
-header p{margin:.6rem auto;max-width:850px;opacity:.95;font-size:1.05rem;}
-#themeToggle{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.85);border:none;padding:.6rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;color:#1e3a8a;transition:.3s;}
-#themeToggle:hover{background:rgba(255,255,255,1);transform:scale(1.05);}
-
-/* ===== SECTION ===== */
-section{max-width:1200px;margin:auto;padding:3rem 1.5rem;}
-section h2{text-align:center;margin-bottom:1.5rem;color:var(--primary);font-size:2rem;}
-
-/* ===== SEARCH + RESET ===== */
-#searchResetContainer{display:flex;justify-content:center;align-items:center;gap:.8rem;margin-bottom:1.5rem;flex-wrap:wrap;}
-#searchResetContainer input#searchBar{flex:1 1 250px;max-width:400px;padding:.6rem 1rem;border-radius:8px;border:1px solid #cbd5e1;font-size:1rem;background:var(--card);color:var(--text);}
-[data-theme="dark"] #searchBar{border-color:#475569;background:#1e293b;color:#f1f5f9;}
-#searchResetContainer button#resetBtn{padding:.5rem 1rem;border:none;border-radius:6px;background:#f43f5e;color:white;font-weight:600;cursor:pointer;flex-shrink:0;}
-#searchResetContainer button#resetBtn:hover{background:#be123c;transform:scale(1.05);}
-
-/* ===== CATEGORY BUTTONS ===== */
-#filterButtons{text-align:center;margin-bottom:1rem;}
-#filterButtons button{margin:.3rem .3rem;padding:.5rem 1rem;border:none;border-radius:6px;background:var(--primary);color:white;font-weight:500;cursor:pointer;transition:transform .2s,background .25s;}
-#filterButtons button:hover{background:var(--btn-hover);transform:scale(1.05);}
-#filterButtons button.active{background:var(--accent);}
-
-/* ===== GRID ===== */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:2rem;}
-
-/* ===== CARD ===== */
-.card{background:var(--card);border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,.12);padding:1.6rem;display:grid;grid-template-columns:1fr 120px;gap:1.4rem;min-height:200px;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease,background .3s,color .3s;}
-.card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.2);}
-.card-content{display:flex;flex-direction:column;}
-.card h3{margin:.3rem 0 .5rem;color:var(--primary);font-size:1.25rem;}
-.card p{font-size:.95rem;line-height:1.5;color:var(--muted);flex-grow:1;}
-.card a{margin-top:1rem;text-decoration:none;color:white;background:linear-gradient(120deg,var(--primary),var(--accent));padding:.55rem 1rem;border-radius:8px;font-size:.92rem;width:fit-content;font-weight:500;}
-.card a:hover{background:var(--btn-hover);transform:scale(1.05);}
-
-/* ===== IMAGE COLUMN ===== */
-.media{display:flex;flex-direction:column;gap:.6rem;}
-.media img{width:100%;height:70px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;cursor:pointer;transition:transform .25s ease,filter .25s ease,border .25s ease;}
-[data-theme="dark"] .media img{border-color:#334155;}
-.media img:hover{transform:scale(1.05);filter:brightness(1.05);}
-
-/* ===== MODAL ===== */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:999;}
-.modal img{max-width:90%;max-height:90%;border-radius:10px;box-shadow:0 20px 40px rgba(0,0,0,.5);}
-.modal.active{display:flex;}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width:500px){.card{grid-template-columns:1fr;}.media img{height:60px;}}
-
-/* ===== CATEGORY TAG COLORS ===== */
-.tag[data-type="Timer"]{background:#e0f2fe;color:#0369a1;}
-[data-theme="dark"] .tag[data-type="Timer"]{background:#1e3a8af0;color:#a5f3fc;}
-
-.tag[data-type="Display"]{background:#fef3c7;color:#b45309;}
-[data-theme="dark"] .tag[data-type="Display"]{background:#78350f;color:#fcd34d;}
-
-.tag[data-type="Multiplexing"]{background:#ede9fe;color:#5b21b6;}
-[data-theme="dark"] .tag[data-type="Multiplexing"]{background:#4c1d95;color:#c4b5fd;}
-
-.tag[data-type="Input"]{background:#dcfce7;color:#15803d;}
-[data-theme="dark"] .tag[data-type="Input"]{background:#166534;color:#bbf7d0;}
-
-.tag[data-type="LCD"]{background:#fe92f2;color:#b91a1c;}
-[data-theme="dark"] .tag[data-type="LCD"]{background:#7f181d;color:#fe0eca;}
-
-
-.tag[data-type="Matrix"]{background:#fee2e2;color:#b91c1c;}
-[data-theme="dark"] .tag[data-type="Matrix"]{background:#7f1d1d;color:#fecaca;}
-
-.tag[data-type="Analog"]{background:#e0f7fa;color:#006064;}
-[data-theme="dark"] .tag[data-type="Analog"]{background:#004d4d;color:#81ecec;}
-
-.tag[data-type="Motor"]{background:#fff7ed;color:#c2410c;}
-[data-theme="dark"] .tag[data-type="Motor"]{background:#7c2d12;color:#fdba74;}
-
-.tag[data-type="Pulse"]{background:#f0fdfa;color:#0f766e;}
-[data-theme="dark"] .tag[data-type="Pulse"]{background:#134e4a;color:#5eead4;}
-
-.tag[data-type="PWM"]{background:#fef9c3;color:#713f12;}
-[data-theme="dark"] .tag[data-type="PWM"]{background:#78350f;color:#fde68a;}
-
-.tag[data-type="UART"]{background:#ede9fe;color:#4f46e5;}
-[data-theme="dark"] .tag[data-type="UART"]{background:#312e81;color:#c7d2fe;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto;background:var(--bg);color:var(--text);line-height:1.6;}
+header{background:linear-gradient(135deg,var(--primary),#0b2540);color:#fff;padding:2rem 1rem;text-align:center;}
+header h1{margin:0;font-size:2.2rem;}
+header p{opacity:.9;max-width:900px;margin:10px auto;}
+.page{max-width:1700px;margin:auto;padding:1.5rem;display:grid;grid-template-columns:260px 1fr 320px;gap:1.5rem;align-items:start;}
+.left-sidebar{position:sticky;top:1.2rem;height:calc(100vh - 2.4rem);overflow-y:auto;background:var(--card);border-radius:14px;padding:1rem;box-shadow:0 12px 28px rgba(0,0,0,.1);}
+.left-sidebar h3{margin:.2rem 0 1rem;color:var(--primary);text-align:center;}
+.lab-nav{display:flex;flex-direction:column;gap:.45rem;}
+.lab-link{display:flex;gap:.6rem;padding:.55rem .7rem;border-radius:8px;text-decoration:none;color:var(--text);font-weight:600;border-left:4px solid transparent;transition:.2s ease;cursor:pointer;}
+.lab-link:hover{background:#eef2ff;transform:translateX(3px);}
+.lab-link.active{background:#e0f2f1;border-left-color:var(--accent);color:#065f5b;}
+.main{display:flex;flex-direction:column;gap:2rem;}
+.card{background:var(--card);border-radius:16px;padding:1.6rem;box-shadow:0 10px 25px rgba(0,0,0,.08);}
+h2{margin-top:0;color:var(--primary);}
+.board-bg{position:relative;overflow:hidden;}
+.board-bg::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.88),rgba(255,255,255,.88)),url("assets/images/ARDU-8051-Board-1a..png") center/cover no-repeat;filter:blur(18px);transform:scale(1.1);z-index:0;}
+.board-bg > *{position:relative;z-index:1;}
+.figure{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin:2.5rem 0;}
+.figure img{width:80%;max-width:900px;background:#fff;padding:12px;border-radius:14px;box-shadow:0 12px 28px rgba(0,0,0,.12);cursor:zoom-in;}
+.figure figcaption{font-size:.9rem;color:var(--muted);}
+svg{width:100%;max-width:900px;display:block;margin:auto;}
+.pin-block rect{transition:.25s;}
+.pin-block:hover rect{fill:#c7d2fe;stroke:#1e40af;cursor:pointer;}
+.label{font-size:12px;font-weight:600;fill:#111;}
+#segDisplay{display:grid;grid-template-columns:repeat(4,80px);justify-content:center;gap:10px;margin:1rem 0 2rem;}
+.digit svg rect{transition:fill 0.25s ease, transform 0.2s ease;transform-origin:center center;}
+.digit svg rect:hover{transform:scale(1.05);}
+#pinControls{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
+.port h4{text-align:center;margin:0 0 .5rem;}
+.port .pins{display:flex;justify-content:center;gap:2px;}
+.port .pins button{width:28px; height:28px;border:1px solid var(--muted);border-radius:4px;background:#fff;cursor:pointer;transition: background .2s, transform .1s;}
+.port .pins button:hover{transform:scale(1.1);}
+#port-P0 .pins button{--pin-color:#3b82f6;}
+#port-P1 .pins button{--pin-color:#10b981;}
+#port-P2 .pins button{--pin-color:#f59e0b;}
+#port-P3 .pins button{--pin-color:#8b5cf6;}
+.port .pins button.active{background:var(--pin-color);color:#fff;font-weight:600;}
+input{width:100%;padding:12px;font-size:1rem;border-radius:8px;border:1px solid #cbd5e1;margin-bottom:1rem;}
+input:focus{outline:none;border-color:var(--accent);}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+.item{background:#f8fafc;padding:1rem;border-radius:10px;border-left:5px solid var(--accent);cursor:pointer;}
+.right-sidebar{position:sticky;top:1.2rem;height:calc(100vh - 2.4rem);overflow-y:auto;background:var(--card);border-radius:14px;padding:1rem;box-shadow:0 12px 28px rgba(0,0,0,.1);}
+.right-sidebar h3{text-align:center;margin:.2rem 0 1rem;color:var(--primary);}
+.right-sidebar section{margin-bottom:1.4rem;}
+.right-sidebar img,.right-sidebar iframe,.right-sidebar a{width:100%;border-radius:12px;margin-top:.4rem;}
+#zoom{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:9999;}
+#zoom img{max-width:92%;max-height:92%;background:#fff;padding:12px;border-radius:14px;}
+@media (max-width:1200px){.page{grid-template-columns:1fr;}.left-sidebar,.right-sidebar{position:relative;height:auto;}}
+footer{text-align:center;padding:2rem;color:var(--muted);}
 </style>
 </head>
-<body data-theme="light">
-
+<body>
 <header>
-  <h1>ARDU-8051 Virtual Laboratory</h1>
-  <p>Interactive, simulation-based 8051 microcontroller experiments mapped directly to the ARDU-8051 hardware platform.</p>
-  <button id="themeToggle">🌙 Dark Mode</button>
+<h1>ARDU-8051 Full Virtual Lab</h1>
+<p>Interactive 8051 board, all common components, experiment-first learning</p>
 </header>
 
-<section id="experiments">
-<h2>🧪 Experiment Dashboard</h2>
+<div class="page">
 
-<div id="searchResetContainer">
-  <input type="text" id="searchBar" placeholder="Search by experiment name or type...">
-  <button id="resetBtn">Reset Filters</button>
-</div>
+<!-- LEFT SIDEBAR -->
+<aside class="left-sidebar">
+<h3>🧪 Experiments</h3>
+<nav class="lab-nav">
+<a class="lab-link">💡 LED Blinking</a>
+<a class="lab-link">🔢 7 Segment</a>
+<a class="lab-link">📊 4 Digit Segment</a>
+<a class="lab-link">🔘 Push Button</a>
+<a class="lab-link">📈 ADC0804</a>
+<a class="lab-link">🧱 Dot Matrix</a>
+<a class="lab-link">🖥️ LCD</a>
+<a class="lab-link">⌨️ Keypad</a>
+<a class="lab-link">⚙️ DC Motor</a>
+<a class="lab-link">🔁 Stepper Motor</a>
+<a class="lab-link">🎯 Servo Motor</a>
+<a class="lab-link">📡 UART</a>
+</nav>
+</aside>
 
-<div id="filterButtons">
-  <button data-filter="all" class="active">All</button>
-  <button data-filter="Timer">Timer</button>
-  <button data-filter="Display">Display</button>
-  <button data-filter="Multiplexing">Multiplexing</button>
-  <button data-filter="Input">Input</button>
-  <button data-filter="Matrix">Matrix</button>
-  <button data-filter="Analog">Analog</button>
-  <button data-filter="Motor">Motor</button>
-  <button data-filter="Pulse">Pulse</button>
-  <button data-filter="PWM">PWM</button>
-  <button data-filter="UART">UART</button>
-</div>
+<!-- CENTER -->
+<main class="main">
 
-<div class="grid" id="experimentGrid">
+<section class="card board-bg">
+<h2>ARDU-8051 Hardware Shield</h2>
+<figure class="figure">
+<img src="assets/images/ARDU-8051-Board-1a..png" onclick="zoom(this)">
+<figcaption>ARDU-8051 AT89C51 Development Board</figcaption>
+</figure>
 
-<!-- ===== EXPERIMENT CARDS ===== -->
-<div class="card" data-type="Timer">
-  <div class="card-content">
-    <span class="tag" data-type="Timer">Timer</span>
-    <h3>LED Blinking</h3>
-    <p>Generate delays using Timer-0 and toggle an LED on Port-1.</p>
-    <a href="../lab/led.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/led-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Display">
-  <div class="card-content">
-    <span class="tag" data-type="Display">Display</span>
-    <h3>7-Segment Display</h3>
-    <p>Interface a single 7-segment display using 8051 I/O ports.</p>
-    <a href="../lab/seven-segment.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="../assets/images/7seg-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Multiplexing">
-  <div class="card-content">
-    <span class="tag" data-type="Multiplexing">Multiplexing</span>
-    <h3>4-Digit 7-Segment</h3>
-    <p>Display multi-digit numbers using time-multiplexing.</p>
-    <a href="../lab/seven-segment-Multiplex.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="../assets/images/seven-segment-counter-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Input">
-  <div class="card-content">
-    <span class="tag" data-type="Input">Input</span>
-    <h3>Push Button</h3>
-    <p>Read digital inputs and control outputs using polling.</p>
-    <a href="../lab/push-button.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/button-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-
-<div class="card" data-type="LCD">
-  <div class="card-content">
-    <span class="tag" data-type="LCD">LCD</span>
-    <h3>16X2 LCD</h3>
-    <p>Interfaceand display characters on LCD.</p>
-    <a href="../lab/lcd.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="../assets/images/lcd-4bit-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/lcd-4bit-simulation.png" onclick="preview(this)">
-  </div>
-</div>
-
-
-
-
-<div class="card" data-type="Matrix">
-  <div class="card-content">
-    <span class="tag" data-type="Matrix">Matrix</span>
-    <h3>4×4 Keypad + LCD</h3>
-    <p>Scan a matrix keypad and display characters on LCD.</p>
-    <a href="../lab/keypad.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/keypad-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Analog">
-  <div class="card-content">
-    <span class="tag" data-type="Analog">Analog</span>
-    <h3>ADC0804</h3>
-    <p>Read analog signals using external ADC interfacing.</p>
-    <a href="../lab/adc.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/adc-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Motor">
-  <div class="card-content">
-    <span class="tag" data-type="Motor">Motor</span>
-    <h3>DC Motor</h3>
-    <p>Control DC motor ON/OFF and direction.</p>
-    <a href="../lab/dc-motor.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/dc-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Pulse">
-  <div class="card-content">
-    <span class="tag" data-type="Pulse">Pulse</span>
-    <h3>Stepper Motor</h3>
-    <p>Generate step sequences to rotate a stepper motor.</p>
-    <a href="../lab/stepper-motor.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/stepper-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="PWM">
-  <div class="card-content">
-    <span class="tag" data-type="PWM">PWM</span>
-    <h3>Servo Motor</h3>
-    <p>Control servo angle using software-generated PWM.</p>
-    <a href="../lab/servo-motor.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-    <img src="assets/images/servo-sim.gif" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="UART">
-  <div class="card-content">
-    <span class="tag" data-type="UART">UART</span>
-    <h3>Serial Communication</h3>
-    <p>Transmit and receive data using 8051 UART.</p>
-    <a href="../lab/serial.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="../assets/images/ARDU-8051-Project-Banner-BG.png" onclick="preview(this)">
-    <img src="assets/images/uart-sim.gif" onclick="preview(this)">
-  </div>
-</div>
-
+<!-- Binary pin toggles -->
+<section class="card">
+<h2>💻 Binary Pin Control (P0–P3)</h2>
+<div id="pinControls">
+  <div class="port" id="port-P0"><h4>P0</h4><div class="pins"></div></div>
+  <div class="port" id="port-P1"><h4>P1</h4><div class="pins"></div></div>
+  <div class="port" id="port-P2"><h4>P2</h4><div class="pins"></div></div>
+  <div class="port" id="port-P3"><h4>P3</h4><div class="pins"></div></div>
 </div>
 </section>
 
-<div class="modal" id="modal">
-  <img id="modalImg">
+<h2>🧩 8051 Interactive Board</h2>
+<svg viewBox="0 0 900 420">
+<rect x="60" y="60" width="780" height="300" rx="20" fill="#e0e7ff" stroke="#1e3a8a" stroke-width="3"/>
+<!-- CPU -->
+<g class="pin-block" id="CPU"><rect x="350" y="120" width="200" height="160" rx="10" fill="#fff" stroke="#1e3a8a" stroke-width="2"/><text x="420" y="200" class="label">8051 CPU</text></g>
+<!-- Pins -->
+<g class="pin-block" id="P1.0"><rect x="110" y="120" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+<g class="pin-block" id="P1.1"><rect x="160" y="120" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+<g class="pin-block" id="P0.0"><rect x="110" y="180" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+<g class="pin-block" id="P0.1"><rect x="160" y="180" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+<g class="pin-block" id="P2.0"><rect x="110" y="240" width="40" height="40" rx="6" fill="#fff" stroke="#1e3a8a" stroke-width="2"/></g>
+<!-- LEDs -->
+<circle id="led-P1.0" cx="130" cy="140" r="6" fill="#fcd34d" visibility="hidden"/>
+<circle id="led-P1.1" cx="180" cy="140" r="6" fill="#fcd34d" visibility="hidden"/>
+<!-- 7-Segment -->
+<g id="7seg-P0.0" transform="translate(200,260)" visibility="hidden">
+<rect x="0" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+<rect x="14" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+<rect x="28" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+<rect x="42" y="0" width="12" height="40" fill="#f87171" rx="2"/>
+</g>
+<!-- Motors -->
+<g id="motor-P2.0" transform="translate(130,260)" visibility="hidden">
+<circle cx="0" cy="0" r="12" fill="#3b82f6"/>
+<line x1="0" y1="-12" x2="0" y2="12" stroke="#fff" stroke-width="2"/>
+<line x1="-12" y1="0" x2="12" y2="0" stroke="#fff" stroke-width="2"/>
+</g>
+<g id="stepper-P2.0" transform="translate(300,260)" visibility="hidden">
+<circle cx="0" cy="0" r="20" fill="#a78bfa"/>
+<line x1="0" y1="-20" x2="0" y2="20" stroke="#fff" stroke-width="2"/>
+<line x1="-20" y1="0" x2="20" y2="0" stroke="#fff" stroke-width="2"/>
+</g>
+
+</svg>
+
+<section class="card">
+<h2>🔍 Search Experiments</h2>
+<input type="text" id="search" placeholder="LED, LCD, ADC, DC, 7-Segment, Stepper…">
+<div class="grid" id="list">
+<div class="item" data-exp="led">LED Blinking</div>
+<div class="item" data-exp="7seg">7-Segment</div>
+<div class="item" data-exp="4digit">4-Digit 7-Segment</div>
+<div class="item" data-exp="push">Push Button</div>
+<div class="item" data-exp="adc">ADC0804</div>
+<div class="item" data-exp="lcd">LCD</div>
+<div class="item" data-exp="motor">DC Motor</div>
+<div class="item" data-exp="stepper">Stepper Motor</div>
+<div class="item" data-exp="servo">Servo Motor</div>
+<div class="item" data-exp="dot">Dot Matrix</div>
+<div class="item" data-exp="keypad">Keypad</div>
+<div class="item" data-exp="uart">UART</div>
+</div>
+</section>
+
+</section>
+</main>
+
+<!-- RIGHT SIDEBAR -->
+<aside class="right-sidebar">
+<h3>📌 Notes & Resources</h3>
+<section>
+<ul>
+<li>AT89C51 – 8-bit MCU</li>
+<li>32 programmable I/O pins</li>
+<li>2 timers, 1 UART</li>
+<li>Interrupt-driven design</li>
+</ul>
+</section>
+<section>
+<img src="assets/images/led-connection.png">
+</section>
+<section>
+<iframe height="180" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+</section>
+</aside>
 </div>
 
+<footer>ARDU-8051 Virtual Lab • Open Source • GitHub Pages Ready</footer>
+<div id="zoom" onclick="this.style.display='none'"><img></div>
+
 <script>
-// Theme toggle
-const themeBtn = document.getElementById('themeToggle');
-themeBtn.addEventListener('click', ()=>{
-  const body = document.body;
-  if(body.dataset.theme === "light"){
-    body.dataset.theme = "dark";
-    themeBtn.textContent = "☀️ Light Mode";
-  }else{
-    body.dataset.theme = "light";
-    themeBtn.textContent = "🌙 Dark Mode";
+// ZOOM IMAGE
+function zoom(img){const z=document.getElementById("zoom"); z.style.display="flex"; z.querySelector("img").src=img.src;}
+
+// DYNAMIC PIN GENERATION
+['P0','P1','P2','P3'].forEach(port=>{
+  const container=document.querySelector(`#port-${port} .pins`);
+  for(let i=0;i<8;i++){
+    const btn=document.createElement('button'); btn.innerText=i; btn.dataset.pin=`${port}.${i}`;
+    btn.addEventListener('click',()=>{btn.classList.toggle('active'); updatePinLED(btn.dataset.pin);});
+    container.appendChild(btn);
   }
 });
 
-// Image modal
-function preview(img){
-  const modal = document.getElementById('modal');
-  document.getElementById('modalImg').src = img.src;
-  modal.classList.add('active');
+// PIN TO LED FUNCTION
+function updatePinLED(pin){const ledMap={'P1.0':'led-P1.0','P1.1':'led-P1.1'}; if(ledMap[pin]){const el=document.getElementById(ledMap[pin]); el.setAttribute('visibility',el.getAttribute('visibility')==='visible'?'hidden':'visible');}}
+
+// SEARCH
+const search=document.getElementById("search");
+const items=document.querySelectorAll(".item");
+search.addEventListener("keyup",()=>{const q=search.value.toLowerCase(); items.forEach(i=>i.style.display=i.innerText.toLowerCase().includes(q)?"block":"none");});
+
+// RESET BOARD
+function resetBoard(){
+  clearInterval(window.lcdInterval); clearInterval(window.adcInterval);
+  clearInterval(window.ledInterval); clearInterval(window.segInterval);
+  clearInterval(window.dcInterval); clearInterval(window.stepperInterval);
+  clearInterval(window.servoInterval);
+  document.querySelectorAll(".pin-block rect").forEach(r=>r.setAttribute("fill","#fff"));
+  document.querySelectorAll("circle, g[id^='motor'], g[id^='7seg']").forEach(e=>e.setAttribute("visibility","hidden"));
+  const lcd=document.getElementById("lcd-overlay"); if(lcd) lcd.remove();
+  const adc=document.getElementById("adc-overlay"); if(adc) adc.remove();
 }
-document.getElementById('modal').addEventListener('click', e=>{
-  if(e.target.id==='modal') e.currentTarget.classList.remove('active');
-});
-document.addEventListener('keydown', e=>{
-  if(e.key==='Escape') document.getElementById('modal').classList.remove('active');
-});
 
-// Search/filter functionality
-const searchBar = document.getElementById('searchBar');
-const cards = document.querySelectorAll('.card');
-function filterCards(){
-  const query = searchBar.value.toLowerCase();
-  const activeFilter = document.querySelector('#filterButtons button.active').dataset.filter.toLowerCase();
-  cards.forEach(card=>{
-    const title = card.querySelector('h3').textContent.toLowerCase();
-    const type = card.dataset.type.toLowerCase();
-    const matchesSearch = title.includes(query) || type.includes(query);
-    const matchesFilter = activeFilter === 'all' || type === activeFilter;
-    card.style.display = (matchesSearch && matchesFilter) ? "grid" : "none";
+// EXPERIMENTS FUNCTIONS
+function runLED(){ resetBoard(); const led1=document.getElementById("led-P1.0"); const led2=document.getElementById("led-P1.1"); let state=false; window.ledInterval=setInterval(()=>{state=!state; led1.setAttribute("visibility",state?"visible":"hidden"); led2.setAttribute("visibility",!state?"visible":"hidden");},500); }
+
+function run7Seg(){ resetBoard(); const seg=document.getElementById("7seg-P0.0"); seg.setAttribute("visibility","visible"); let num=0; window.segInterval=setInterval(()=>{seg.setAttribute("transform",`translate(200,260) rotate(${num*36})`); num=(num+1)%10;},300); }
+
+function runDCMotor(){ resetBoard(); const motor=document.getElementById("motor-P2.0"); motor.setAttribute("visibility","visible"); let deg=0; window.dcInterval=setInterval(()=>{motor.setAttribute("transform",`translate(130,260) rotate(${deg})`); deg=(deg+15)%360;},200); }
+
+function runStepper(){ resetBoard(); const stepper=document.getElementById("stepper-P2.0"); stepper.setAttribute("visibility","visible"); let deg=0; window.stepperInterval=setInterval(()=>{stepper.setAttribute("transform",`translate(300,260) rotate(${deg})`); deg=(deg+30)%360;},400); }
+
+// SIDEBAR LINK CLICK
+document.querySelectorAll(".lab-link").forEach(link=>{
+  link.addEventListener("click",()=>{
+    document.querySelectorAll(".lab-link").forEach(l=>l.classList.remove("active"));
+    link.classList.add("active");
+    const exp=link.innerText.split(" ")[1].toLowerCase();
+    if(exp==="led") runLED();
+    else if(exp==="7") run7Seg();
+    else if(exp==="dc") runDCMotor();
+    else if(exp==="stepper") runStepper();
   });
-}
-searchBar.addEventListener('input', filterCards);
-
-// Category buttons filter
-const filterButtons = document.querySelectorAll('#filterButtons button');
-filterButtons.forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    filterButtons.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    filterCards();
-  });
-});
-
-// Reset button
-document.getElementById('resetBtn').addEventListener('click', ()=>{
-  searchBar.value = '';
-  filterButtons.forEach(b=>b.classList.remove('active'));
-  document.querySelector('#filterButtons button[data-filter="all"]').classList.add('active');
-  filterCards();
 });
 </script>
-
 </body>
 </html>
-
