@@ -36,7 +36,7 @@
 ## 🌐 Live Links
 
 - 🔬 **Virtual Lab (Online):**  
-  https://gmostofabd.github.io/ARDU-8051/
+  https://gmostofabd.github.io/ARDU-8051/lab/
 
 - 📘 **Documentation:**  
   https://github.com/gmostofabd/ARDU-8051/tree/main/docs
