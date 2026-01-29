@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ARDU-8051 Interactive Lab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#f4f6fb;
+  --panel:#ffffff;
+  --primary:#1e3a8a;
+  --accent:#0ea5a4;
+  --code-bg:#0f172a;
+  --code-text:#e5e7eb;
+  --kw:#38bdf8;
+  --num:#facc15;
+  --lbl:#a78bfa;
+  --cmt:#64748b;
+  --mono:Consolas,monospace;
+}
+
+body{margin:0; background:var(--bg); font-family:system-ui;}
+#app{display:grid; grid-template-columns:2.2fr 1fr; height:100vh; gap:8px; padding:8px;}
+.panel{background:var(--panel); border-radius:10px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:10px; overflow:hidden;}
+h3{margin:6px 0; color:var(--primary);}
+
+/* Editor */
+#editorWrap{display:flex; height:calc(100% - 70px); background:var(--code-bg); border-radius:8px; overflow:hidden;}
+#lineNums{background:#020617; color:#94a3b8; padding:10px 6px; text-align:right; font-family:var(--mono); user-select:none;}
+#editor{flex:1; background:transparent; color:var(--code-text); padding:10px; font-family:var(--mono); font-size:14px; outline:none; overflow:auto; white-space:pre;}
+.kw{color:var(--kw);} .num{color:var(--num);} .lbl{color:var(--lbl);} .cmt{color:var(--cmt);}
+
+/* Controls */
+.controls button{background:var(--primary); color:#fff; border:none; padding:6px 12px; border-radius:6px; margin:3px; cursor:pointer;}
+.controls button:hover{opacity:.9}
+
+/* CPU */
+.reg{font-family:var(--mono); background:#f1f5f9; padding:5px; margin:4px 0; border-radius:4px;}
+
+/* Board Pins */
+.board{display:grid; grid-template-columns:repeat(8,1fr); gap:6px; margin-bottom:10px;}
+.pin{width:18px; height:18px; border-radius:50%; background:#9ca3af; position:relative; transition:.2s;}
+.pin.output.active{background:#22c55e; box-shadow:0 0 10px #22c55e;}
+.pin.output.low{background:#ef4444;}
+.pin.input{border:2px dashed #64748b; background:transparent;}
+.pin:hover::after{content:attr(data-name); position:absolute; top:-28px; left:50%; transform:translateX(-50%); background:#020617; color:#fff; font-size:11px; padding:2px 6px; border-radius:4px; white-space:nowrap;}
+
+/* 7-Segment */
+#segDisplay{display:flex; gap:4px; justify-content:center; margin-top:10px;}
+.segment{width:16px; height:32px; background:#374151; border-radius:4px; transition:0.2s;}
+.segment.on{background:#facc15;}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+<!-- Left: Editor -->
+<div class="panel">
+<h3>8051 Assembly Editor</h3>
+<div class="controls">
+<button onclick="assemble()">Assemble</button>
+<button onclick="run()">Run</button>
+<button onclick="step()">Step</button>
+<button onclick="resetCPU()">Reset</button>
+</div>
+
+<div id="editorWrap">
+<pre id="lineNums">1</pre>
+<div id="editor" contenteditable="true" spellcheck="false">
+ORG 0000H
+MOV P1,#0F0H
+HERE: CPL P1
+SJMP HERE
+END
+</div>
+</div>
+</div>
+
+<!-- Right: Board -->
+<div class="panel">
+<h3>Live Hardware Pins</h3>
+<b>P1</b>
+<div class="board" id="P1pins"></div>
+
+<h3>7-Segment Display (connected to P1 bits 0-3)</h3>
+<div id="segDisplay">
+<div class="segment" id="seg0"></div>
+<div class="segment" id="seg1"></div>
+<div class="segment" id="seg2"></div>
+<div class="segment" id="seg3"></div>
+</div>
+
+<h3>CPU State</h3>
+<div class="reg">PC: <span id="pc">0000</span></div>
+<div class="reg">A : <span id="acc">00</span></div>
+<div class="reg">PSW: <span id="psw">00</span></div>
+<div class="reg">P1: <span id="p1">00</span></div>
+</div>
+
+</div>
+
+<script>
+/* ============ LINE NUMBERS ============ */
+const ed=document.getElementById("editor");
+const ln=document.getElementById("lineNums");
+function updateLines(){ ln.textContent=ed.innerText.split("\n").map((_,i)=>i+1).join("\n"); }
+ed.addEventListener("input",()=>{updateLines(); syntaxHighlight();});
+updateLines();
+
+/* ============ SYNTAX HIGHLIGHT ============ */
+function syntaxHighlight(){
+  const sel = window.getSelection();
+  const start = sel.anchorOffset;
+  let text = ed.innerText.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  let html = text
+    .replace(/(;.*)/g,'<span class="cmt">$1</span>')
+    .replace(/\b(MOV|CPL|SJMP|ORG|END)\b/g,'<span class="kw">$1</span>')
+    .replace(/\b([A-Z]+):/g,'<span class="lbl">$1</span>:')
+    .replace(/#([0-9A-F]+H)/g,'#<span class="num">$1</span>');
+  ed.innerHTML = html;
+  sel.collapse(ed.childNodes[0] || ed, start);
+}
+
+/* ============ CPU & BOARD ============ */
+let PC=0,A=0,PSW=0;
+let PORTS={P1:0};
+let program=[],running=false;
+
+/* ===== INIT P1 PINS ===== */
+const p1=document.getElementById("P1pins");
+for(let i=7;i>=0;i--){
+  const d=document.createElement("div");
+  d.className="pin output low";
+  d.dataset.port="P1"; d.dataset.bit=i;
+  d.dataset.name=`P1.${i}`;
+  p1.appendChild(d);
+}
+
+/* ===== 7-SEG ===== */
+const segs=[0,1,2,3].map(i=>document.getElementById("seg"+i));
+function update7Seg(value){
+  for(let i=0;i<4;i++){
+    if((value>>i)&1) segs[i].classList.add("on");
+    else segs[i].classList.remove("on");
+  }
+}
+
+/* ===== ASSEMBLER ===== */
+function assemble(){
+  program=[];
+  PC=0;
+  ed.innerText.split("\n").forEach(l=>{
+    l=l.trim();
+    if(!l||l.startsWith(";"))return;
+    program.push(l);
+  });
+  alert("Assembled "+program.length+" lines");
+}
+
+/* ===== EXECUTION ===== */
+function step(){ if(PC>=program.length) return; exec(program[PC]); PC++; updateUI(); }
+function run(){ running=true; const t=setInterval(()=>{if(!running||PC>=program.length){clearInterval(t);return;} step();},400);}
+function resetCPU(){PC=A=PSW=0; PORTS.P1=0; boardReset(); updateUI();}
+
+/* ===== INSTRUCTIONS ===== */
+function exec(inst){
+  if(inst.startsWith("MOV P1")){
+    const v=parseInt(inst.split("#")[1],16);
+    PORTS.P1=v; boardWrite("P1",v);
+  }
+  if(inst.startsWith("CPL P1")){
+    PORTS.P1^=0xFF; boardWrite("P1",PORTS.P1);
+  }
+}
+
+/* ===== UI ===== */
+function updateUI(){
+  pc.textContent=PC.toString(16).padStart(4,"0");
+  acc.textContent=A.toString(16).padStart(2,"0");
+  psw.textContent=PSW.toString(16).padStart(2,"0");
+  p1.textContent=PORTS.P1.toString(16).padStart(2,"0");
+  update7Seg(PORTS.P1 & 0x0F); // lowest 4 bits -> 7-seg
+}
+
+/* ===== PIN HIGHLIGHT ===== */
+function highlightPortPins(port,value){
+  document.querySelectorAll(`.pin[data-port="${port}"]`).forEach(p=>{
+    const b=parseInt(p.dataset.bit);
+    const s=(value>>b)&1;
+    p.classList.remove("active","low");
+    p.classList.add(s?"active":"low");
+  });
+}
+
+/* ===== BOARD BRIDGE ===== */
+function boardWrite(port,value){highlightPortPins(port,value);}
+function boardRead(port){return 0;}
+function boardReset(){highlightPortPins("P1",0); update7Seg(0);}
+</script>
+</body>
+</html>
