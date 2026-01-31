@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARDU-8051 | Editable LCD Virtual Lab</title>
+<style>
+body { font-family:sans-serif; margin:0; padding:0; background:#f9f9f9; color:#333;}
+header{background:#1f3c88;color:#fff;padding:2rem;text-align:center;}
+header h1{margin:0;font-size:2rem;}
+section{max-width:900px;margin:2rem auto;padding:1rem;background:#fff;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.lab-container{display:flex;flex-wrap:wrap;gap:1rem;}
+.lab-left,.lab-right{flex:1 1 400px;}
+.lab-code{background:#1e1e1e;color:#0f0;padding:1rem;border-radius:8px;font-family:monospace;white-space:pre;resize:vertical;overflow:auto;}
+.lab-board{background:#222;border-radius:10px;padding:1rem;text-align:center;position:relative;}
+.lab-lcd{background:#111;color:#0f0;font-family:monospace;width:320px;height:64px;margin:auto;padding:0.5rem;border-radius:5px;display:flex;flex-direction:column;justify-content:center;letter-spacing:2px;}
+.lab-btn{padding:0.4rem 0.8rem;margin:0.3rem;border:none;border-radius:6px;background:#1f3c88;color:#fff;cursor:pointer;}
+.lab-btn:hover{background:#0a9396;}
+</style>
+</head>
+<body>
+
+<header>
+<h1>ARDU-8051 Editable LCD Lab</h1>
+<p>8-bit Data Mode | Type your assembly or hex code and see LCD updates</p>
+</header>
+
+<section>
+<div class="lab-container">
+
+<!-- LEFT: CODE -->
+<div class="lab-left">
+<h3>Edit Your Code</h3>
+<textarea id="labCode" class="lab-code" rows="20">
+// Example: MOV P2,#0x48  → writes 'H'
+// You can also directly write: 48 45 4C 4C 4F 20 57 4F 52 4C 44
+</textarea>
+
+<button class="lab-btn" onclick="labStep()">Step</button>
+<button class="lab-btn" onclick="labRun()">Run</button>
+<button class="lab-btn" onclick="labReset()">Reset</button>
+</div>
+
+<!-- RIGHT: LCD DISPLAY -->
+<div class="lab-right">
+<h3>Virtual LCD</h3>
+<div class="lab-board">
+<div id="lcdDisplay" class="lab-lcd">
+<span id="lcdRow1">                </span>
+<span id="lcdRow2">                </span>
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+let pc=0,runInt=null;
+let lcdRow1="                ", lcdRow2="                "; // 16 chars each
+const lcdRow1Elem=document.getElementById("lcdRow1");
+const lcdRow2Elem=document.getElementById("lcdRow2");
+const codeArea=document.getElementById("labCode");
+
+function parseCode(){
+  // split into lines, ignore empty
+  return codeArea.value.split("\n").map(l=>l.trim()).filter(l=>l!=="");
+}
+
+function updateLCD(){
+  lcdRow1Elem.innerText=lcdRow1;
+  lcdRow2Elem.innerText=lcdRow2;
+}
+
+function executeLine(line){
+  // Support MOV P2,#0xHH
+  if(line.toUpperCase().startsWith("MOV P2,#0X")){
+    const hex=line.split("#")[1];
+    const charCode=parseInt(hex,16);
+    writeChar(charCode);
+  } else {
+    // If user enters just hex bytes: 48 45 4C ...
+    const hexBytes=line.match(/[0-9A-Fa-f]{2}/g);
+    if(hexBytes){
+      hexBytes.forEach(h=>{
+        writeChar(parseInt(h,16));
+      });
+    }
+  }
+}
+
+function writeChar(charCode){
+  if(lcdRow1.indexOf(" ")!==-1){
+    lcdRow1=lcdRow1.replace(" ",""+String.fromCharCode(charCode));
+  } else {
+    lcdRow2=lcdRow2.replace(" ",""+String.fromCharCode(charCode));
+  }
+}
+
+function labStep(){
+  const codeLines=parseCode();
+  if(pc>=codeLines.length)return;
+  executeLine(codeLines[pc]);
+  pc++;
+  updateLCD();
+}
+
+function labRun(){
+  if(runInt)return;
+  const codeLines=parseCode();
+  runInt=setInterval(()=>{
+    if(pc>=codeLines.length){clearInterval(runInt);runInt=null;return;}
+    executeLine(codeLines[pc]);
+    pc++;
+    updateLCD();
+  },400);
+}
+
+function labReset(){
+  clearInterval(runInt);
+  runInt=null;
+  pc=0;
+  lcdRow1="                ";
+  lcdRow2="                ";
+  updateLCD();
+}
+
+updateLCD();
+</script>
+
+</section>
+</body>
+</html>

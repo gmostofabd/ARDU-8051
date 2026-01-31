@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>8051 Virtual Lab | DC Motor</title>
+<style>
+body{font-family:Arial;background:#f4f6fb}
+h1{background:#1f3c88;color:#fff;padding:1rem;text-align:center}
+.lab{max-width:900px;margin:auto;background:#fff;padding:1rem;border-radius:12px}
+.motor{
+  width:120px;height:120px;border:6px solid #444;
+  border-radius:50%;margin:20px auto;position:relative;
+}
+.motor::after{
+  content:"";width:6px;height:50px;background:red;
+  position:absolute;left:50%;top:10px;
+  transform-origin:bottom;
+}
+.spin{animation:rot 1s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+button{padding:.4rem 1rem;margin:.3rem}
+pre{background:#1e1e1e;color:#00ff9c;padding:1rem}
+</style>
+</head>
+
+<body>
+<h1>DC Motor Control – 8051</h1>
+
+<div class="lab">
+
+<pre>
+; P1.0 -> MOTOR ON/OFF
+; P1.1 -> DIRECTION
+
+ORG 0000H
+SETB P1.0      ; Motor ON
+SETB P1.1      ; Clockwise
+SJMP $
+END
+</pre>
+
+<div class="motor" id="m"></div>
+
+<button onclick="on()">ON</button>
+<button onclick="off()">OFF</button>
+
+</div>
+
+<script>
+function on(){document.getElementById("m").classList.add("spin")}
+function off(){document.getElementById("m").classList.remove("spin")}
+</script>
+</body>
+</html>

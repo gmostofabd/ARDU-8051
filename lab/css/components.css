@@ -1,0 +1,138 @@
+
+/* ===================== LED ===================== */
+.led {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #222;
+  display: inline-block;
+  margin: 5px;
+  transition: background 0.2s;
+}
+.led.on { background: #0f0; }
+
+/* ===================== 7-Segment ===================== */
+.seg7 {
+  position: relative;
+  width: 40px;
+  height: 70px;
+  margin: 10px;
+}
+.seg7 .segment {
+  position: absolute;
+  background: #222;
+  transition: background 0.2s;
+}
+.seg7 .segment.on { background: #f00; }
+.seg7 .a { top:0; left:8px; width:24px; height:6px; }
+.seg7 .b { top:6px; right:0; width:6px; height:28px; }
+.seg7 .c { bottom:6px; right:0; width:6px; height:28px; }
+.seg7 .d { bottom:0; left:8px; width:24px; height:6px; }
+.seg7 .e { bottom:6px; left:0; width:6px; height:28px; }
+.seg7 .f { top:6px; left:0; width:6px; height:28px; }
+.seg7 .g { top:32px; left:8px; width:24px; height:6px; }
+
+/* ===================== LCD ===================== */
+.lcd {
+  width: 120px;
+  height: 30px;
+  background: #006400;
+  color: #0f0;
+  font-family: monospace;
+  text-align: center;
+  line-height: 30px;
+  margin: 5px;
+  border-radius: 3px;
+}
+
+/* ===================== Motor ===================== */
+.motor, .stepper, .servo {
+  width: 50px;
+  height: 50px;
+  background: #555;
+  border-radius: 50%;
+  border: 4px solid #333;
+  margin: 10px;
+  display: inline-block;
+  transition: transform 0.5s ease-in-out;
+  position: relative;
+}
+.motor::after, .stepper::after, .servo::after {
+  content: "";
+  width: 4px;
+  height: 20px;
+  background: #ff0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  border-radius: 2px;
+}
+
+/* ===================== Dot Matrix ===================== */
+.dot-matrix {
+  width: 40px;
+  height: 40px;
+  background: #222;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 3px;
+  transition: background 0.3s;
+}
+
+/* ===================== Buttons ===================== */
+#component-display button {
+  margin: 5px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #333;
+  background: #444;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#component-display button:hover { background: #555; }
+#component-display button.active { background: #0f0; color: #000; }
+
+/* ===================== Keypad ===================== */
+.keypad button {
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+  background: #333;
+  color: #fff;
+  border: 1px solid #222;
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+.keypad button.active { background: #0f0; color: #000; }
+
+    border-radius: 4px;
+    background: #444;
+    border: 1px solid #222;
+    cursor: pointer;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+}
+
+.hw-button.pressed {
+    background: #0ea5e9;
+}
+
+/* ----- MOTORS, STEPPER, SERVO ----- */
+.motor, .stepper, .servo {
+    width: 40px;
+    height: 40px;
+    background: #666;
+    border-radius: 4px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+}
