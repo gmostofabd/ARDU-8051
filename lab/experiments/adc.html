@@ -1,0 +1,94 @@
+<section class="section-light">
+<h2>🔢 Virtual Lab: ADC0804 Analog-to-Digital Conversion</h2>
+
+<div class="highlight-box">
+This experiment demonstrates <b>ADC0804 interfacing with AT89S52</b>.  
+An analog voltage (0–5V) is converted into an 8-bit digital value and mapped to <b>Port-0 (P0.0–P0.7)</b>.
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center">
+
+<!-- LEFT: Assembly Code -->
+<div>
+<h3>📜 Assembly Code (Conceptual)</h3>
+<pre style="background:#111;color:#0f0;padding:1rem;border-radius:8px;font-size:0.9rem;">
+ORG 0000H
+START:
+    MOV P0, #0FFH     ; Read ADC data
+    SJMP START
+END
+</pre>
+
+<p style="font-size:0.9rem">
+ADC0804 continuously updates Port-0 with the converted digital value.
+</p>
+</div>
+
+<!-- RIGHT: ADC Simulation -->
+<div>
+<h3>🎛 Analog Input</h3>
+
+<label><b>Analog Voltage (0–5V)</b></label>
+<input type="range" min="0" max="5" step="0.01" value="2.5"
+       id="adcSlider" style="width:100%">
+
+<p>
+Voltage: <span id="voltage">2.50</span> V  
+</p>
+
+<p>
+ADC Output:  
+<b><span id="adcHex">0x80</span></b>  
+(<span id="adcBin">10000000</span>)
+</p>
+
+<h4>Port-0 State</h4>
+<div id="port0" style="display:flex;gap:6px;">
+</div>
+</div>
+
+</div>
+
+<caption style="text-align:center;font-weight:bold;margin-top:1rem;">
+Figure: ADC0804 Virtual Experiment – Analog Input to Port-0 Mapping
+</caption>
+</section>
+
+<script>
+const slider = document.getElementById("adcSlider");
+const voltageText = document.getElementById("voltage");
+const adcHex = document.getElementById("adcHex");
+const adcBin = document.getElementById("adcBin");
+const port0 = document.getElementById("port0");
+
+function updateADC() {
+  const voltage = parseFloat(slider.value);
+  voltageText.textContent = voltage.toFixed(2);
+
+  // ADC0804: 8-bit, 0–5V
+  const digital = Math.round((voltage / 5) * 255);
+
+  adcHex.textContent = "0x" + digital.toString(16).toUpperCase().padStart(2,"0");
+  adcBin.textContent = digital.toString(2).padStart(8,"0");
+
+  port0.innerHTML = "";
+  for (let i = 7; i >= 0; i--) {
+    const bit = (digital >> i) & 1;
+    const led = document.createElement("div");
+    led.style.width = "26px";
+    led.style.height = "26px";
+    led.style.borderRadius = "6px";
+    led.style.background = bit ? "#0a9396" : "#ccc";
+    led.style.color = "#fff";
+    led.style.display = "flex";
+    led.style.alignItems = "center";
+    led.style.justifyContent = "center";
+    led.style.fontSize = "0.7rem";
+    led.textContent = "P0." + i;
+    port0.appendChild(led);
+  }
+}
+
+slider.addEventListener("input", updateADC);
+updateADC();
+</script>

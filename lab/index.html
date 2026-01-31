@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARDU-8051 Ultimate Interactive Lab</title>
+
+<style>
+:root{--primary:#1e3a8a;--accent:#0ea5a4;--bg:#f5f7fb;--card:#fff;--text:#1f2937;--success:#16a34a;}
+body{margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+header{background:linear-gradient(135deg,var(--primary),var(--accent));color:white;padding:1.5rem;text-align:center;}
+.container{display:grid;grid-template-columns:2fr 1fr;gap:1rem;max-width:1600px;margin:auto;padding:1rem;}
+.card{background:var(--card);border-radius:12px;padding:1rem;box-shadow:0 10px 25px rgba(0,0,0,.06);}
+h2{margin:.3rem 0;}
+button{padding:.45rem .8rem;border-radius:6px;border:none;font-weight:600;cursor:pointer;margin:2px;}
+.run{background:var(--success);color:white;}
+.step{background:#2563eb;color:white;}
+.reset{background:#64748b;color:white;}
+
+#board{position:relative;height:450px;background:#0e1e2f;border-radius:12px;margin-bottom:.5rem;overflow:hidden;}
+
+.port{position:absolute;width:32px;height:32px;border-radius:50%;background:#64748b;color:white;
+display:flex;align-items:center;justify-content:center;font-size:.8rem;}
+
+.component{position:absolute;cursor:grab;display:flex;align-items:center;justify-content:center;
+border-radius:6px;user-select:none;}
+
+.led{width:30px;height:30px;border-radius:50%;background:#111;}
+.led.on{background:red;box-shadow:0 0 10px red;}
+
+.seg{width:40px;height:60px;background:#222;color:#0f0;font-size:1.2rem;text-align:center;line-height:60px;}
+.lcd{width:120px;height:30px;background:#0a3;color:#0f0;font-size:.8rem;text-align:center;line-height:30px;}
+.button{width:40px;height:40px;background:#f43f5e;}
+.keypad{width:100px;height:100px;background:#333;display:grid;grid-template-columns:repeat(3,1fr);grid-gap:2px;}
+.keypad button{width:30px;height:30px;background:#555;color:white;border:none;border-radius:4px;}
+.adc{width:60px;}
+.dotmatrix{width:80px;height:80px;background:#111;display:grid;grid-template-columns:repeat(8,1fr);grid-gap:1px;}
+.dotmatrix div{width:8px;height:8px;background:#222;border-radius:2px;}
+.motor{width:50px;height:30px;background:#555;}
+.stepper{width:50px;height:50px;background:#0aa;}
+.servo{width:50px;height:30px;background:#ff9900;}
+
+.codebox{background:#0f172a;color:#e5e7eb;font-family:Consolas,monospace;
+font-size:.85rem;padding:.6rem;border-radius:8px;height:220px;overflow:auto;}
+.code-line{padding:2px 6px;}
+.code-line.active{background:#1d4ed8;}
+
+.reggrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;font-size:.85rem;margin-top:.5rem;}
+.reg{background:#f1f5f9;padding:.4rem;border-radius:6px;}
+.flag.on{color:#16a34a;font-weight:700;}
+.flag.off{color:#9ca3af;}
+
+canvas{background:#111;border-radius:6px;margin-top:.3rem;}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🧪 ARDU-8051 Interactive Lab</h1>
+<p>LEDs, 7-Segment, LCD, Button, Keypad, ADC, DotMatrix, Motors, Timers, UART, SFR Map, Step/Run</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>Board</h2>
+<div id="board">
+<div class="port" style="left:8px;top:50px">P0</div>
+<div class="port" style="left:8px;top:100px">P1</div>
+<div class="port" style="left:8px;top:150px">P2</div>
+<div class="port" style="left:8px;top:200px">P3</div>
+</div>
+
+<div style="margin-top:1rem">
+<button class="run" onclick="run()">▶ Run</button>
+<button class="step" onclick="step()">⏭ Step</button>
+<button class="reset" onclick="resetAll()">⟳ Reset</button>
+</div>
+
+<h2>UART TX</h2>
+<canvas id="uart" width="500" height="80"></canvas>
+</div>
+
+<div class="card">
+<h2>SFR Map</h2>
+<div class="reggrid">
+<div class="reg">ACC <span id="ACC">00</span></div>
+<div class="reg">PSW <span id="PSW">00</span></div>
+<div class="reg">IE <span id="IE">00</span></div>
+<div class="reg">IP <span id="IP">00</span></div>
+<div class="reg">P1 <span id="REG_P1">00</span></div>
+<div class="reg">TMOD <span id="TMOD">00</span></div>
+<div class="reg">TH0 <span id="TH0">00</span></div>
+<div class="reg">TL0 <span id="TL0">00</span></div>
+<div class="reg">TH1 <span id="TH1">00</span></div>
+<div class="reg">TL1 <span id="TL1">00</span></div>
+<div class="reg">TF0 <span id="TF0" class="flag off">0</span></div>
+<div class="reg">TF1 <span id="TF1" class="flag off">0</span></div>
+</div>
+
+<h2>Assembly Program</h2>
+<div id="code" class="codebox"></div>
+</div>
+
+</div>
+
+<script>
+// ================= SFR =================
+const SFR={ACC:0,PSW:0,IE:0,IP:0,P1:0,TMOD:0,TH0:0,TL0:0,TH1:0,TL1:0,TF0:0,TF1:0};
+let pc=0,timer=null;
+
+// ================= PROGRAM =================
+const program=[
+"MOV ACC,#05H",
+"MOV P1,#01H",
+"SETB P1.0",
+"CLR P1.1",
+"CPL P1.2"
+];
+
+// ================= UI REFS =================
+const board=document.getElementById("board");
+const codeDiv=document.getElementById("code");
+const ACCspan=document.getElementById("ACC");
+const REG_P1span=document.getElementById("REG_P1");
+
+// ================= COMPONENT STORAGE =================
+const leds=[];
+
+// ================= DRAG =================
+function makeDraggable(el){
+ let sx,sy;
+ el.onmousedown=e=>{
+  sx=e.offsetX; sy=e.offsetY;
+  document.onmousemove=m=>{
+   el.style.left=m.pageX-sx+"px";
+   el.style.top=m.pageY-sy+"px";
+  }
+  document.onmouseup=()=>document.onmousemove=null;
+ }
+}
+
+// ================= COMPONENTS =================
+function addLED(x,y,bit){
+ let d=document.createElement('div');
+ d.className='component led';
+ d.dataset.bit=bit;
+ d.style.left=x+'px';
+ d.style.top=y+'px';
+ board.appendChild(d);
+ leds.push(d);
+ makeDraggable(d);
+}
+function addSeg(x,y,val){
+ let d=document.createElement('div');
+ d.className='component seg';
+ d.style.left=x+'px';
+ d.style.top=y+'px';
+ d.textContent=val;
+ board.appendChild(d);
+ makeDraggable(d);
+}
+function addLCD(x,y,text){
+ let d=document.createElement('div');
+ d.className='component lcd';
+ d.style.left=x+'px';
+ d.style.top=y+'px';
+ d.textContent=text;
+ board.appendChild(d);
+ makeDraggable(d);
+}
+function addButton(x,y){
+ let d=document.createElement('div');
+ d.className='component button';
+ d.style.left=x+'px';
+ d.style.top=y+'px';
+ d.onclick=()=>{SFR.P1^=1;updateUI();};
+ board.appendChild(d);
+ makeDraggable(d);
+}
+function addKeypad(x,y){
+ let d=document.createElement('div');
+ d.className='component keypad';
+ d.style.left=x+'px';
+ d.style.top=y+'px';
+ for(let i=1;i<=9;i++){
+  let b=document.createElement('button');
+  b.textContent=i;
+  b.onclick=()=>{SFR.P1=i;updateUI();};
+  d.appendChild(b);
+ }
+ board.appendChild(d);
+ makeDraggable(d);
+}
+function addADC(x,y){
+ let d=document.createElement('input');
+ d.type='range'; d.min=0; d.max=255;
+ d.className='component adc';
+ d.style.left=x+'px';
+ d.style.top=y+'px';
+ d.oninput=()=>{SFR.P1=parseInt(d.value);updateUI();};
+ board.appendChild(d);
+ makeDraggable(d);
+}
+function addDotMatrix(x,y){
+ let d=document.createElement('div');
+ d.className='component dotmatrix';
+ d.style.left=x+'px';
+ d.style.top=y+'px';
+ for(let i=0;i<64;i++) d.appendChild(document.createElement('div'));
+ board.appendChild(d);
+ makeDraggable(d);
+}
+function addMotor(x,y){let d=document.createElement('div');d.className='component motor';d.style.left=x+'px';d.style.top=y+'px';board.appendChild(d);makeDraggable(d);}
+function addStepper(x,y){let d=document.createElement('div');d.className='component stepper';d.style.left=x+'px';d.style.top=y+'px';board.appendChild(d);makeDraggable(d);}
+function addServo(x,y){let d=document.createElement('div');d.className='component servo';d.style.left=x+'px';d.style.top=y+'px';board.appendChild(d);makeDraggable(d);}
+
+// ================= ADD ALL =================
+addLED(60,100,0);
+addLED(100,100,1);
+addLED(140,100,2);
+addSeg(200,50,'0');
+addLCD(200,120,'HELLO');
+addButton(60,160);
+addKeypad(300,50);
+addADC(300,160);
+addDotMatrix(420,50);
+addMotor(420,160);
+addStepper(480,120);
+addServo(540,50);
+
+// ================= EXECUTION =================
+function execute(instr){
+ if(instr.startsWith("MOV ACC")){
+  SFR.ACC=parseInt(instr.split("#")[1],16);
+ }
+ else if(instr.startsWith("MOV P1")){
+  SFR.P1=parseInt(instr.split("#")[1],16);
+ }
+ else if(instr.startsWith("SETB")){
+  let b=parseInt(instr.split(".")[1]);
+  SFR.P1|=(1<<b);
+ }
+ else if(instr.startsWith("CLR")){
+  let b=parseInt(instr.split(".")[1]);
+  SFR.P1&=~(1<<b);
+ }
+ else if(instr.startsWith("CPL")){
+  let b=parseInt(instr.split(".")[1]);
+  SFR.P1^=(1<<b);
+ }
+}
+
+// ================= UPDATE =================
+function updateUI(){
+ ACCspan.textContent=SFR.ACC.toString(16).padStart(2,'0').toUpperCase();
+ REG_P1span.textContent=SFR.P1.toString(16).padStart(2,'0').toUpperCase();
+ leds.forEach(l=>{
+  let b=parseInt(l.dataset.bit);
+  l.classList.toggle("on",(SFR.P1>>b)&1);
+ });
+}
+function renderCode(){
+ codeDiv.innerHTML='';
+ program.forEach((l,i)=>{
+  let d=document.createElement('div');
+  d.className='code-line'+(i===pc?' active':'');
+  d.textContent=l;
+  codeDiv.appendChild(d);
+ });
+}
+
+// ================= CONTROLS =================
+function step(){
+ if(pc>=program.length) pc=0;
+ execute(program[pc]);
+ pc++;
+ updateUI(); renderCode();
+}
+function run(){
+ if(!timer) timer=setInterval(step,600);
+}
+function resetAll(){
+ clearInterval(timer); timer=null;
+ pc=0;
+ Object.keys(SFR).forEach(k=>SFR[k]=0);
+ updateUI(); renderCode();
+}
+
+// ================= INIT =================
+renderCode(); updateUI();
+</script>
+
+</body>
+</html>

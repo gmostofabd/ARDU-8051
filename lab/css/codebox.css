@@ -1,0 +1,40 @@
+#code-window {
+    flex: 1;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: monospace;
+    overflow: auto;
+    min-height: 200px;
+}
+
+.highlight {
+    background: #0ea5e9;
+    color: white;
+}
+
+button.sim-btn {
+    margin-top: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background: #0ea5e9;
+    border: none;
+    border-radius: 4px;
+    color: white;
+}
+.codebox{background:#0f172a;color:#e5e7eb;font-family:Consolas,monospace;font-size:.85rem;padding:.6rem;border-radius:8px;height:220px;overflow:auto;}
+.code-line{padding:2px 6px;}
+.code-line.active{background:#1d4ed8;}
+.opcode{color:#f59e0b;font-weight:700;}
+.register{color:#3b82f6;font-weight:600;}
+.number{color:#14b8a6;font-weight:600;}
+.label{color:#e879f9;font-weight:700;}
+.comment{color:#6b7280;font-style:italic;}
+.reggrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;font-size:.85rem;margin-top:.5rem;}
+.reg{background:#f1f5f9;padding:.4rem;border-radius:6px;}
+.flag.on{color:#16a34a;font-weight:700;}
+.flag.off{color:#9ca3af;}
+
+<h2>Assembly Program</h2>
+<div id="code" class="codebox"></div>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>8051 Virtual Lab | 4x4 Keypad with LCD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI,Arial;
+  background:#f4f6fb;
+}
+header{
+  background:linear-gradient(135deg,#1f3c88,#0a9396);
+  color:white;
+  padding:1.8rem;
+  text-align:center;
+}
+section{
+  max-width:1150px;
+  margin:auto;
+  padding:1.5rem;
+}
+h2{color:#1f3c88}
+
+/* ===== LAB ===== */
+.lab{
+  background:white;
+  border-radius:14px;
+  padding:1.5rem;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+.flex{
+  display:flex;
+  gap:1.5rem;
+  flex-wrap:wrap;
+}
+.left,.right{
+  flex:1 1 450px;
+}
+
+/* ===== CODE ===== */
+pre{
+  background:#1e1e1e;
+  color:#00ff9c;
+  padding:1rem;
+  border-radius:8px;
+  font-family:Consolas,monospace;
+  font-size:14px;
+  overflow-x:auto;
+}
+
+/* ===== LCD ===== */
+.lcd{
+  width:100%;
+  background:#003300;
+  color:#00ff66;
+  padding:10px;
+  font-family:monospace;
+  border-radius:8px;
+  box-shadow:inset 0 0 15px #000;
+}
+.lcd-line{
+  height:1.4em;
+  white-space:pre;
+}
+
+/* ===== KEYPAD ===== */
+.keypad{
+  display:grid;
+  grid-template-columns:repeat(4,60px);
+  gap:10px;
+  margin-top:1rem;
+  justify-content:center;
+}
+.key{
+  background:#e0e0e0;
+  border-radius:8px;
+  text-align:center;
+  padding:14px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 4px 8px rgba(0,0,0,.2);
+}
+.key:hover{background:#cfd8dc}
+
+/* ===== PANEL ===== */
+.panel{
+  background:#eef2f7;
+  padding:.6rem;
+  border-radius:6px;
+  font-family:monospace;
+  margin-top:.8rem;
+}
+button{
+  background:#1f3c88;
+  color:white;
+  border:none;
+  padding:.4rem 1rem;
+  border-radius:6px;
+  cursor:pointer;
+  margin:.4rem .2rem;
+}
+button:hover{background:#0a9396}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>8051 Virtual Lab</h1>
+  <p>4×4 Matrix Keypad Interfacing with LCD (Assembly Concept)</p>
+</header>
+
+<section>
+<h2>🧪 Experiment Description</h2>
+<p>
+This experiment demonstrates interfacing of a <b>4×4 matrix keypad</b> with
+an <b>LCD display</b> using the 8051 microcontroller.
+Key scanning is done by grounding rows sequentially and reading columns.
+The detected key is converted to ASCII and displayed on the LCD.
+</p>
+
+<div class="lab">
+<div class="flex">
+
+<!-- ===== LEFT ===== -->
+<div class="left">
+
+<pre>
+; ROWS -> P1.0 - P1.3
+; COLS -> P1.4 - P1.7
+; LCD DATA -> P2
+; RS -> P3.0
+; EN -> P3.1
+
+ORG 0000H
+ACALL LCD_INIT
+
+MAIN:
+ACALL GET_KEY
+MOV A,R7
+ACALL LCD_DATA
+SJMP MAIN
+
+; -------- KEYPAD SCAN --------
+GET_KEY:
+MOV P1,#0F0H      ; Columns high
+
+ROW1:
+MOV P1,#0FEH
+JB P1.4,ROW2
+MOV R7,#'1'
+RET
+
+ROW2:
+MOV P1,#0FDH
+JB P1.5,ROW3
+MOV R7,#'5'
+RET
+
+ROW3:
+MOV P1,#0FBH
+JB P1.6,ROW4
+MOV R7,#'9'
+RET
+
+ROW4:
+MOV P1,#0F7H
+JB P1.7,GET_KEY
+MOV R7,#'D'
+RET
+
+; -------- LCD ROUTINES --------
+LCD_INIT:
+MOV P2,#38H
+ACALL CMD
+MOV P2,#0CH
+ACALL CMD
+MOV P2,#06H
+ACALL CMD
+MOV P2,#01H
+ACALL CMD
+RET
+
+CMD:
+CLR P3.0
+SETB P3.1
+CLR P3.1
+ACALL DELAY
+RET
+
+LCD_DATA:
+SETB P3.0
+SETB P3.1
+CLR P3.1
+ACALL DELAY
+RET
+
+DELAY:
+MOV R5,#255
+DJNZ R5,$
+RET
+
+END
+</pre>
+
+<button onclick="clearLCD()">Clear LCD</button>
+
+</div>
+
+<!-- ===== RIGHT ===== -->
+<div class="right">
+
+<div class="lcd">
+  <div class="lcd-line" id="l1">                </div>
+  <div class="lcd-line" id="l2">                </div>
+</div>
+
+<div class="keypad">
+  <div class="key" onclick="press('1')">1</div>
+  <div class="key" onclick="press('2')">2</div>
+  <div class="key" onclick="press('3')">3</div>
+  <div class="key" onclick="press('A')">A</div>
+
+  <div class="key" onclick="press('4')">4</div>
+  <div class="key" onclick="press('5')">5</div>
+  <div class="key" onclick="press('6')">6</div>
+  <div class="key" onclick="press('B')">B</div>
+
+  <div class="key" onclick="press('7')">7</div>
+  <div class="key" onclick="press('8')">8</div>
+  <div class="key" onclick="press('9')">9</div>
+  <div class="key" onclick="press('C')">C</div>
+
+  <div class="key" onclick="press('*')">*</div>
+  <div class="key" onclick="press('0')">0</div>
+  <div class="key" onclick="press('#')">#</div>
+  <div class="key" onclick="press('D')">D</div>
+</div>
+
+<div class="panel">
+Rows → P1.0–P1.3<br>
+Columns → P1.4–P1.7<br>
+LCD Data → P2
+</div>
+
+</div>
+
+</div>
+</div>
+</section>
+
+<script>
+let cursor=0;
+function press(ch){
+  let l1=document.getElementById("l1");
+  let txt=l1.textContent;
+  if(cursor<16){
+    l1.textContent=
+      txt.substring(0,cursor)+ch+
+      txt.substring(cursor+1);
+    cursor++;
+  }
+}
+function clearLCD(){
+  document.getElementById("l1").textContent="                ";
+  document.getElementById("l2").textContent="                ";
+  cursor=0;
+}
+</script>
+
+</body>
+</html>

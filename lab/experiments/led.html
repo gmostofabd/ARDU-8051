@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LED Blink | ARDU-8051 Lab</title>
+
+<style>
+body{
+  font-family:Segoe UI,Arial;
+  background:#f4f6fb;
+  margin:0;
+}
+header{
+  background:#1e3a8a;
+  color:white;
+  padding:1.2rem;
+}
+main{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.2rem;
+  padding:1.2rem;
+}
+
+/* ===== EDITOR ===== */
+.editor{
+  background:white;
+  border-radius:12px;
+  padding:1rem;
+  box-shadow:0 6px 16px rgba(0,0,0,.1);
+}
+textarea{
+  width:100%;
+  height:260px;
+  font-family:monospace;
+  font-size:.9rem;
+}
+button{
+  margin-top:.6rem;
+  padding:.5rem .9rem;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+.save{background:#0ea5a4;color:white}
+.run{background:#22c55e;color:white}
+
+/* ===== SIMULATION ===== */
+.sim{
+  background:white;
+  border-radius:12px;
+  padding:1rem;
+  box-shadow:0 6px 16px rgba(0,0,0,.1);
+}
+.console{
+  background:#0f172a;
+  color:#22c55e;
+  padding:.6rem;
+  height:120px;
+  overflow:auto;
+  font-family:monospace;
+  font-size:.85rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>LED Blinking – Timer 0</h2>
+<p>Student: <span id="student"></span></p>
+</header>
+
+<main>
+
+<div class="editor">
+<h3>Code Editor</h3>
+
+<textarea id="code">
+ORG 0000H
+MAIN:
+  MOV TMOD,#01H
+LOOP:
+  MOV TH0,#3CH
+  MOV TL0,#0B0H
+  SETB TR0
+WAIT:
+  JNB TF0,WAIT
+  CLR TR0
+  CLR TF0
+  CPL P1.0
+  SJMP LOOP
+END
+</textarea>
+
+<button class="save" onclick="saveCode()">Save</button>
+<button class="run" onclick="runCode()">Run</button>
+</div>
+
+<div class="sim">
+<h3>Simulation Output</h3>
+<img src="../assets/images/led-sim.gif" width="100%">
+<div class="console" id="console"></div>
+</div>
+
+</main>
+
+<script>
+const EXP="led";
+document.getElementById("student").innerText =
+  localStorage.getItem("studentName");
+
+/* ===== SAVE ===== */
+function saveCode(){
+  localStorage.setItem(EXP+"_code",
+    document.getElementById("code").value);
+
+  let p = JSON.parse(localStorage.getItem(EXP));
+  p.saved = true;
+  localStorage.setItem(EXP, JSON.stringify(p));
+
+  log("✔ Code saved");
+}
+
+/* ===== RUN ===== */
+function runCode(){
+  let p = JSON.parse(localStorage.getItem(EXP));
+  p.runs++;
+  p.completed = true;
+  localStorage.setItem(EXP, JSON.stringify(p));
+
+  log("▶ Simulation running...");
+  log("LED toggling on P1.0");
+}
+
+function log(msg){
+  const c = document.getElementById("console");
+  c.innerHTML += msg+"<br>";
+  c.scrollTop = c.scrollHeight;
+}
+
+/* ===== LOAD CODE ===== */
+const saved = localStorage.getItem(EXP+"_code");
+if(saved) document.getElementById("code").value = saved;
+</script>
+
+</body>
+</html>
