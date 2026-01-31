@@ -4,71 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARDU-8051 | Virtual Experiment Dashboard</title>
-
 <style>
-/* ===== COLOR VARIABLES ===== */
+/* ===== COLORS & GLOBAL ===== */
 :root {
-  --primary: #1e40af;
-  --accent: #0ea5e9;
-  --bg: #f5f7fb;
-  --card: #ffffff;
-  --text: #1f2937;
-  --muted: #4b5563;
-  --hover: #1e3a8a;
-  --btn-hover: #0b2540;
+  --primary: #1e40af; --accent: #0ea5e9; --bg: #f5f7fb; --card: #ffffff; --text: #1f2937; --muted: #4b5563; --hover: #1e3a8a; --btn-hover: #0b2540;
 }
-
-/* ===== DARK MODE VARIABLES ===== */
 [data-theme="dark"] {
-  --bg: #0f172a;
-  --card: #1e293b;
-  --text: #f1f5f9;
-  --muted: #94a3b8;
-  --hover: #3b82f6;
-  --btn-hover: #2563eb;
-  --primary: #60a5fa;
-  --accent: #38bdf8;
+  --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; --muted: #94a3b8; --hover: #3b82f6; --btn-hover: #2563eb;
+  --primary: #60a5fa; --accent: #38bdf8;
 }
-
-/* ===== GLOBAL STYLES ===== */
-*{box-sizing:border-box;margin:0;padding:0;transition:all 0.25s ease;}
-body{font-family:"Segoe UI", Roboto, Arial, sans-serif;background:var(--bg);color:var(--text);transition:background 0.3s, color 0.3s;}
-
-/* ===== HEADER ===== */
-header{
-  background: linear-gradient(135deg,var(--primary),var(--accent));
-  color:white;
-  padding:3rem 1rem;
-  text-align:center;
-  position:relative;
-  border-bottom: 3px solid var(--accent);
-}
+*{box-sizing:border-box;margin:0;padding:0;transition:all .25s ease;}
+body{font-family:"Segoe UI", Roboto, Arial, sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s;}
+header{background:linear-gradient(135deg,var(--primary),var(--accent));color:white;padding:3rem 1rem;text-align:center;position:relative;border-bottom:3px solid var(--accent);}
 header h1{margin:0;font-size:2.6rem;}
 header p{margin:.6rem auto;max-width:850px;opacity:.95;font-size:1.05rem;}
-#themeToggle{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.85);border:none;padding:.6rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;color:#1e3a8a;transition:.3s;}
+#themeToggle{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,.85);border:none;padding:.6rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;color:#1e3a8a;transition:.3s;}
 #themeToggle:hover{background:rgba(255,255,255,1);transform:scale(1.05);}
-
-/* ===== SECTION ===== */
 section{max-width:1200px;margin:auto;padding:3rem 1.5rem;}
 section h2{text-align:center;margin-bottom:1.5rem;color:var(--primary);font-size:2rem;}
-
-/* ===== SEARCH + RESET ===== */
 #searchResetContainer{display:flex;justify-content:center;align-items:center;gap:.8rem;margin-bottom:1.5rem;flex-wrap:wrap;}
 #searchResetContainer input#searchBar{flex:1 1 250px;max-width:400px;padding:.6rem 1rem;border-radius:8px;border:1px solid #cbd5e1;font-size:1rem;background:var(--card);color:var(--text);}
 [data-theme="dark"] #searchBar{border-color:#475569;background:#1e293b;color:#f1f5f9;}
 #searchResetContainer button#resetBtn{padding:.5rem 1rem;border:none;border-radius:6px;background:#f43f5e;color:white;font-weight:600;cursor:pointer;flex-shrink:0;}
 #searchResetContainer button#resetBtn:hover{background:#be123c;transform:scale(1.05);}
-
-/* ===== CATEGORY BUTTONS ===== */
 #filterButtons{text-align:center;margin-bottom:1rem;}
 #filterButtons button{margin:.3rem .3rem;padding:.5rem 1rem;border:none;border-radius:6px;background:var(--primary);color:white;font-weight:500;cursor:pointer;transition:transform .2s,background .25s;}
 #filterButtons button:hover{background:var(--btn-hover);transform:scale(1.05);}
 #filterButtons button.active{background:var(--accent);}
-
-/* ===== GRID ===== */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:2rem;}
-
-/* ===== CARD ===== */
 .card{background:var(--card);border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,.12);padding:1.6rem;display:grid;grid-template-columns:1fr 120px;gap:1.4rem;min-height:200px;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease,background .3s,color .3s;}
 .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.2);}
 .card-content{display:flex;flex-direction:column;}
@@ -76,55 +39,26 @@ section h2{text-align:center;margin-bottom:1.5rem;color:var(--primary);font-size
 .card p{font-size:.95rem;line-height:1.5;color:var(--muted);flex-grow:1;}
 .card a{margin-top:1rem;text-decoration:none;color:white;background:linear-gradient(120deg,var(--primary),var(--accent));padding:.55rem 1rem;border-radius:8px;font-size:.92rem;width:fit-content;font-weight:500;}
 .card a:hover{background:var(--btn-hover);transform:scale(1.05);}
-
-/* ===== IMAGE COLUMN ===== */
 .media{display:flex;flex-direction:column;gap:.6rem;}
 .media img{width:100%;height:70px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;cursor:pointer;transition:transform .25s ease,filter .25s ease,border .25s ease;}
 [data-theme="dark"] .media img{border-color:#334155;}
 .media img:hover{transform:scale(1.05);filter:brightness(1.05);}
-
-/* ===== MODAL ===== */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:999;}
 .modal img{max-width:90%;max-height:90%;border-radius:10px;box-shadow:0 20px 40px rgba(0,0,0,.5);}
 .modal.active{display:flex;}
-
-/* ===== RESPONSIVE ===== */
 @media (max-width:500px){.card{grid-template-columns:1fr;}.media img{height:60px;}}
-
-/* ===== CATEGORY TAG COLORS ===== */
+.tag{padding:.2rem .5rem;border-radius:6px;font-size:.8rem;font-weight:600;}
 .tag[data-type="Timer"]{background:#e0f2fe;color:#0369a1;}
-[data-theme="dark"] .tag[data-type="Timer"]{background:#1e3a8af0;color:#a5f3fc;}
-
 .tag[data-type="Display"]{background:#fef3c7;color:#b45309;}
-[data-theme="dark"] .tag[data-type="Display"]{background:#78350f;color:#fcd34d;}
-
 .tag[data-type="Multiplexing"]{background:#ede9fe;color:#5b21b6;}
-[data-theme="dark"] .tag[data-type="Multiplexing"]{background:#4c1d95;color:#c4b5fd;}
-
 .tag[data-type="Input"]{background:#dcfce7;color:#15803d;}
-[data-theme="dark"] .tag[data-type="Input"]{background:#166534;color:#bbf7d0;}
-
 .tag[data-type="LCD"]{background:#fe92f2;color:#b91a1c;}
-[data-theme="dark"] .tag[data-type="LCD"]{background:#7f181d;color:#fe0eca;}
-
-
 .tag[data-type="Matrix"]{background:#fee2e2;color:#b91c1c;}
-[data-theme="dark"] .tag[data-type="Matrix"]{background:#7f1d1d;color:#fecaca;}
-
 .tag[data-type="Analog"]{background:#e0f7fa;color:#006064;}
-[data-theme="dark"] .tag[data-type="Analog"]{background:#004d4d;color:#81ecec;}
-
 .tag[data-type="Motor"]{background:#fff7ed;color:#c2410c;}
-[data-theme="dark"] .tag[data-type="Motor"]{background:#7c2d12;color:#fdba74;}
-
 .tag[data-type="Pulse"]{background:#f0fdfa;color:#0f766e;}
-[data-theme="dark"] .tag[data-type="Pulse"]{background:#134e4a;color:#5eead4;}
-
 .tag[data-type="PWM"]{background:#fef9c3;color:#713f12;}
-[data-theme="dark"] .tag[data-type="PWM"]{background:#78350f;color:#fde68a;}
-
 .tag[data-type="UART"]{background:#ede9fe;color:#4f46e5;}
-[data-theme="dark"] .tag[data-type="UART"]{background:#312e81;color:#c7d2fe;}
 </style>
 </head>
 <body data-theme="light">
@@ -158,155 +92,7 @@ section h2{text-align:center;margin-bottom:1.5rem;color:var(--primary);font-size
 </div>
 
 <div class="grid" id="experimentGrid">
-
-<!-- ===== EXPERIMENT CARDS ===== -->
-<div class="card" data-type="Timer">
-  <div class="card-content">
-    <span class="tag" data-type="Timer">Timer</span>
-    <h3>LED Blinking</h3>
-    <p>Generate delays using Timer-0 and toggle an LED on Port-1.</p>
-    <a href="../lab/led.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/led-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Display">
-  <div class="card-content">
-    <span class="tag" data-type="Display">Display</span>
-    <h3>7-Segment Display</h3>
-    <p>Interface a single 7-segment display using 8051 I/O ports.</p>
-    <a href="../lab/seven-segment.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="../assets/images/7seg-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Multiplexing">
-  <div class="card-content">
-    <span class="tag" data-type="Multiplexing">Multiplexing</span>
-    <h3>4-Digit 7-Segment</h3>
-    <p>Display multi-digit numbers using time-multiplexing.</p>
-    <a href="../lab/seven-segment-Multiplex.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="../assets/images/seven-segment-counter-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Input">
-  <div class="card-content">
-    <span class="tag" data-type="Input">Input</span>
-    <h3>Push Button</h3>
-    <p>Read digital inputs and control outputs using polling.</p>
-    <a href="../lab/push-button.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/button-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-
-<div class="card" data-type="LCD">
-  <div class="card-content">
-    <span class="tag" data-type="LCD">LCD</span>
-    <h3>16X2 LCD</h3>
-    <p>Interfaceand display characters on LCD.</p>
-    <a href="../lab/lcd.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="../assets/images/lcd-4bit-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/lcd-4bit-simulation.png" onclick="preview(this)">
-  </div>
-</div>
-
-
-
-
-<div class="card" data-type="Matrix">
-  <div class="card-content">
-    <span class="tag" data-type="Matrix">Matrix</span>
-    <h3>4×4 Keypad + LCD</h3>
-    <p>Scan a matrix keypad and display characters on LCD.</p>
-    <a href="../lab/keypad.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/keypad-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Analog">
-  <div class="card-content">
-    <span class="tag" data-type="Analog">Analog</span>
-    <h3>ADC0804</h3>
-    <p>Read analog signals using external ADC interfacing.</p>
-    <a href="../lab/adc.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/adc-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Motor">
-  <div class="card-content">
-    <span class="tag" data-type="Motor">Motor</span>
-    <h3>DC Motor</h3>
-    <p>Control DC motor ON/OFF and direction.</p>
-    <a href="../lab/dc-motor.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/dc-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="Pulse">
-  <div class="card-content">
-    <span class="tag" data-type="Pulse">Pulse</span>
-    <h3>Stepper Motor</h3>
-    <p>Generate step sequences to rotate a stepper motor.</p>
-    <a href="../lab/stepper-motor.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="assets/images/stepper-circuit.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="PWM">
-  <div class="card-content">
-    <span class="tag" data-type="PWM">PWM</span>
-    <h3>Servo Motor</h3>
-    <p>Control servo angle using software-generated PWM.</p>
-    <a href="../lab/servo-motor.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="../assets/images/ARDU-8051-Board.png" onclick="preview(this)">
-    <img src="../assets/images/ARDU-8051-Project-Banner-BG.png" onclick="preview(this)">
-  </div>
-</div>
-
-<div class="card" data-type="UART">
-  <div class="card-content">
-    <span class="tag" data-type="UART">UART</span>
-    <h3>Serial Communication</h3>
-    <p>Transmit and receive data using 8051 UART.</p>
-    <a href="../lab/serial.html" target="_blank">Open Experiment</a>
-  </div>
-  <div class="media">
-    <img src="../assets/images/ARDU-8051-Board1.png" onclick="preview(this)">
-    <img src="assets/images/uart-sim.gif" onclick="preview(this)">
-  </div>
-</div>
-
+  <!-- Cards generated by JS -->
 </div>
 </section>
 
@@ -315,20 +101,58 @@ section h2{text-align:center;margin-bottom:1.5rem;color:var(--primary);font-size
 </div>
 
 <script>
-// Theme toggle
-const themeBtn = document.getElementById('themeToggle');
-themeBtn.addEventListener('click', ()=>{
+// ===== Experiment Data =====
+const experiments = [
+  {type:"Timer", title:"LED Blinking", desc:"Generate delays using Timer-0 and toggle an LED on Port-1.", link:"../lab/led.html", images:["assets/images/led-circuit.png","../assets/images/ARDU-8051-Board.png"]},
+  {type:"Display", title:"7-Segment Display", desc:"Interface a single 7-segment display using 8051 I/O ports.", link:"../lab/seven-segment.html", images:["../assets/images/7seg-circuit.png","../assets/images/ARDU-8051-Board.png"]},
+  {type:"Multiplexing", title:"4-Digit 7-Segment", desc:"Display multi-digit numbers using time-multiplexing.", link:"../lab/seven-segment-Multiplex.html", images:["../assets/images/seven-segment-counter-circuit.png","../assets/images/ARDU-8051-Board.png"]},
+  {type:"Input", title:"Push Button", desc:"Read digital inputs and control outputs using polling.", link:"../lab/push-button.html", images:["assets/images/button-circuit.png","../assets/images/ARDU-8051-Board.png"]},
+  {type:"LCD", title:"16X2 LCD", desc:"Interface and display characters on LCD.", link:"../lab/lcd.html", images:["../assets/images/lcd-4bit-circuit.png","../assets/images/lcd-4bit-simulation.png"]},
+  {type:"Matrix", title:"4×4 Keypad + LCD", desc:"Scan a matrix keypad and display characters on LCD.", link:"../lab/keypad.html", images:["assets/images/keypad-circuit.png","../assets/images/ARDU-8051-Board.png"]},
+  {type:"Analog", title:"ADC0804", desc:"Read analog signals using external ADC interfacing.", link:"../lab/adc.html", images:["assets/images/adc-circuit.png","../assets/images/ARDU-8051-Board.png"]},
+  {type:"Motor", title:"DC Motor", desc:"Control DC motor ON/OFF and direction.", link:"../lab/dc-motor.html", images:["assets/images/dc-circuit.png","../assets/images/ARDU-8051-Board.png"]},
+  {type:"Pulse", title:"Stepper Motor", desc:"Generate step sequences to rotate a stepper motor.", link:"../lab/stepper-motor.html", images:["assets/images/stepper-circuit.png","../assets/images/ARDU-8051-Board.png"]},
+  {type:"PWM", title:"Servo Motor", desc:"Control servo angle using software-generated PWM.", link:"../lab/servo-motor.html", images:["../assets/images/ARDU-8051-Board.png","../assets/images/ARDU-8051-Project-Banner-BG.png"]},
+  {type:"UART", title:"Serial Communication", desc:"Transmit and receive data using 8051 UART.", link:"../lab/serial.html", images:["../assets/images/ARDU-8051-Board1.png","assets/images/uart-sim.gif"]}
+];
+
+// ===== Generate Cards =====
+const grid = document.getElementById('experimentGrid');
+function renderCards(){
+  grid.innerHTML = '';
+  experiments.forEach(exp=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.type = exp.type;
+    card.innerHTML = `
+      <div class="card-content">
+        <span class="tag" data-type="${exp.type}">${exp.type}</span>
+        <h3>${exp.title}</h3>
+        <p>${exp.desc}</p>
+        <a href="${exp.link}" target="_blank">Open Experiment</a>
+      </div>
+      <div class="media">
+        ${exp.images.map(img=>`<img src="${img}" onclick="preview(this)">`).join('')}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+renderCards();
+
+// ===== THEME TOGGLE =====
+document.getElementById('themeToggle').addEventListener('click', ()=>{
   const body = document.body;
   if(body.dataset.theme === "light"){
     body.dataset.theme = "dark";
-    themeBtn.textContent = "☀️ Light Mode";
-  }else{
+    document.getElementById('themeToggle').textContent = "☀️ Light Mode";
+  } else {
     body.dataset.theme = "light";
-    themeBtn.textContent = "🌙 Dark Mode";
+    document.getElementById('themeToggle').textContent = "🌙 Dark Mode";
   }
 });
 
-// Image modal
+// ===== IMAGE MODAL =====
 function preview(img){
   const modal = document.getElementById('modal');
   document.getElementById('modalImg').src = img.src;
@@ -341,13 +165,12 @@ document.addEventListener('keydown', e=>{
   if(e.key==='Escape') document.getElementById('modal').classList.remove('active');
 });
 
-// Search/filter functionality
+// ===== SEARCH & FILTER =====
 const searchBar = document.getElementById('searchBar');
-const cards = document.querySelectorAll('.card');
 function filterCards(){
   const query = searchBar.value.toLowerCase();
   const activeFilter = document.querySelector('#filterButtons button.active').dataset.filter.toLowerCase();
-  cards.forEach(card=>{
+  document.querySelectorAll('.card').forEach(card=>{
     const title = card.querySelector('h3').textContent.toLowerCase();
     const type = card.dataset.type.toLowerCase();
     const matchesSearch = title.includes(query) || type.includes(query);
@@ -357,20 +180,19 @@ function filterCards(){
 }
 searchBar.addEventListener('input', filterCards);
 
-// Category buttons filter
-const filterButtons = document.querySelectorAll('#filterButtons button');
-filterButtons.forEach(btn=>{
+// ===== CATEGORY FILTER BUTTONS =====
+document.querySelectorAll('#filterButtons button').forEach(btn=>{
   btn.addEventListener('click', ()=>{
-    filterButtons.forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('#filterButtons button').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     filterCards();
   });
 });
 
-// Reset button
+// ===== RESET BUTTON =====
 document.getElementById('resetBtn').addEventListener('click', ()=>{
   searchBar.value = '';
-  filterButtons.forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#filterButtons button').forEach(b=>b.classList.remove('active'));
   document.querySelector('#filterButtons button[data-filter="all"]').classList.add('active');
   filterCards();
 });
