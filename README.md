@@ -21,7 +21,7 @@
   <img src="https://img.shields.io/badge/MCU-8051-orange?style=for-the-badge">
 </a>
 
-<a href="https://gmostofabd.github.io/ARDU-8051/">
+<a href="https://gmostofabd.github.io/ARDU-8051/lab/">
   <img src="https://img.shields.io/badge/Virtual%20Lab-Online-purple?style=for-the-badge">
 </a>
 
